@@ -1,0 +1,2338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stenward &#8212; ISO 27001, done properly</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --navy:#0F1A2A;--navy-dark:#0a0f18;--navy-light:#1a2d47;
+      --teal:#00fdb3;
+      --charcoal:#444444;--muted-grey:#595959;--light-surface:#F2F2F2;
+      --border:#e5e7eb;--bg-alt:#f9fafb;
+    }
+    html{scroll-behavior:smooth;overflow-y:scroll}
+    body{font-family:'DM Sans',sans-serif;color:var(--charcoal);background:#fff;-webkit-font-smoothing:antialiased;line-height:1.6;min-height:100vh;display:flex;flex-direction:column}
+    main, section, footer{flex-shrink:0}
+
+    /* ─── NAV ─── */
+    /* Starts transparent with white text on dark hero; becomes frosted pill on scroll */
+    .site-nav{position:fixed;top:0;width:100%;z-index:200;padding:0 .75rem}
+    .nav-inner{
+      max-width:72rem;margin:0 auto;margin-top:.5rem;
+      padding:.75rem 3rem;
+      display:flex;align-items:center;justify-content:space-between;
+      transition:max-width .4s cubic-bezier(.4,0,.2,1), padding .4s cubic-bezier(.4,0,.2,1), background .4s, border-radius .4s, box-shadow .4s, border .4s;
+    }
+    .nav-brand{display:flex;align-items:center;gap:8px;text-decoration:none}
+    .nav-brand img{width:26px;height:26px;border-radius:6px}
+    .nav-brand span{
+      font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:600;
+      letter-spacing:-.02em;
+      color:#fff;
+      transition:color .35s;
+    }
+    .nav-links{display:flex;gap:0;list-style:none}
+    .nav-links a{
+      font-size:.85rem;font-weight:500;
+      color:rgba(255,255,255,.65);
+      text-decoration:none;padding:.4rem .9rem;border-radius:7px;
+      transition:color .15s,background .15s;white-space:nowrap;
+    }
+    .nav-links a:hover{color:#fff;background:rgba(255,255,255,.08)}
+    .nav-links a:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+    .nav-ctas{display:flex;align-items:center;gap:8px}
+    .btn-book-sm{
+      font-size:.85rem;font-weight:700;
+      color:var(--navy);background:var(--teal);
+      padding:.42rem 1rem;border-radius:7px;text-decoration:none;
+      transition:background .35s, color .35s, opacity .15s, transform .15s;
+      box-shadow:0 2px 10px rgba(0,253,179,.25);white-space:nowrap;
+    }
+    .btn-book-sm:hover{opacity:.88;transform:translateY(-1px)}
+    .btn-book-sm:active{transform:translateY(0)}
+    .btn-book-sm:focus-visible{outline:2px solid #fff;outline-offset:2px}
+
+    /* Scrolled state: frosted white pill with dark text */
+    .nav-inner.scrolled{
+      background:rgba(255,255,255,.88);
+      max-width:54rem;border-radius:1rem;
+      border:1px solid rgba(0,0,0,.07);
+      backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+      padding:.65rem 1.5rem;
+      box-shadow:0 4px 28px rgba(3,20,50,.08);
+    }
+    .nav-inner.scrolled .nav-brand span{display:none}
+    .nav-inner.scrolled .nav-links a{color:var(--subtle)}
+    .nav-inner.scrolled .nav-links a:hover{color:var(--navy);background:rgba(3,20,50,.05)}
+    .nav-inner.scrolled .btn-book-sm{background:var(--navy);color:#fff;box-shadow:none}
+
+    /* ─── HERO ─── */
+    .hero{
+      background:var(--navy);
+      min-height:100vh;
+      display:flex;flex-direction:column;align-items:stretch;
+      position:relative;overflow:hidden;
+      padding-top:9rem;padding-bottom:0;
+    }
+
+    /* Canvas for animated beams */
+    #hero-canvas{
+      position:absolute;inset:0;width:100%;height:100%;
+      filter:blur(15px);
+      pointer-events:none;z-index:0;
+    }
+
+    /* Mouse-follow glow */
+    .hero-cursor-glow{
+      position:absolute;width:600px;height:600px;border-radius:50%;
+      background:radial-gradient(circle, rgba(0,253,179,.07) 0%, rgba(67,166,247,.04) 40%, transparent 70%);
+      transform:translate(-50%,-50%);
+      pointer-events:none;z-index:1;
+      transition:opacity .5s;opacity:0;
+      will-change:left,top;
+    }
+
+    /* Subtle center radial overlay to boost text readability */
+    .hero-vignette{
+      position:absolute;inset:0;z-index:2;pointer-events:none;
+      background:radial-gradient(ellipse 80% 80% at 50% 40%, transparent 30%, rgba(3,20,50,.45) 100%);
+    }
+
+    /* Bottom fade into the first light section */
+    .hero-floor-fade{
+      position:absolute;bottom:0;left:0;right:0;height:180px;
+      background:linear-gradient(to bottom,transparent,var(--navy));
+      z-index:3;pointer-events:none;
+    }
+
+    .hero-content{
+      max-width:52rem;margin:0 auto;padding:0 1.5rem;
+      text-align:center;position:relative;z-index:5;
+    }
+
+    /* ── Entrance animations ── */
+    @keyframes heroBlurIn{
+      from{opacity:0;filter:blur(12px);transform:translateY(14px)}
+      to{opacity:1;filter:blur(0px);transform:translateY(0)}
+    }
+    .hero-eyebrow{animation:heroBlurIn .75s cubic-bezier(.22,1,.36,1) .15s both}
+    .hero h1{animation:heroBlurIn 1s cubic-bezier(.22,1,.36,1) .3s both}
+    .hero-sub{animation:heroBlurIn .85s cubic-bezier(.22,1,.36,1) .5s both}
+    .why-stenward-box{
+      background:var(--navy);color:#fff;border-radius:12px;
+      padding:2rem;margin:2rem 0 3rem;
+      border-left:4px solid var(--teal);
+    }
+    .why-stenward-content h3{
+      font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;
+      margin-bottom:1rem;line-height:1.3;
+    }
+    .why-stenward-content p{
+      font-size:1rem;color:rgba(255,255,255,.85);line-height:1.8;
+    }
+    .hero-ctas{animation:heroBlurIn .8s cubic-bezier(.22,1,.36,1) .65s both}
+    .hero-visual{animation:heroBlurIn .9s cubic-bezier(.22,1,.36,1) .85s both}
+
+    @keyframes rowSlideIn{
+      from{opacity:0;transform:translateX(-10px)}
+      to{opacity:1;transform:translateX(0)}
+    }
+    .isms-row{animation:rowSlideIn .4s ease both;opacity:0}
+    .isms-row:nth-child(1){animation-delay:1.2s}
+    .isms-row:nth-child(2){animation-delay:1.35s}
+    .isms-row:nth-child(3){animation-delay:1.5s}
+    .isms-row:nth-child(4){animation-delay:1.65s}
+    .isms-row:nth-child(5){animation-delay:1.8s}
+    .isms-row:nth-child(6){animation-delay:1.95s}
+
+    /* Hero eyebrow */
+    .hero-eyebrow{
+      display:inline-flex;align-items:center;gap:8px;
+      font-size:.72rem;font-weight:600;color:rgba(255,255,255,.6);
+      letter-spacing:.08em;text-transform:uppercase;
+      border:1px solid rgba(255,255,255,.14);
+      padding:.3rem .9rem;border-radius:100px;margin-bottom:1.75rem;
+      background:rgba(255,255,255,.04);
+    }
+    .hero-eyebrow-dot{
+      width:5px;height:5px;border-radius:50%;
+      background:var(--teal);display:inline-block;
+      box-shadow:0 0 8px rgba(0,253,179,.7);
+    }
+    /* Pulsing dot */
+    @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(0,253,179,.5)}50%{box-shadow:0 0 0 5px rgba(0,253,179,0)}}
+    .hero-eyebrow-dot{animation:pulse 2.5s ease-in-out infinite}
+
+    .hero h1{
+      font-family:'Playfair Display',serif;
+      font-size:clamp(2.6rem,5.5vw,4.5rem);
+      font-weight:700;color:#fff;
+      line-height:1.1;letter-spacing:-.04em;margin-bottom:1.4rem;
+    }
+    .hero h1 em{font-style:italic;font-weight:400;color:rgba(255,255,255,.72)}
+
+    .hero-sub{
+      font-size:clamp(1.02rem,1.6vw,1.12rem);
+      color:rgba(255,255,255,.68);line-height:1.8;
+      margin-bottom:2.5rem;max-width:42rem;margin-left:auto;margin-right:auto;
+    }
+
+    .hero-ctas{
+      display:flex;align-items:center;justify-content:center;
+      gap:12px;flex-wrap:wrap;margin-bottom:4rem;
+    }
+
+    .btn-primary{
+      font-size:.95rem;font-weight:700;
+      color:var(--navy);background:var(--teal);
+      padding:.7rem 1.8rem;border-radius:10px;text-decoration:none;
+      transition:opacity .15s,transform .15s,box-shadow .15s;
+      box-shadow:0 4px 18px rgba(0,253,179,.35);
+      display:inline-flex;align-items:center;gap:6px;
+    }
+    .btn-primary:hover{opacity:.9;transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,253,179,.4)}
+    .btn-primary:active{transform:translateY(0)}
+    .btn-primary:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+
+    .btn-ghost{
+      font-size:.95rem;font-weight:500;color:rgba(255,255,255,.75);
+      text-decoration:none;display:inline-flex;align-items:center;gap:6px;
+      padding:.68rem 1.2rem;border-radius:10px;border:1px solid rgba(255,255,255,.18);
+      transition:background .15s,border-color .15s,transform .15s;
+    }
+    .btn-ghost:hover{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.32);transform:translateY(-1px)}
+    .btn-ghost:active{transform:translateY(0)}
+    .btn-ghost:focus-visible{outline:2px solid rgba(255,255,255,.4);outline-offset:2px}
+
+    /* Hero ISMS visual */
+    .hero-visual{
+      position:relative;max-width:54rem;margin:0 auto;
+      padding:0 1.5rem;z-index:5;
+    }
+    .hero-vis-fade{
+      position:absolute;inset:0;
+      background:linear-gradient(to bottom,transparent 38%,var(--navy));
+      z-index:10;pointer-events:none;
+    }
+    .hero-vis-card{
+      background:#fff;border:1px solid rgba(255,255,255,.1);border-radius:16px;
+      padding:24px 28px 32px;
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,.06),
+        0 8px 16px rgba(0,0,0,.2),
+        0 32px 80px rgba(0,0,0,.45);
+    }
+    .isms-row{
+      display:grid;grid-template-columns:1fr 110px 90px;
+      gap:8px;align-items:center;padding:9px 6px;border-radius:8px;
+      transition:background .15s;
+    }
+    .isms-row:hover{background:rgba(3,20,50,.04)}
+
+    /* ─── REST OF SECTIONS ─── */
+    .sec{padding:5.5rem clamp(1.5rem,5vw,4rem)}
+    .sec-alt{background:#fff}
+    .sec-tinted{background:var(--light-surface)}
+    .sec-dark{background:var(--navy);color:#fff}
+    .sec-inner{max-width:68rem;margin:0 auto}
+    .sec-inner-narrow{max-width:52rem;margin:0 auto}
+
+    .eyebrow{font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted-grey);margin-bottom:.75rem;display:block;flex-shrink:0}
+    .eyebrow-navy{font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:.75rem;display:block;flex-shrink:0}
+
+    .sec-h{font-family:'Playfair Display',serif;font-size:clamp(1.85rem,3vw,2.55rem);font-weight:700;color:var(--navy);letter-spacing:-.03em;line-height:1.2;margin-bottom:1.25rem}
+    .sec-h-white{font-family:'Playfair Display',serif;font-size:clamp(1.85rem,3vw,2.55rem);font-weight:700;color:#fff;letter-spacing:-.03em;line-height:1.2;margin-bottom:1.25rem}
+    .sec-h-xl{font-size:clamp(2rem,3.5vw,3rem)}
+
+    .sec-body{font-size:1.05rem;color:var(--charcoal);line-height:1.82}
+    .sec-body p+p{margin-top:1rem}
+    .sec-body-white{font-size:1.05rem;color:rgba(255,255,255,.75);line-height:1.82}
+    .sec-body-white p+p{margin-top:1rem}
+
+    .text-link{display:inline-flex;align-items:center;gap:5px;font-size:.875rem;font-weight:600;color:var(--navy);text-decoration:none;margin-top:1.5rem;border-bottom:1.5px solid var(--navy);padding-bottom:1px;transition:opacity .15s}
+    .text-link:hover{opacity:.6}
+
+    /* ─── PAGE TRANSITIONS ─── */
+    body.page-exit{animation:fadeOut 0.4s ease-out forwards}
+    @keyframes fadeOut{
+      0%{opacity:1}
+      100%{opacity:0}
+    }
+
+    /* ─── COOKIES BANNER ─── */
+    .cookies-banner{
+      position:fixed;bottom:0;left:0;right:0;
+      background:var(--navy);color:#fff;padding:20px;
+      display:flex;align-items:center;justify-content:space-between;
+      gap:20px;z-index:100;
+      font-size:0.9rem;line-height:1.5;
+      box-shadow:0 -4px 16px rgba(0,0,0,0.15);
+    }
+
+    .cookies-banner.hidden{display:none}
+
+    .cookies-content{flex:1}
+
+    .cookies-content a{color:var(--teal);text-decoration:none;font-weight:600}
+
+    .cookies-content a:hover{text-decoration:underline}
+
+    .cookies-actions{display:flex;gap:12px;flex-shrink:0}
+
+    .cookies-btn{
+      padding:8px 16px;border:none;border-radius:6px;
+      cursor:pointer;font-weight:600;font-size:0.85rem;
+      transition:opacity 0.2s;
+    }
+
+    .cookies-btn-accept{
+      background:var(--teal);color:var(--navy);
+    }
+
+    .cookies-btn-accept:hover{opacity:0.9}
+
+    .cookies-btn-decline{
+      background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,0.3);
+    }
+
+    .cookies-btn-decline:hover{background:rgba(255,255,255,0.1)}
+
+    @media (max-width:768px){
+      .cookies-banner{
+        flex-direction:column;align-items:flex-start;
+        gap:16px;
+      }
+      .cookies-actions{width:100%}
+      .cookies-btn{width:100%;text-align:center}
+    }
+    .text-link-white{display:inline-flex;align-items:center;gap:5px;font-size:.875rem;font-weight:600;color:#fff;text-decoration:none;margin-top:1.5rem;border-bottom:1.5px solid rgba(255,255,255,.35);padding-bottom:1px;transition:opacity .15s}
+    .text-link-white:hover{opacity:.65}
+
+    /* ─── PROBLEM (kept for responsive cleanup ref) ─── */
+
+    /* ─── HERO ANIMATED ORBS ─── */
+    /* Slowly floating radial blobs behind the beams canvas.
+       They breathe in different directions at different speeds so the
+       background always feels alive rather than static. */
+    @keyframes orbA{
+      0%,100%{transform:translate(0,0) scale(1)}
+      30%{transform:translate(45px,-55px) scale(1.1)}
+      60%{transform:translate(-35px,30px) scale(.93)}
+      80%{transform:translate(20px,-25px) scale(1.05)}
+    }
+    @keyframes orbB{
+      0%,100%{transform:translate(0,0) scale(1)}
+      25%{transform:translate(-50px,40px) scale(1.08)}
+      55%{transform:translate(30px,-30px) scale(.95)}
+      80%{transform:translate(-20px,50px) scale(1.04)}
+    }
+    @keyframes orbC{
+      0%,100%{transform:translate(0,0) scale(1)}
+      40%{transform:translate(35px,45px) scale(1.12)}
+      70%{transform:translate(-40px,-20px) scale(.9)}
+    }
+    .hero-orb{
+      position:absolute;border-radius:50%;
+      pointer-events:none;z-index:0;
+    }
+    .hero-orb-a{
+      width:700px;height:600px;top:-160px;right:-80px;
+      background:radial-gradient(circle, rgba(67,166,247,.18) 0%, transparent 65%);
+      filter:blur(50px);
+      animation:orbA 18s ease-in-out infinite;
+    }
+    .hero-orb-b{
+      width:650px;height:550px;bottom:-80px;left:-120px;
+      background:radial-gradient(circle, rgba(131,115,235,.12) 0%, transparent 65%);
+      filter:blur(60px);
+      animation:orbB 22s ease-in-out infinite;
+    }
+    .hero-orb-c{
+      width:520px;height:430px;top:25%;left:32%;
+      background:radial-gradient(circle, rgba(0,253,179,.09) 0%, transparent 65%);
+      filter:blur(70px);
+      animation:orbC 15s ease-in-out infinite 1.5s;
+    }
+    .hero-orb-d{
+      width:400px;height:350px;bottom:10%;right:20%;
+      background:radial-gradient(circle, rgba(67,166,247,.1) 0%, transparent 65%);
+      filter:blur(55px);
+      animation:orbA 20s ease-in-out infinite reverse 3s;
+    }
+
+    /* ─── FEATURES-1 CARDS (replaces pillar grid) ─── */
+    .features-grid{
+      display:grid;grid-template-columns:repeat(3,1fr);
+      gap:1.5rem;margin-top:2.5rem;
+    }
+    .feat-card{
+      text-align:center;
+      border:1.5px solid var(--border);border-radius:14px;border-top:3px solid var(--navy);
+      background:#fff;
+      box-shadow:0 2px 8px rgba(3,20,50,.03);
+      transition:box-shadow .22s,border-color .22s,transform .22s;
+    }
+    .feat-card:hover{
+      box-shadow:0 10px 36px rgba(3,20,50,.09);
+      border-color:#c5cad8;transform:translateY(-3px);
+    }
+    .feat-card-header{
+      padding:1.75rem 1.5rem .75rem;
+      display:flex;flex-direction:column;align-items:center;
+    }
+    /* Masked grid + icon decorator — direct port of CardDecorator */
+    .feat-decorator{
+      position:relative;width:9rem;height:9rem;
+      mask-image:radial-gradient(ellipse 50% 50% at 50% 50%,#000 70%,transparent 100%);
+      -webkit-mask-image:radial-gradient(ellipse 50% 50% at 50% 50%,#000 70%,transparent 100%);
+    }
+    .feat-decorator-grid{
+      position:absolute;inset:0;
+      background-image:
+        linear-gradient(to right,rgba(3,20,50,.14) 1px,transparent 1px),
+        linear-gradient(to bottom,rgba(3,20,50,.14) 1px,transparent 1px);
+      background-size:24px 24px;
+    }
+    .feat-decorator-icon{
+      position:absolute;inset:0;margin:auto;
+      width:3rem;height:3rem;
+      display:flex;align-items:center;justify-content:center;
+      background:#fff;
+      border-top:1px solid var(--border);
+      border-left:1px solid var(--border);
+      color:var(--navy);
+    }
+    .feat-card-title{
+      font-size:1rem;font-weight:700;color:var(--navy);
+      margin-top:1.25rem;line-height:1.3;
+    }
+    .feat-card-body{
+      padding:.5rem 1.5rem 1.75rem;
+      font-size:.875rem;color:#6b7280;line-height:1.75;
+    }
+    @media(max-width:900px){
+      .features-grid{grid-template-columns:1fr;max-width:22rem;margin-left:auto;margin-right:auto}
+    }
+
+    /* ─── DIFFERENTIATION ─── */
+    .diff-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+    .philosophy-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:4rem;align-items:start}
+    .coverage-grid{
+      display:grid;grid-template-columns:1fr 1fr;gap:1rem;
+      padding:2rem;background:#fff;border-radius:12px;border:1px solid var(--navy);
+    }
+    .coverage-item{
+      font-size:.95rem;color:var(--navy);font-weight:500;
+      padding:.75rem;text-align:center;
+      background:var(--light-surface);border-radius:8px;
+    }
+    .diff-quote{font-family:'Playfair Display',serif;font-size:clamp(1.2rem,2vw,1.5rem);font-weight:500;font-style:italic;color:var(--navy);line-height:1.55;padding-left:1.5rem;border-left:4px solid var(--navy);margin-bottom:1.5rem}
+
+    /* ─── APPROACH ─── */
+    .approach-inner{max-width:52rem;margin:0 auto}
+
+    /* ─── CREDIBILITY ─── */
+    .credibility-content{
+      display:grid;grid-template-columns:1fr 320px;gap:3rem;
+      margin-top:2.5rem;align-items:start;
+    }
+    .credibility-text h3{
+      font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;
+      color:var(--navy);margin:0 0 1rem;
+    }
+    .credibility-text p{
+      font-size:1rem;color:var(--charcoal);line-height:1.8;margin-bottom:1.5rem;
+    }
+    .frameworks-grid{
+      display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1rem;margin:1.5rem 0;
+    }
+    .framework-item{
+      background:var(--light-surface);border:1.5px solid var(--navy);
+      border-radius:8px;padding:1rem;text-align:center;
+      font-size:.95rem;font-weight:600;color:var(--navy);
+    }
+    .framework-coming-soon{
+      background:rgba(15,26,42,.05);border:1.5px dashed var(--navy);
+      color:var(--muted-grey);opacity:.7;
+    }
+    .credibility-sidebar{
+      position:relative;
+    }
+    .credibility-highlight{
+      background:var(--light-surface);border-left:4px solid var(--teal);
+      border-radius:8px;padding:1.75rem;
+      position:sticky;top:2rem;
+    }
+    .credibility-highlight h4{
+      font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;
+      color:var(--navy);margin:0 0 .75rem;
+    }
+    .credibility-highlight p{
+      font-size:.9rem;color:var(--charcoal);line-height:1.7;margin:0;
+    }
+
+    @media (max-width:900px){
+      .credibility-content{grid-template-columns:1fr;gap:2rem}
+      .credibility-sidebar{position:static}
+      .frameworks-grid{grid-template-columns:repeat(2,1fr)}
+    }
+    .stats-row{display:flex;gap:0;border:1.5px solid var(--border);border-radius:14px;border-top:3px solid var(--navy);overflow:hidden;margin-bottom:2.5rem}
+    .stat-item{flex:1;padding:1.5rem 1.75rem;border-right:1.5px solid var(--border)}
+    .stat-item:last-child{border-right:none}
+    .stat-num{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;color:var(--navy);letter-spacing:-.03em;line-height:1;margin-bottom:.35rem}
+    .stat-lbl{font-size:.88rem;color:var(--charcoal);line-height:1.5}
+
+    /* ─── AMBIENT GRADIENTS: flow the navy/teal palette through the whole page ─── */
+    /* Very low opacity — they feel like light rather than color blocks */
+    body{
+      background-image:
+        radial-gradient(ellipse 55% 35% at 95% 18%, rgba(0,253,179,.022) 0%, transparent 65%),
+        radial-gradient(ellipse 45% 40% at 5%  55%, rgba(67,166,247,.028) 0%, transparent 65%),
+        radial-gradient(ellipse 60% 40% at 55% 80%, rgba(3,20,50,.022)    0%, transparent 65%);
+      background-attachment:fixed;
+    }
+    /* Smooth the hard dark→light transition coming out of the hero */
+    #problem{
+      background-image:
+        linear-gradient(180deg, rgba(3,20,50,.04) 0%, transparent 80px),
+        radial-gradient(ellipse 50% 55% at 90% 85%, rgba(67,166,247,.028) 0%, transparent 65%);
+    }
+    #services{
+      background-image:
+        radial-gradient(ellipse 50% 45% at 5% 90%, rgba(0,253,179,.025) 0%, transparent 65%);
+    }
+    .sec-tinted{
+      background-image:
+        radial-gradient(ellipse 60% 50% at 85% 35%, rgba(67,166,247,.04) 0%, transparent 65%);
+    }
+    #approach{
+      background-image:
+        radial-gradient(ellipse 45% 55% at 12% 60%, rgba(3,20,50,.025) 0%, transparent 65%);
+    }
+    #about{
+      background-image:
+        radial-gradient(ellipse 55% 40% at 88% 20%, rgba(0,253,179,.022) 0%, transparent 65%);
+    }
+
+    /* ─── CASE STUDIES GRID ─── */
+    .case-grid{
+      display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+      gap:2rem;margin-top:3rem;
+    }
+    .case-card{
+      display:flex;flex-direction:column;
+      border-radius:16px;overflow:hidden;
+      background:#fff;
+      border:2px solid var(--navy);
+      box-shadow:0 2px 8px rgba(0,0,0,.04);
+      transition:box-shadow .3s,border-color .3s;
+    }
+    .case-card:hover{
+      box-shadow:0 12px 32px rgba(0,0,0,.1);
+      border-color:#d1d5db;
+    }
+    .case-bg{
+      position:relative;width:100%;height:220px;overflow:hidden;background:#f0f0f0}
+    .case-img{
+      position:absolute;inset:0;width:100%;height:100%;
+      object-fit:cover;transition:transform .4s cubic-bezier(.22,1,.36,1);
+    }
+    .case-card:hover .case-img{transform:scale(1.06)}
+    .case-overlay{
+      position:absolute;inset:0;
+      background:linear-gradient(135deg,rgba(3,20,50,.15),rgba(67,166,247,.1));
+    }
+    .case-content{
+      padding:1.75rem;flex:1;display:flex;flex-direction:column;
+    }
+    .case-tag{
+      font-size:.65rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+      color:var(--teal);background:rgba(0,253,179,.1);
+      padding:4px 10px;border-radius:100px;
+      display:inline-block;margin-bottom:.9rem;width:fit-content;
+    }
+    .case-title{
+      font-family:'Playfair Display',serif;
+      font-size:1.1rem;font-weight:700;line-height:1.4;
+      color:var(--navy);margin-bottom:.8rem;
+    }
+    .case-body{
+      font-size:.95rem;line-height:1.7;
+      color:var(--charcoal);flex:1;
+    }
+    @media (max-width:900px){
+      .case-grid{grid-template-columns:1fr}
+    }
+
+    /* ─── SERVICES (6-card grid) ─── */
+    .services-grid-6{
+      display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+      gap:2rem;margin-top:3rem;
+    }
+    .service-card{
+      background:#fff;border:1.5px solid var(--navy);border-radius:12px;
+      padding:2rem;display:flex;flex-direction:column;
+      transition:box-shadow .3s,transform .3s;
+    }
+    .service-card:hover{box-shadow:0 12px 32px rgba(15,26,42,.15);transform:translateY(-2px)}
+    .service-card-hero{
+      grid-column:span 1;background:var(--navy);color:#fff;border:none;
+      box-shadow:0 8px 24px rgba(15,26,42,.25);
+    }
+    .service-card-hero:hover{box-shadow:0 12px 40px rgba(15,26,42,.35)}
+    @media (min-width:900px){
+      .service-card-hero{grid-column:span 1;grid-row:span 2;padding:2.5rem}
+    }
+    .service-icon-wrap{
+      width:44px;height:44px;
+      background:var(--teal);color:var(--navy);
+      border-radius:8px;display:flex;align-items:center;justify-content:center;
+      margin-bottom:1rem;flex-shrink:0;
+    }
+    .service-card-hero .service-icon-wrap{background:rgba(0,253,179,.2);color:var(--teal)}
+    .service-card-title{
+      font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;
+      color:var(--navy);margin-bottom:.75rem;line-height:1.3;
+    }
+    .service-card-hero .service-card-title{color:#fff;font-size:1.3rem}
+    .service-card-desc{
+      font-size:.95rem;color:var(--charcoal);line-height:1.7;flex:1;margin-bottom:1.25rem;
+    }
+    .service-card-hero .service-card-desc{color:rgba(255,255,255,.8)}
+    .service-card-link{
+      font-size:.9rem;font-weight:600;color:var(--navy);text-decoration:none;
+      transition:opacity .2s;display:inline-flex;width:fit-content;
+    }
+    .service-card:hover .service-card-link{opacity:.7}
+    .service-card-hero .service-card-link{color:var(--teal)}
+
+    /* Legacy services-list for reference */
+    .services-list{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-top:3rem;border:1.5px solid var(--border);border-radius:14px;overflow:hidden}
+    .service-item{
+      padding:2rem 2.25rem;border-right:1px solid var(--border);border-bottom:1px solid var(--border);
+      transition:background .15s,border-left-color .15s;
+      border-left:3px solid transparent;
+      padding-left:2rem;
+    }
+    .service-item:nth-child(even){border-right:none}
+    .service-item:nth-child(3),.service-item:nth-child(4){border-bottom:none}
+    .service-item:hover{background:#fafbff;border-left-color:var(--navy)}
+    .service-name{font-size:.95rem;font-weight:700;color:var(--navy);margin-bottom:.5rem}
+    .service-desc{font-size:.95rem;color:var(--charcoal);line-height:1.7}
+
+    /* ─── HOW IT WORKS (VERTICAL TIMELINE) ─── */
+    .process-header{margin-bottom:3rem}
+    .process-intro{font-size:1.05rem;color:var(--charcoal);line-height:1.8;max-width:900px;margin-top:1rem}
+
+    .process-flow{
+      position:relative;padding:2rem 0;margin-top:2rem;
+    }
+    .process-flow::before{
+      content:'';position:absolute;left:3.5rem;top:0;bottom:0;width:3px;
+      background:linear-gradient(180deg,var(--navy),var(--teal));z-index:1;
+    }
+
+    .process-phase{
+      display:grid;grid-template-columns:80px 1fr;gap:2rem;
+      margin-bottom:3rem;position:relative;z-index:2;
+    }
+
+    .phase-marker{
+      display:flex;flex-direction:column;align-items:center;position:relative;
+    }
+    .phase-icon{
+      width:70px;height:70px;border-radius:50%;
+      background:#fff;border:4px solid var(--navy);
+      display:flex;align-items:center;justify-content:center;
+      font-size:2rem;box-shadow:0 4px 12px rgba(15,26,42,.15);
+      position:relative;z-index:3;
+    }
+    .phase-line{
+      position:absolute;width:3px;height:120px;top:70px;
+      background:linear-gradient(180deg,var(--navy),transparent);
+      left:33.5px;
+    }
+    .process-phase:last-child .phase-line{display:none}
+
+    .phase-content{
+      padding:1.5rem;background:var(--light-surface);border-radius:12px;
+      border-left:4px solid var(--teal);
+    }
+    .phase-title{
+      font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;
+      color:var(--navy);margin:0 0 .75rem;
+    }
+    .phase-desc{
+      font-size:.95rem;color:var(--charcoal);line-height:1.8;margin-bottom:1rem;
+    }
+    .phase-details{
+      display:grid;grid-template-columns:1fr 1fr;gap:1rem;
+      margin-top:1.25rem;padding-top:1.25rem;border-top:1px solid rgba(15,26,42,.1);
+    }
+    .detail-item{
+      font-size:.9rem;color:var(--navy);font-weight:500;
+    }
+
+    @media (max-width:900px){
+      .process-flow::before{left:2.5rem}
+      .process-phase{grid-template-columns:60px 1fr;gap:1.5rem}
+      .phase-icon{width:60px;height:60px;font-size:1.5rem;border-width:3px}
+      .phase-line{left:23.5px;height:100px}
+      .phase-content{padding:1.25rem}
+      .phase-title{font-size:1.05rem}
+      .phase-details{grid-template-columns:1fr}
+    }
+
+    /* ─── CTA ─── */
+    .cta-content{max-width:46rem;margin:0 auto;text-align:center}
+    .cta-actions{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;margin-top:2.5rem}
+    .btn-cta{font-size:.95rem;font-weight:700;color:var(--navy);background:#fff;padding:.7rem 1.75rem;border-radius:10px;text-decoration:none;transition:opacity .15s,transform .15s;box-shadow:0 4px 16px rgba(0,0,0,.08)}
+    .btn-cta:hover{opacity:.9;transform:translateY(-1px)}
+    .btn-cta:active{transform:translateY(0)}
+    .btn-cta:focus-visible{outline:2px solid #fff;outline-offset:2px}
+    .btn-cta-ghost{font-size:.95rem;font-weight:500;color:rgba(255,255,255,.72);text-decoration:none;display:inline-flex;align-items:center;gap:5px;padding:.68rem 1.2rem;border-radius:10px;border:1px solid rgba(255,255,255,.18);transition:background .15s,border-color .15s}
+    .btn-cta-ghost:hover{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.35)}
+
+    /* ─── SITUATION SECTION: CTA card (call-to-action-cta component) ─── */
+    .situation-sec{padding:3rem clamp(1.5rem,5vw,4rem)}
+    .cta-card{
+      position:relative;width:100%;overflow:hidden;
+      border-radius:20px;border:1px solid rgba(255,255,255,.08);
+      min-height:360px;
+    }
+    .cta-card-bg{
+      position:absolute;inset:0;width:100%;height:100%;
+      object-fit:cover;object-position:center 30%;
+    }
+    .cta-card-overlay{
+      position:absolute;inset:0;
+      background:linear-gradient(105deg,rgba(3,20,50,.88) 0%,rgba(3,20,50,.72) 55%,rgba(3,20,50,.6) 100%);
+    }
+    .cta-card-content{
+      position:relative;z-index:5;
+      display:grid;grid-template-columns:1.1fr 1fr;
+      gap:3rem;padding:3.5rem 4rem;
+      align-items:center;min-height:360px;
+    }
+    .cta-card-eyebrow{
+      font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+      color:rgba(255,255,255,.45);margin-bottom:.75rem;display:block;
+    }
+    .cta-card-heading{
+      font-family:'Playfair Display',serif;
+      font-size:clamp(1.6rem,3vw,2.3rem);
+      font-weight:700;color:#fff;
+      line-height:1.15;letter-spacing:-.035em;margin-bottom:1.1rem;
+    }
+    .cta-card-text{
+      font-size:1rem;color:rgba(255,255,255,.75);line-height:1.78;
+    }
+    .cta-card-text + .cta-card-text{margin-top:.85rem}
+    .cta-card-emphasis{
+      font-size:.93rem;color:#fff;font-weight:600;
+      line-height:1.65;margin-top:1rem;
+    }
+    .cta-card-btn{
+      display:inline-flex;align-items:center;gap:8px;
+      background:#fff;color:var(--navy);
+      font-size:.9rem;font-weight:700;
+      padding:.65rem 1.5rem;border-radius:10px;
+      text-decoration:none;
+      transition:opacity .15s,transform .15s;
+      box-shadow:0 4px 14px rgba(0,0,0,.18);
+      margin-top:1.75rem;
+    }
+    .cta-card-btn:hover{opacity:.9;transform:translateY(-1px)}
+    .cta-card-btn:active{transform:translateY(0)}
+    .cta-card-btn:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+
+    /* Entrance animation — port of framer-motion whileInView stagger */
+    @keyframes ctaEnter{
+      from{opacity:0;transform:translateY(22px)}
+      to{opacity:1;transform:translateY(0)}
+    }
+    .cta-anim{opacity:0}
+    .cta-anim.on{animation:ctaEnter .75s cubic-bezier(.22,1,.36,1) both}
+    .cta-anim.d1.on{animation-delay:.12s}
+    .cta-anim.d2.on{animation-delay:.28s}
+    .cta-anim.d3.on{animation-delay:.44s}
+
+    /* ─── FOOTER (footer-section component) ─── */
+    footer{background:var(--navy-deep)}
+    footer{
+      background:var(--navy);width:100%;margin-top:auto;
+    }
+    .site-footer{
+      width:100%;max-width:72rem;margin:0 auto;
+      border-top:1px solid rgba(255,255,255,.15);
+      border-radius:2.5rem 2.5rem 0 0;
+      background:radial-gradient(35% 128px at 50% 0%,rgba(255,255,255,.08),transparent);
+      padding:2rem 2rem 2rem;
+      position:relative;
+    }
+    /* Glow line centred at top (the foreground/20 div in the reference) */
+    .site-footer::before{
+      content:'';position:absolute;
+      top:0;left:50%;
+      transform:translateX(-50%) translateY(-50%);
+      width:34%;height:1px;
+      background:rgba(255,255,255,.35);
+      border-radius:100px;
+      filter:blur(2px);
+    }
+    .footer-grid{display:grid;grid-template-columns:1fr 2.2fr;gap:3rem}
+    .footer-brand-block img{width:26px;height:26px;border-radius:6px}
+    .footer-brand-name{
+      font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:600;
+      color:#fff;letter-spacing:-.02em;margin-left:8px;vertical-align:middle;
+    }
+    .footer-brand-desc{font-size:.9rem;color:rgba(255,255,255,.65);line-height:1.65;max-width:220px;margin-top:.85rem}
+    .footer-brand-copy{font-size:.73rem;color:rgba(255,255,255,.45);margin-top:1.5rem}
+    .footer-col-group{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem}
+    .footer-col-label{
+      font-size:.7rem;font-weight:700;color:rgba(255,255,255,.65);
+      text-transform:uppercase;letter-spacing:.1em;margin-bottom:.9rem;
+    }
+    .footer-col-links{list-style:none;display:flex;flex-direction:column;gap:.55rem}
+    .footer-col-links a{
+      font-size:.9rem;color:rgba(255,255,255,.75);text-decoration:none;
+      display:inline-flex;align-items:center;gap:6px;
+      transition:color .15s;
+    }
+    .footer-col-links a:hover{color:rgba(255,255,255,.92)}
+    .footer-col-links svg{width:13px;height:13px;flex-shrink:0}
+    /* Entrance animation for footer columns (port of AnimatedContainer) */
+    .fa{
+      opacity:0;filter:blur(4px);transform:translateY(-8px);
+      transition:opacity .8s ease,filter .8s ease,transform .8s ease;
+    }
+    .fa.on{opacity:1;filter:blur(0);transform:translateY(0)}
+    .fa.d1{transition-delay:.1s}.fa.d2{transition-delay:.2s}
+    .fa.d3{transition-delay:.3s}.fa.d4{transition-delay:.4s}
+    @media(max-width:900px){
+      .cta-card-content{grid-template-columns:1fr;padding:2.5rem 2rem;gap:2rem}
+      .footer-grid{grid-template-columns:1fr}
+      .footer-col-group{grid-template-columns:repeat(2,1fr)}
+    }
+    @media(max-width:520px){
+      .footer-col-group{grid-template-columns:1fr 1fr}
+    }
+
+    .divider{width:100%;height:2px;background:linear-gradient(90deg,transparent,var(--navy),transparent);max-width:68rem;margin:0 auto;opacity:.4}
+
+    /* ─── SCROLL REVEAL ─── */
+    .reveal{opacity:0;transform:translateY(18px);transition:opacity .65s ease,transform .65s ease}
+    .reveal.on{opacity:1;transform:translateY(0)}
+    .reveal-delay-1{transition-delay:.1s}
+    .reveal-delay-2{transition-delay:.2s}
+    .reveal-delay-3{transition-delay:.3s}
+
+    /* ─── RESPONSIVE ─── */
+    @media(max-width:900px){
+      .diff-grid{grid-template-columns:1fr;gap:2.5rem}
+      .philosophy-grid{grid-template-columns:1fr;gap:2.5rem}
+      .coverage-grid{grid-template-columns:1fr}
+.services-list{grid-template-columns:1fr}
+      .service-item{border-right:none}
+      .service-item:nth-child(n){border-bottom:1px solid var(--border)}
+      .service-item:last-child{border-bottom:none}
+      .stats-row{flex-direction:column}
+      .stat-item{border-right:none;border-bottom:1.5px solid var(--border)}
+      .stat-item:last-child{border-bottom:none}
+      .hero-vis-card{padding:18px 16px 24px}
+    }
+    @media(max-width:640px){
+      .nav-links{display:none}
+      .footer-inner{flex-direction:column;align-items:flex-start;gap:1.25rem}
+      .isms-row{grid-template-columns:1fr auto}
+    }
+    @media(max-width:640px){
+      .isms-lead-col{display:none}
+    }
+
+    /* ─── BOOKING MODAL ─── */
+    .booking-modal-overlay{
+      position:fixed;top:0;left:0;right:0;bottom:0;
+      background:rgba(0,0,0,.5);z-index:999;
+    }
+    .booking-modal{
+      position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);
+      z-index:1000;width:90%;max-width:900px;max-height:90vh;overflow-y:auto;
+    }
+    .booking-modal-content{
+      background:#fff;border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.3);
+    }
+    .booking-modal-header{
+      display:flex;justify-content:space-between;align-items:center;
+      padding:2rem;border-bottom:1px solid var(--border);
+    }
+    .booking-modal-header h2{
+      font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;
+      color:var(--navy);margin:0;
+    }
+    .modal-close{
+      background:none;border:none;font-size:2rem;color:var(--navy);
+      cursor:pointer;padding:0;width:40px;height:40px;display:flex;align-items:center;justify-content:center;
+      transition:opacity .2s;
+    }
+    .modal-close:hover{opacity:.6}
+
+    .booking-modal-body{
+      display:grid;grid-template-columns:1fr 1fr;gap:2rem;
+      padding:2rem;min-height:400px;
+    }
+    .booking-calendar-section, .booking-slots-section{display:flex;flex-direction:column}
+
+    .timezone-info{
+      background:var(--light-surface);border-radius:8px;padding:.75rem 1rem;
+      margin-bottom:1rem;text-align:center;
+    }
+    .timezone-label{
+      font-size:.9rem;font-weight:600;color:var(--navy);
+    }
+
+    .calendar-nav{
+      display:flex;justify-content:space-between;align-items:center;
+      margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:1px solid var(--border);
+    }
+    .cal-nav-btn{
+      background:none;border:1px solid var(--border);padding:.5rem 1rem;border-radius:6px;
+      color:var(--navy);font-weight:600;cursor:pointer;transition:all .2s;
+    }
+    .cal-nav-btn:hover{background:var(--light-surface);border-color:var(--navy)}
+    .cal-current-month{
+      font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;
+      color:var(--navy);
+    }
+
+    .booking-calendar{
+      display:grid;grid-template-columns:repeat(7,1fr);gap:.5rem;
+    }
+    .cal-day-header{
+      text-align:center;font-weight:700;color:var(--muted-grey);
+      font-size:.85rem;padding:.5rem;text-transform:uppercase;
+    }
+    .cal-day{
+      aspect-ratio:1;display:flex;align-items:center;justify-content:center;
+      border-radius:8px;cursor:pointer;border:1px solid var(--border);
+      font-size:.9rem;color:var(--charcoal);transition:all .2s;
+    }
+    .cal-day:not(.other-month):hover{
+      background:var(--light-surface);border-color:var(--navy);
+    }
+    .cal-day.other-month{
+      color:#d1d5db;cursor:default;
+    }
+    .cal-day.available{
+      font-weight:600;
+    }
+    .cal-day.selected{
+      background:var(--navy);color:#fff;border-color:var(--navy);font-weight:700;
+    }
+    .cal-day.disabled{
+      color:#d1d5db;cursor:not-allowed;opacity:.5;
+    }
+
+    .booking-slots-section h3{
+      font-size:1.05rem;font-weight:700;color:var(--navy);margin-bottom:1rem;
+    }
+    .time-slots-grid{
+      display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;
+    }
+    .time-slot{
+      padding:1rem;border:1.5px solid var(--border);border-radius:8px;
+      text-align:center;cursor:pointer;transition:all .2s;
+      font-size:.9rem;font-weight:500;color:var(--charcoal);
+    }
+    .time-slot:hover:not(.unavailable){
+      border-color:var(--navy);background:var(--light-surface);
+    }
+    .time-slot.selected{
+      background:var(--navy);color:#fff;border-color:var(--navy);font-weight:700;
+    }
+    .time-slot.unavailable{
+      color:#d1d5db;background:#f9fafb;cursor:not-allowed;opacity:.6;
+    }
+
+    .booking-modal-footer{
+      padding:1.5rem 2rem;border-top:1px solid var(--border);
+      background:var(--light-surface);border-radius:0 0 16px 16px;
+    }
+
+    @media (max-width:768px){
+      .booking-modal{width:95%;max-width:none}
+      .booking-modal-body{grid-template-columns:1fr;gap:1.5rem;min-height:auto}
+      .time-slots-grid{grid-template-columns:repeat(2,1fr)}
+    }
+
+    /* ─── BOOKING / CONTACT SECTION ─── */
+    .booking-grid{
+      max-width:68rem;margin:0 auto;
+      display:grid;grid-template-columns:1fr 1.1fr;
+      gap:5rem;align-items:center;
+    }
+
+    /* Avatar row */
+    .booking-avatar-row{
+      display:flex;align-items:center;gap:14px;
+      margin-bottom:2rem;
+    }
+    .booking-avatar-wrap{position:relative;flex-shrink:0}
+    .booking-avatar-img{
+      width:56px;height:56px;border-radius:50%;
+      object-fit:cover;object-position:top center;
+      border:2px solid rgba(255,255,255,.18);
+      display:block;
+    }
+    .booking-avatar-dot{
+      position:absolute;bottom:2px;right:2px;
+      width:13px;height:13px;border-radius:50%;
+      background:#22c55e;border:2.5px solid var(--navy);
+    }
+    /* Pulsing green ring */
+    @keyframes onlinePulse{
+      0%{box-shadow:0 0 0 0 rgba(34,197,94,.55)}
+      70%{box-shadow:0 0 0 7px rgba(34,197,94,0)}
+      100%{box-shadow:0 0 0 0 rgba(34,197,94,0)}
+    }
+    .booking-avatar-dot{animation:onlinePulse 2.2s ease-in-out infinite}
+    .booking-person-name{
+      font-family:'Playfair Display',serif;
+      font-size:1rem;font-weight:600;color:#fff;
+      letter-spacing:-.01em;line-height:1.2;
+    }
+    .booking-person-title{
+      font-size:.88rem;color:rgba(255,255,255,.55);
+      margin-top:2px;
+    }
+    .booking-credentials{
+      font-size:.75rem;color:rgba(255,255,255,.38);
+      margin-top:1rem;line-height:1.5;font-weight:500;letter-spacing:.02em;
+    }
+
+    /* Calendar widget (right side) */
+    .cal-card-link{text-decoration:none;display:block;cursor:pointer}
+    .cal-card{
+      background:#fff;border-radius:22px;padding:22px;
+      box-shadow:0 8px 20px rgba(0,0,0,.22),0 40px 90px rgba(0,0,0,.38);
+      transition:transform .2s cubic-bezier(.22,1,.36,1),box-shadow .2s;
+    }
+    .cal-card-link:hover .cal-card{
+      transform:translateY(-4px);
+      box-shadow:0 14px 36px rgba(0,0,0,.28),0 50px 100px rgba(0,0,0,.42);
+    }
+    .cal-card-header{
+      margin-bottom:16px;
+    }
+    .cal-card-title{
+      font-family:'Playfair Display',serif;
+      font-size:1.05rem;font-weight:700;color:#031432;
+      letter-spacing:-.02em;margin-bottom:4px;
+    }
+    .cal-card-sub{
+      font-size:.78rem;color:#9ca3af;
+    }
+    .cal-inner{
+      background:#fafafa;
+      border-radius:14px;
+      border:1.5px solid rgba(165,174,184,.2);
+      padding:14px 14px 16px;
+    }
+    .cal-meta{
+      display:flex;align-items:center;gap:8px;
+      margin-bottom:14px;
+    }
+    .cal-month-label{
+      font-size:.82rem;font-weight:600;color:#031432;
+    }
+    .cal-sep{
+      width:3px;height:3px;border-radius:50%;
+      background:#d1d5db;display:inline-block;
+    }
+    .cal-duration{
+      font-size:.72rem;color:#9ca3af;font-weight:500;
+    }
+    .cal-grid{
+      display:grid;grid-template-columns:repeat(7,1fr);
+      gap:5px;
+    }
+    .cal-dh{
+      display:flex;align-items:center;justify-content:center;
+      font-size:.6rem;font-weight:700;color:#d1d5db;
+      letter-spacing:.06em;height:26px;
+    }
+    .cal-dc{
+      display:flex;align-items:center;justify-content:center;
+      aspect-ratio:1;border-radius:8px;
+      font-size:.75rem;font-weight:500;color:#374151;
+      transition:background .12s,color .12s;
+      cursor:default;
+    }
+    .cal-dc.avail{
+      background:#031432;color:#fff;
+      cursor:pointer;font-weight:600;
+    }
+    .cal-dc.avail:hover{background:#0d3883}
+    .cal-dc.today{
+      background:#00fdb3;color:#031432;
+      font-weight:800;
+    }
+    .cal-dc.past{color:#e5e7eb}
+    .cal-dc.empty{background:transparent;cursor:default}
+
+    /* Selected day glow */
+    .cal-dc.selected{
+      background:#00fdb3;color:#031432;
+      box-shadow:0 0 0 2px rgba(0,253,179,.4);
+    }
+
+    /* CTA kept below calendar on dark */
+    .booking-cta-row{
+      display:flex;align-items:center;gap:12px;
+      flex-wrap:wrap;margin-top:2rem;
+    }
+
+    @media(max-width:900px){
+      .booking-grid{grid-template-columns:1fr;gap:3rem}
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════ NAVIGATION ═══════════════ -->
+<nav class="site-nav" id="site-nav">
+  <div class="nav-inner" id="nav-inner">
+    <a href="#" class="nav-brand">
+      <img src="brand_assets/Rounded Corners Update (3).png" alt="Stenward">
+      <span>Stenward</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#offer">The Offer</a></li>
+      <li><a href="#track-record">Track Record</a></li>
+      <li><a href="#services">Our Services</a></li>
+      <li><a href="#outcomes">Client Outcomes</a></li>
+      <li><a href="#process">Process</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="nav-ctas">
+      <a href="#contact" class="btn-book-sm">Book a call</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<section class="hero">
+
+  <!-- Slowly-animated colour orbs — give the background life before the beams render -->
+  <div class="hero-orb hero-orb-a" aria-hidden="true"></div>
+  <div class="hero-orb hero-orb-b" aria-hidden="true"></div>
+  <div class="hero-orb hero-orb-c" aria-hidden="true"></div>
+  <div class="hero-orb hero-orb-d" aria-hidden="true"></div>
+
+  <!-- Animated beams canvas (sits on top of orbs) -->
+  <canvas id="hero-canvas"></canvas>
+
+  <!-- Mouse-follow glow -->
+  <div class="hero-cursor-glow" id="hero-glow"></div>
+
+  <!-- Vignette overlay for text contrast -->
+  <div class="hero-vignette" aria-hidden="true"></div>
+
+  <!-- Floor fade into navy -->
+  <div class="hero-floor-fade" aria-hidden="true"></div>
+
+  <!-- ── Hero content ── -->
+  <div class="hero-content">
+    <div class="hero-eyebrow" aria-hidden="true">
+      <span class="hero-eyebrow-dot"></span>
+      ISO 27001 Specialists
+    </div>
+
+    <h1>ISO 27001, <em>done properly</em>, and built to last.</h1>
+
+    <p class="hero-sub">Stenward helps technology companies achieve ISO 27001 certification with senior-led implementation that fits how your business actually works. No bloated frameworks. No junior consultants learning on your time. Just a clear path to the certificate your customers are asking for.</p>
+
+    <div class="hero-ctas">
+      <a href="#contact" class="btn-primary">
+        Book a call
+      </a>
+      <a href="#services" class="btn-ghost">
+        Explore our services
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7.5 4l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <!-- ── ISMS Implementation Tracker card ── -->
+  <div class="hero-visual">
+    <div class="hero-vis-fade" aria-hidden="true"></div>
+    <div class="hero-vis-card" id="isms-card">
+
+      <!-- Card header -->
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid #f3f4f6;">
+        <div style="display:flex;align-items:center;gap:8px;">
+          <img src="brand_assets/Rounded Corners Update (3).png" alt="" style="width:20px;height:20px;border-radius:4px;">
+          <span style="font-family:'Playfair Display',serif;font-size:.88rem;font-weight:600;color:#031432;letter-spacing:-.01em;">Stenward ISMS</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <div style="font-size:.68rem;font-weight:700;color:#0d3883;background:#eef2ff;padding:2px 10px;border-radius:100px;letter-spacing:.04em;">ISO 27001</div>
+          <div style="font-size:.68rem;font-weight:700;color:#059669;background:#d1fae5;padding:2px 10px;border-radius:100px;">On track</div>
+        </div>
+      </div>
+
+      <!-- Progress bar -->
+      <div style="margin-bottom:18px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:7px;">
+          <div style="font-size:.7rem;font-weight:600;color:#9ca3af;letter-spacing:.05em;text-transform:uppercase;">Certification readiness</div>
+          <div style="font-size:.8rem;font-weight:700;color:#031432;" id="progress-pct">72%</div>
+        </div>
+        <div style="height:5px;background:#f3f4f6;border-radius:3px;overflow:hidden;">
+          <div id="progress-bar" style="width:0%;height:100%;background:linear-gradient(90deg,#031432,#0d3883);border-radius:3px;transition:width 1.2s cubic-bezier(.22,1,.36,1);"></div>
+        </div>
+      </div>
+
+      <!-- Column headers -->
+      <div style="display:grid;grid-template-columns:1fr 110px 90px;gap:8px;padding:0 6px 6px;border-bottom:1px solid #f3f4f6;margin-bottom:4px;">
+        <div style="font-size:.62rem;font-weight:700;color:#d1d5db;text-transform:uppercase;letter-spacing:.08em;">Stage</div>
+        <div style="font-size:.62rem;font-weight:700;color:#d1d5db;text-transform:uppercase;letter-spacing:.08em;">Status</div>
+        <div class="isms-lead-col" style="font-size:.62rem;font-weight:700;color:#d1d5db;text-transform:uppercase;letter-spacing:.08em;text-align:right;">Lead</div>
+      </div>
+
+      <!-- Stages -->
+      <div style="display:flex;flex-direction:column;gap:1px;">
+
+        <div class="isms-row">
+          <div style="font-size:.82rem;font-weight:600;color:#111827;">Scope &amp; Context</div>
+          <div style="display:flex;align-items:center;gap:5px;font-size:.72rem;font-weight:700;color:#059669;">
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="6.5" fill="#d1fae5"/><path d="M4 6.5L5.8 8.5L9 4.5" stroke="#059669" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Complete
+          </div>
+          <div class="isms-lead-col" style="font-size:.72rem;color:#d1d5db;text-align:right;">Stenward</div>
+        </div>
+
+        <div class="isms-row" style="background:#f9fafb;">
+          <div style="font-size:.82rem;font-weight:600;color:#111827;">Risk Assessment</div>
+          <div style="display:flex;align-items:center;gap:5px;font-size:.72rem;font-weight:700;color:#059669;">
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="6.5" fill="#d1fae5"/><path d="M4 6.5L5.8 8.5L9 4.5" stroke="#059669" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Complete
+          </div>
+          <div class="isms-lead-col" style="font-size:.72rem;color:#d1d5db;text-align:right;">Stenward</div>
+        </div>
+
+        <div class="isms-row">
+          <div style="font-size:.82rem;font-weight:600;color:#111827;">Controls Selection</div>
+          <div style="display:flex;align-items:center;gap:5px;font-size:.72rem;font-weight:700;color:#059669;">
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="6.5" fill="#d1fae5"/><path d="M4 6.5L5.8 8.5L9 4.5" stroke="#059669" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Complete
+          </div>
+          <div class="isms-lead-col" style="font-size:.72rem;color:#d1d5db;text-align:right;">Stenward</div>
+        </div>
+
+        <div class="isms-row" style="background:#eef2ff;border-radius:8px;border:1px solid #e0e7ff;">
+          <div style="font-size:.82rem;font-weight:600;color:#111827;">Policies &amp; Docs</div>
+          <div style="display:flex;align-items:center;gap:5px;font-size:.72rem;font-weight:700;color:#4f46e5;">
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="6.5" fill="#e0e7ff"/><circle cx="6.5" cy="6.5" r="2.5" fill="#4f46e5"/></svg>
+            In progress
+          </div>
+          <div class="isms-lead-col" style="font-size:.72rem;color:#a5b4fc;text-align:right;">Stenward</div>
+        </div>
+
+        <div class="isms-row" style="background:#f9fafb;">
+          <div style="font-size:.82rem;font-weight:500;color:#9ca3af;">Internal Audit</div>
+          <div style="display:flex;align-items:center;gap:5px;font-size:.72rem;font-weight:600;color:#d1d5db;">
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="5.5" stroke="#d1d5db" stroke-width="1.5"/></svg>
+            Scheduled
+          </div>
+          <div class="isms-lead-col" style="font-size:.72rem;color:#d1d5db;text-align:right;">Stenward</div>
+        </div>
+
+        <div class="isms-row">
+          <div style="font-size:.82rem;font-weight:500;color:#9ca3af;">Stage 2 Audit</div>
+          <div style="display:flex;align-items:center;gap:5px;font-size:.72rem;font-weight:600;color:#d1d5db;">
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="5.5" stroke="#d1d5db" stroke-width="1.5"/></svg>
+            Booked
+          </div>
+          <div class="isms-lead-col" style="font-size:.72rem;color:#d1d5db;text-align:right;">BSI Group</div>
+        </div>
+
+      </div>
+    </div><!-- /hero-vis-card -->
+  </div><!-- /hero-visual -->
+
+</section>
+
+<!-- ═══════════════ SECTION 2 — SITUATION (CTA card) ═══════════════ -->
+<section class="situation-sec" id="problem">
+  <div class="sec-inner">
+    <div class="cta-card">
+      <!-- Background image: enterprise office — evokes the "deal in procurement" moment -->
+      <img
+        src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=1400&auto=format&fit=crop&q=80"
+        alt=""
+        class="cta-card-bg"
+        aria-hidden="true"
+      >
+      <div class="cta-card-overlay" aria-hidden="true"></div>
+
+      <div class="cta-card-content">
+
+        <!-- Left column: headline + opening -->
+        <div class="cta-anim" id="cta-col-left">
+          <span class="cta-card-eyebrow">The situation</span>
+          <h2 class="cta-card-heading">A customer is asking for ISO 27001. And you don&#8217;t have a compliance team to deliver it.</h2>
+          <p class="cta-card-text">For most technology companies, ISO 27001 doesn&#8217;t become a priority until it&#8217;s suddenly urgent &#8212; an enterprise deal stalls in procurement, a security questionnaire lands, a prospect asks for the certificate before they&#8217;ll sign.</p>
+          <p class="cta-card-text">Suddenly certification isn&#8217;t a someday project. It&#8217;s between you and revenue.</p>
+        </div>
+
+        <!-- Right column: reality + CTA -->
+        <div class="cta-anim d2" id="cta-col-right">
+          <p class="cta-card-text">But you&#8217;re a lean team. You don&#8217;t have a GRC function, a compliance manager, or someone whose job is to know what ISO 27001 actually requires. Hiring one is slow and expensive. A big consultancy is overkill and priced like it. And a self-service platform still leaves all the real work &#8212; and all the judgement &#8212; to you.</p>
+          <p class="cta-card-emphasis">You need someone senior who can simply take this on, do it properly, and make it fit a company your size.</p>
+          <a href="#offer" class="cta-card-btn">
+            See how we work
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7.5 4l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ SECTION 3 — THE OFFER (3 pillars) ═══════════════ -->
+<section class="sec sec-alt reveal" id="offer">
+  <div class="sec-inner" style="max-width:58rem;">
+    <div style="text-align:center;margin-bottom:.5rem;">
+      <span class="eyebrow" style="display:inline-block;">The offer</span>
+      <h2 class="sec-h">ISO 27001 implementation,<br>end to end.</h2>
+      <p class="sec-body" style="max-width:46rem;margin:0 auto;">Stenward takes you from wherever you are today to a certificate you can rely on &#8212; and an ISMS your team can actually run.</p>
+    </div>
+
+    <div class="features-grid">
+
+      <!-- Card 1: Senior-led -->
+      <div class="feat-card reveal reveal-delay-1">
+        <div class="feat-card-header">
+          <div class="feat-decorator" aria-hidden="true">
+            <div class="feat-decorator-grid"></div>
+            <div class="feat-decorator-icon">
+              <!-- Award — senior practitioner, credentialled expertise -->
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
+            </div>
+          </div>
+          <h3 class="feat-card-title">Senior-led from start to finish</h3>
+        </div>
+        <p class="feat-card-body">Every engagement is led personally by a senior practitioner who has built and defended ISMS programmes in real environments. You work directly with the person doing the work &#8212; not a sales team that hands you to a junior once the contract is signed.</p>
+      </div>
+
+      <!-- Card 2: Built for how you work -->
+      <div class="feat-card reveal reveal-delay-2">
+        <div class="feat-card-header">
+          <div class="feat-decorator" aria-hidden="true">
+            <div class="feat-decorator-grid"></div>
+            <div class="feat-decorator-icon">
+              <!-- Sliders — proportionate controls, fit to your business -->
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg>
+            </div>
+          </div>
+          <h3 class="feat-card-title">Built for how you work</h3>
+        </div>
+        <p class="feat-card-body">We design controls that fit your business, your size, and your stage &#8212; not a generic template bolted on from the outside. The result is an ISMS your team adopts naturally, because it reflects how you already operate.</p>
+      </div>
+
+      <!-- Card 3: Made to last -->
+      <div class="feat-card reveal reveal-delay-3">
+        <div class="feat-card-header">
+          <div class="feat-decorator" aria-hidden="true">
+            <div class="feat-decorator-grid"></div>
+            <div class="feat-decorator-icon">
+              <!-- Refresh-CW — ISMS that survives every surveillance audit, keeps maturing -->
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>
+            </div>
+          </div>
+          <h3 class="feat-card-title">Made to last beyond the audit</h3>
+        </div>
+        <p class="feat-card-body">Certification is the start, not the finish. We build an ISMS you can sustain through every surveillance audit that follows &#8212; with a clear roadmap for what matures as you grow.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ SECTION 5 — CREDIBILITY ═══════════════ -->
+<section class="sec reveal" id="track-record">
+  <div class="sec-inner">
+    <span class="eyebrow">Track record</span>
+    <h2 class="sec-h">Real experience across the full information security lifecycle.</h2>
+
+    <div class="stats-row">
+      <div class="stat-item">
+        <div class="stat-num">5</div>
+        <div class="stat-lbl">Frameworks maintained through a complex corporate acquisition</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">0→✓</div>
+        <div class="stat-lbl">Zero-to-certified ISMS built from scratch under tight deadlines</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">100%</div>
+        <div class="stat-lbl">Senior-led delivery on every engagement — no handoffs</div>
+      </div>
+    </div>
+
+    <div class="credibility-content">
+      <div class="credibility-text">
+        <h3>Situations we've handled</h3>
+        <p>Stenward's work spans the situations technology companies actually face — building an ISMS from scratch under a tight certification deadline, maintaining certifications through surveillance audits across multiple frameworks, and holding compliance together through high-pressure corporate change.</p>
+
+        <h3 style="margin-top:2rem;">Frameworks and standards</h3>
+        <p>Our experience covers the full spectrum technology companies care about:</p>
+        <div class="frameworks-grid">
+          <div class="framework-item">ISO 27001</div>
+          <div class="framework-item">ISO 27701</div>
+          <div class="framework-item">ISO 22301</div>
+          <div class="framework-item">SOC 2</div>
+          <div class="framework-item">PCI DSS</div>
+          <div class="framework-item">GDPR</div>
+          <div class="framework-item">Cyber Essentials</div>
+          <div class="framework-item framework-coming-soon">ISO 42001 <span style="font-size:.75rem;display:block;margin-top:4px;opacity:.7;">Coming soon</span></div>
+        </div>
+
+        <h3 style="margin-top:2rem;">What this means for you</h3>
+        <p>Stenward brings understanding of your environment, your auditors, and what it takes to get through certification cleanly. We've guided companies from 5-person startups to 500+ person enterprises through every scenario — platform migrations, team transitions, acquisition disruptions, aggressive timelines, and the thousand small decisions that separate a compliance project that sticks from one that becomes a burden.</p>
+      </div>
+
+      <div class="credibility-sidebar">
+        <div class="credibility-highlight">
+          <h4>Why experience matters in ISO 27001</h4>
+          <p>A certification body checks your documentation. We help you build an ISMS that survives real life — one your team will actually use because it fits how you work. That requires having seen how compliance breaks in the wild and knowing what actually works under pressure.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ SECTION 5 — OUR SERVICES (6 cards) ═══════════════ -->
+<section class="sec reveal" id="services">
+  <div class="sec-inner">
+    <span class="eyebrow">Our services</span>
+    <h2 class="sec-h">What we deliver.</h2>
+
+    <!-- Why Stenward intro box -->
+    <div class="why-stenward-box">
+      <div class="why-stenward-content">
+        <h3>The compliance function you don't have to build.</h3>
+        <p>Enterprise-grade rigour without the enterprise-grade overhead. One senior practitioner covers what would otherwise need a team or a costly hire — and can stay on as your ongoing compliance capability after certification.</p>
+      </div>
+    </div>
+
+    <div class="services-grid-6">
+      <!-- ISO 27001 Implementation — Hero card -->
+      <div class="service-card service-card-hero">
+        <div class="service-icon-wrap">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><polyline points="13 2 13 9 20 9"/></svg>
+        </div>
+        <h3 class="service-card-title">ISO 27001 Implementation</h3>
+        <p class="service-card-desc">End-to-end certification, from scoping to passing your stage 2 audit.</p>
+        <a href="service-iso-27001-implementation.html" class="service-card-link">Learn more →</a>
+      </div>
+
+      <!-- Gap Analysis -->
+      <div class="service-card">
+        <div class="service-icon-wrap">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"/><path d="M12 11v10M6 14H4a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h4"/><path d="M18 14h2a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-4"/></svg>
+        </div>
+        <h3 class="service-card-title">Gap Analysis</h3>
+        <p class="service-card-desc">A clear, honest assessment of where you stand against the standard and what it will take to get certified.</p>
+        <a href="service-gap-analysis.html" class="service-card-link">Learn more →</a>
+      </div>
+
+      <!-- ISMS Maintenance -->
+      <div class="service-card">
+        <div class="service-icon-wrap">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 10 10M12 6v6l4 2"/></svg>
+        </div>
+        <h3 class="service-card-title">ISMS Maintenance</h3>
+        <p class="service-card-desc">Ongoing senior oversight to keep your certification alive through surveillance audits, without hiring a full-time compliance team.</p>
+        <a href="service-isms-maintenance.html" class="service-card-link">Learn more →</a>
+      </div>
+
+      <!-- Internal Audit & Readiness -->
+      <div class="service-card">
+        <div class="service-icon-wrap">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11H7a4 4 0 0 0-4 4v7h4m10 0h4v-7a4 4 0 0 0-4-4h-2m0-4a2 2 0 1 1 4 0 2 2 0 0 1-4 0m-8 0a2 2 0 1 1 4 0 2 2 0 0 1-4 0"/></svg>
+        </div>
+        <h3 class="service-card-title">Internal Audit &amp; Readiness</h3>
+        <p class="service-card-desc">Independent internal audits and pre-audit readiness checks to make sure you're ready before the certification body arrives.</p>
+        <a href="service-internal-audit.html" class="service-card-link">Learn more →</a>
+      </div>
+
+      <!-- Security Questionnaire Response -->
+      <div class="service-card">
+        <div class="service-icon-wrap">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </div>
+        <h3 class="service-card-title">Security Questionnaire Response</h3>
+        <p class="service-card-desc">Fast, practitioner-grade responses to the security questionnaires enterprise buyers send during procurement.</p>
+        <a href="service-questionnaire-response.html" class="service-card-link">Learn more →</a>
+      </div>
+
+      <!-- Security Awareness Training -->
+      <div class="service-card">
+        <div class="service-icon-wrap">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2zM22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        </div>
+        <h3 class="service-card-title">Security Awareness Training</h3>
+        <p class="service-card-desc">Tailored security and data-protection awareness training your team will actually engage with, deployable through your existing tools.</p>
+        <a href="service-awareness-training.html" class="service-card-link">Learn more →</a>
+      </div>
+    </div>
+
+    <a href="#contact" class="text-link" style="margin-top:2.5rem;">
+      Explore our services
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7.5 4l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </div>
+</section>
+
+<!-- ═══════════════ SECTION 6 — CLIENT OUTCOMES ═══════════════ -->
+<section class="sec reveal" id="outcomes" style="background:var(--light-surface)">
+  <div class="sec-inner">
+    <span class="eyebrow">Client Outcomes</span>
+    <h2 class="sec-h">Client outcomes that speak for themselves.</h2>
+
+    <div class="case-grid">
+      <!-- Case 1: Build from scratch -->
+      <div class="case-card">
+        <div class="case-bg">
+          <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=900&auto=format&fit=crop&q=80" alt="" class="case-img">
+          <div class="case-overlay" aria-hidden="true"></div>
+        </div>
+        <div class="case-content">
+          <span class="case-tag">Build from scratch</span>
+          <h3 class="case-title">Building an ISMS from scratch, against the clock</h3>
+          <p class="case-body">A remote-first technology company needed ISO 27001 certification readiness with a hard deadline and no existing management system. Stenward built the entire ISMS from a blank page — scope, risk assessment, controls, policies, evidence — and had the organisation certification-ready within roughly three months.</p>
+        </div>
+      </div>
+
+      <!-- Case 2: Breadth under pressure -->
+      <div class="case-card">
+        <div class="case-bg">
+          <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=900&auto=format&fit=crop&q=80" alt="" class="case-img">
+          <div class="case-overlay" aria-hidden="true"></div>
+        </div>
+        <div class="case-content">
+          <span class="case-tag">Breadth under pressure</span>
+          <h3 class="case-title">Five frameworks through a high-stakes acquisition</h3>
+          <p class="case-body">After an acquisition dissolved an established compliance team, an enterprise software company faced surveillance audits across ISO 27001, ISO 27701, ISO 22301, SOC 2, and PCI DSS with no one to run them. Stenward took on the entire estate single-handedly — maintaining every certification through the disruption.</p>
+        </div>
+      </div>
+
+      <!-- Case 3: Ongoing maintenance -->
+      <div class="case-card">
+        <div class="case-bg">
+          <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=900&auto=format&fit=crop&q=80" alt="" class="case-img">
+          <div class="case-overlay" aria-hidden="true"></div>
+        </div>
+        <div class="case-content">
+          <span class="case-tag">Ongoing maintenance</span>
+          <h3 class="case-title">Maintaining and maturing an ISMS</h3>
+          <p class="case-body">A construction-technology SaaS company needed its ISO 27001 ISMS maintained and matured while handling enterprise security questionnaires. Stenward kept the ISMS audit-ready and supported a move into SOC 2 — earning an invitation to return a year after the engagement ended.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ SECTION 9 — HOW IT WORKS / APPROACH (VISUAL TIMELINE) ═══════════════ -->
+<section class="sec reveal" id="process">
+  <div class="sec-inner">
+    <div class="process-header">
+      <span class="eyebrow">Process</span>
+      <h2 class="sec-h">How it works.</h2>
+      <p class="process-intro">Our engagement follows a proven four-phase approach, tailored to your specific situation and keeping you informed and involved every step of the way.</p>
+    </div>
+
+    <div class="process-flow" id="process-timeline">
+      <!-- Phase 1 -->
+      <div class="process-phase" data-phase="1">
+        <div class="phase-marker">
+          <div class="phase-icon">📍</div>
+          <div class="phase-line"></div>
+        </div>
+        <div class="phase-content">
+          <h3 class="phase-title">Discovery & Scoping</h3>
+          <p class="phase-desc">We start by understanding your environment, business context, and compliance maturity. We map your IT infrastructure, interview key stakeholders across security, engineering, operations, and HR, and define a realistic ISMS scope. This phase typically takes 2-4 weeks and ends with a clear understanding of where you stand and what certification will require.</p>
+          <div class="phase-details">
+            <div class="detail-item">✓ Environment mapping</div>
+            <div class="detail-item">✓ Stakeholder interviews</div>
+            <div class="detail-item">✓ Scope definition</div>
+            <div class="detail-item">✓ Initial gap assessment</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Phase 2 -->
+      <div class="process-phase" data-phase="2">
+        <div class="phase-marker">
+          <div class="phase-icon">⚙️</div>
+          <div class="phase-line"></div>
+        </div>
+        <div class="phase-content">
+          <h3 class="phase-title">Build the ISMS</h3>
+          <p class="phase-desc">We develop your complete ISMS from the ground up, tailored to your business. This includes your risk assessment, core policies and procedures, control selection and design, and your Statement of Applicability. Throughout this phase, we embed controls into how your team already works rather than imposing external compliance structures. This is the heaviest lifting phase and typically runs 4-6 months depending on your complexity.</p>
+          <div class="phase-details">
+            <div class="detail-item">✓ Risk assessment</div>
+            <div class="detail-item">✓ Policies & procedures</div>
+            <div class="detail-item">✓ Controls design</div>
+            <div class="detail-item">✓ Evidence gathering</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Phase 3 -->
+      <div class="process-phase" data-phase="3">
+        <div class="phase-marker">
+          <div class="phase-icon">🔍</div>
+          <div class="phase-line"></div>
+        </div>
+        <div class="phase-content">
+          <h3 class="phase-title">Audit Preparation</h3>
+          <p class="phase-desc">Six to eight weeks before your stage 2 audit, we conduct an internal audit to stress-test your ISMS against the standard. We identify gaps while there's still time to fix them, document findings, and work with your team on remediation. We also conduct a management review and ensure all evidence is organized and audit-ready. This phase is typically 6-8 weeks and dramatically reduces surprises during the real audit.</p>
+          <div class="phase-details">
+            <div class="detail-item">✓ Internal audit</div>
+            <div class="detail-item">✓ Management review</div>
+            <div class="detail-item">✓ Finding remediation</div>
+            <div class="detail-item">✓ Evidence organization</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Phase 4 -->
+      <div class="process-phase" data-phase="4">
+        <div class="phase-marker">
+          <div class="phase-icon">✓</div>
+        </div>
+        <div class="phase-content">
+          <h3 class="phase-title">Certification & Beyond</h3>
+          <p class="phase-desc">We attend both your stage 1 (documentation audit) and stage 2 (compliance audit) with your certification body, supporting you through every question and clarification. Once certified, you have an ISMS that's genuinely audit-ready and that your team understands. Many clients ask us to stay on as ongoing compliance support — surveillance audits, finding management, documentation updates, and new questionnaires — without the cost of hiring in-house.</p>
+          <div class="phase-details">
+            <div class="detail-item">✓ Stage 1 & 2 support</div>
+            <div class="detail-item">✓ Certification</div>
+            <div class="detail-item">✓ Optional ongoing support</div>
+            <div class="detail-item">✓ Post-cert confidence</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ SECTION 10 — BOOKING / CONTACT ═══════════════ -->
+<section class="sec sec-dark" id="contact">
+  <div class="booking-grid">
+
+    <!-- ── Left: avatar + copy + CTA ── -->
+    <div>
+      <div class="booking-avatar-row">
+        <div class="booking-avatar-wrap">
+          <img src="linkedin.jpeg" alt="Daniyal Tanveer" class="booking-avatar-img">
+          <span class="booking-avatar-dot" title="Available"></span>
+        </div>
+        <div>
+          <div class="booking-person-name">Daniyal Tanveer</div>
+          <div class="booking-person-title">Founder, Stenward</div>
+          <div class="booking-credentials">ISO 27001 Lead Implementer · CIPP/E · Certified in Cybersecurity (CC)</div>
+        </div>
+      </div>
+
+      <span class="eyebrow-navy">Get in touch</span>
+      <h2 class="sec-h-white sec-h-xl">Let&#8217;s talk about where you are.</h2>
+      <p class="sec-body-white">Whether you have a deal waiting on certification or you&#8217;re getting ahead of what&#8217;s coming, the first step is a conversation. No pressure, no obligation &#8212; just a clear, honest view of what ISO 27001 will take for a company like yours.</p>
+      <div class="booking-cta-row">
+        <button class="btn-cta" id="booking-btn-main">Book a call &#8594;</button>
+        <a href="mailto:info@stenward.com" class="btn-cta-ghost">info@stenward.com</a>
+      </div>
+    </div>
+
+    <!-- ── Right: calendar preview card ── -->
+    <div>
+      <div class="cal-card">
+        <div class="cal-card-header">
+          <div class="cal-card-title">Book a 30-min call</div>
+          <div class="cal-card-sub">Pick a time that works for you &#8212; no sales pitch, just a conversation.</div>
+        </div>
+        <div class="cal-inner">
+          <div class="cal-meta">
+            <span class="cal-month-label" id="cal-preview-month">June 2026</span>
+            <span class="cal-sep"></span>
+            <span class="cal-duration">30 min</span>
+          </div>
+          <div class="cal-grid" id="cal-preview-grid">
+            <!-- Preview calendar generated -->
+          </div>
+        </div>
+        <div style="text-align:center;padding:1rem;font-size:.85rem;color:#9ca3af;">
+          <button class="btn-cta" id="booking-btn-card" style="width:100%;margin:0;">Open calendar →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Booking Modal ── -->
+    <div id="booking-modal" class="booking-modal" style="display:none;">
+      <div class="booking-modal-content">
+        <div class="booking-modal-header">
+          <h2>Book a consultation</h2>
+          <button class="modal-close" id="modal-close">×</button>
+        </div>
+
+        <div class="booking-modal-body">
+          <!-- Calendar Section -->
+          <div class="booking-calendar-section">
+            <div class="timezone-info">
+              <span class="timezone-label">🌍 US Eastern Time</span>
+            </div>
+
+            <div class="calendar-nav">
+              <button id="cal-prev-month" class="cal-nav-btn">← Prev</button>
+              <span id="cal-modal-month" class="cal-current-month">June 2026</span>
+              <button id="cal-next-month" class="cal-nav-btn">Next →</button>
+            </div>
+
+            <div class="booking-calendar" id="booking-calendar">
+              <!-- Calendar grid generated by JS -->
+            </div>
+          </div>
+
+          <!-- Time Slots Section -->
+          <div class="booking-slots-section">
+            <h3 id="selected-date-display">Select a date first</h3>
+            <div class="time-slots-grid" id="time-slots-grid">
+              <!-- Time slots generated when date selected -->
+            </div>
+            <div class="timezone-note" id="timezone-note" style="display:none;">
+              <p style="font-size:.85rem;color:#6b7280;margin-top:1rem;">All times shown in <strong>US Eastern Time (ET)</strong></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="booking-modal-overlay" class="booking-modal-overlay" style="display:none;"></div>
+
+  </div>
+</section>
+
+<!-- ═══════════════ COOKIES BANNER ═══════════════ -->
+<div id="cookiesBanner" class="cookies-banner">
+  <div class="cookies-content">
+    <span>We use cookies to enhance your experience. By continuing to browse, you agree to our <a href="/privacy.html" target="_blank">privacy policy</a>.</span>
+  </div>
+  <div class="cookies-actions">
+    <button class="cookies-btn cookies-btn-decline" id="declineCookies">Decline</button>
+    <button class="cookies-btn cookies-btn-accept" id="acceptCookies">Accept</button>
+  </div>
+</div>
+
+<!-- ═══════════════ FOOTER (footer-section component) ═══════════════ -->
+<footer>
+  <div class="site-footer">
+    <div class="footer-grid">
+
+      <!-- Brand column -->
+      <div class="fa" id="fa0">
+        <div style="display:flex;align-items:center;margin-bottom:.9rem;">
+          <img src="brand_assets/Rounded Corners Update (3).png" alt="Stenward" class="footer-brand-block" style="width:26px;height:26px;border-radius:6px;display:inline-block;vertical-align:middle;">
+          <span class="footer-brand-name">Stenward</span>
+        </div>
+        <p class="footer-brand-desc">Information security,<br>on your terms.</p>
+        <p class="footer-brand-copy">&#169; 2026 Stenward. All rights reserved.</p>
+      </div>
+
+      <!-- Link columns -->
+      <div class="footer-col-group">
+
+        <div class="fa d1" id="fa1">
+          <div class="footer-col-label">Services</div>
+          <ul class="footer-col-links">
+            <li><a href="service-iso-27001-implementation.html">ISO 27001 Implementation</a></li>
+            <li><a href="service-gap-analysis.html">Gap Analysis</a></li>
+            <li><a href="service-isms-maintenance.html">ISMS Maintenance</a></li>
+            <li><a href="service-internal-audit.html">Internal Audit & Readiness</a></li>
+            <li><a href="service-questionnaire-response.html">Security Questionnaire Response</a></li>
+            <li><a href="service-awareness-training.html">Security Awareness Training</a></li>
+          </ul>
+        </div>
+
+        <div class="fa d2" id="fa2">
+          <div class="footer-col-label">Company</div>
+          <ul class="footer-col-links">
+            <li><a href="#offer">The Offer</a></li>
+            <li><a href="#outcomes">Client Outcomes</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="privacy.html">Privacy Policy</a></li>
+          </ul>
+        </div>
+
+        <div class="fa d3" id="fa3">
+          <div class="footer-col-label">Contact</div>
+          <ul class="footer-col-links">
+            <li><a href="#contact">Book a call</a></li>
+            <li><a href="mailto:info@stenward.com">info@stenward.com</a></li>
+            <li><a href="https://www.linkedin.com/company/stenward" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor" style="width:16px;height:16px;display:inline;margin-right:4px;vertical-align:middle;"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+              LinkedIn
+            </a></li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ═══════════════ SCRIPTS ═══════════════ -->
+<script>
+// ────────────────────────────────────────────────────────────
+// 1. BEAM CANVAS ANIMATION
+// Translated from the React beams-background component.
+// Colors tuned for Stenward navy (#031432) background.
+// ────────────────────────────────────────────────────────────
+(function () {
+  var canvas = document.getElementById('hero-canvas');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  if (!ctx) return;
+
+  var beams = [];
+  var W = 0, H = 0;
+  var animId;
+  var BEAM_COUNT = 30;
+
+  // Stenward brand hues: teal (163), blue (200-220), deep blue (225)
+  var HUES = [163, 175, 195, 205, 218, 225];
+
+  function makeBeam() {
+    var hue = HUES[Math.floor(Math.random() * HUES.length)] + Math.random() * 12;
+    return {
+      x: Math.random() * W * 1.5 - W * 0.25,
+      y: Math.random() * H * 1.5 - H * 0.25,
+      w: 30 + Math.random() * 60,
+      len: H * 2.5,
+      angle: -35 + Math.random() * 10,
+      speed: 0.45 + Math.random() * 0.9,
+      opacity: 0.1 + Math.random() * 0.15,
+      hue: hue,
+      pulse: Math.random() * Math.PI * 2,
+      pulseSpeed: 0.018 + Math.random() * 0.022,
+    };
+  }
+
+  function resetBeam(b, idx) {
+    var col = idx % 3;
+    var sp = W / 3;
+    b.y = H + 100;
+    b.x = col * sp + sp / 2 + (Math.random() - 0.5) * sp * 0.5;
+    b.w = 80 + Math.random() * 80;
+    b.speed = 0.4 + Math.random() * 0.4;
+    b.opacity = 0.15 + Math.random() * 0.1;
+  }
+
+  function resize() {
+    var dpr = window.devicePixelRatio || 1;
+    var parent = canvas.parentElement;
+    W = parent.clientWidth;
+    H = parent.clientHeight;
+    canvas.width = Math.round(W * dpr);
+    canvas.height = Math.round(H * dpr);
+    canvas.style.width = W + 'px';
+    canvas.style.height = H + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    beams = Array.from({ length: BEAM_COUNT }, makeBeam);
+  }
+
+  function drawBeam(b) {
+    ctx.save();
+    ctx.translate(b.x, b.y);
+    ctx.rotate(b.angle * Math.PI / 180);
+    var op = b.opacity * (0.8 + Math.sin(b.pulse) * 0.2);
+    var g = ctx.createLinearGradient(0, 0, 0, b.len);
+    g.addColorStop(0,   'hsla(' + b.hue + ',85%,65%,0)');
+    g.addColorStop(0.1, 'hsla(' + b.hue + ',85%,65%,' + (op * 0.5) + ')');
+    g.addColorStop(0.4, 'hsla(' + b.hue + ',85%,65%,' + op + ')');
+    g.addColorStop(0.6, 'hsla(' + b.hue + ',85%,65%,' + op + ')');
+    g.addColorStop(0.9, 'hsla(' + b.hue + ',85%,65%,' + (op * 0.5) + ')');
+    g.addColorStop(1,   'hsla(' + b.hue + ',85%,65%,0)');
+    ctx.fillStyle = g;
+    ctx.fillRect(-b.w / 2, 0, b.w, b.len);
+    ctx.restore();
+  }
+
+  function tick() {
+    ctx.clearRect(0, 0, W, H);
+    ctx.save();
+    ctx.filter = 'blur(35px)';
+    beams.forEach(function (b, i) {
+      b.y -= b.speed;
+      b.pulse += b.pulseSpeed;
+      if (b.y + b.len < -100) resetBeam(b, i);
+      drawBeam(b);
+    });
+    ctx.restore();
+    animId = requestAnimationFrame(tick);
+  }
+
+  resize();
+  window.addEventListener('resize', resize, { passive: true });
+  tick();
+})();
+
+// ────────────────────────────────────────────────────────────
+// 2. MOUSE-FOLLOW GLOW on hero
+// ────────────────────────────────────────────────────────────
+(function () {
+  var hero = document.getElementById('hero');
+  var glow = document.getElementById('hero-glow');
+  if (!hero || !glow) return;
+
+  var visible = false;
+  hero.addEventListener('mousemove', function (e) {
+    var rect = hero.getBoundingClientRect();
+    var x = e.clientX - rect.left;
+    var y = e.clientY - rect.top;
+    glow.style.left = x + 'px';
+    glow.style.top = y + 'px';
+    if (!visible) { glow.style.opacity = '1'; visible = true; }
+  }, { passive: true });
+
+  hero.addEventListener('mouseleave', function () {
+    glow.style.opacity = '0';
+    visible = false;
+  });
+})();
+
+// ────────────────────────────────────────────────────────────
+// 3. CANVAS PARALLAX on mouse move (subtle beam-layer shift)
+// ────────────────────────────────────────────────────────────
+(function () {
+  var canvas = document.getElementById('hero-canvas');
+  var hero = document.getElementById('hero');
+  if (!canvas || !hero) return;
+
+  hero.addEventListener('mousemove', function (e) {
+    var rect = hero.getBoundingClientRect();
+    var dx = (e.clientX - rect.left - rect.width  / 2) / rect.width;
+    var dy = (e.clientY - rect.top  - rect.height / 2) / rect.height;
+    canvas.style.transform = 'translate(' + (dx * 18) + 'px,' + (dy * 12) + 'px)';
+  }, { passive: true });
+
+  hero.addEventListener('mouseleave', function () {
+    canvas.style.transform = 'translate(0,0)';
+    canvas.style.transition = 'transform .6s ease';
+  });
+
+  hero.addEventListener('mouseenter', function () {
+    canvas.style.transition = 'transform .08s linear';
+  });
+})();
+
+// ────────────────────────────────────────────────────────────
+// 4. NAV: transparent white text → frosted white pill on scroll
+// ────────────────────────────────────────────────────────────
+(function () {
+  var navInner = document.getElementById('nav-inner');
+  if (!navInner) return;
+  var ticking = false;
+  window.addEventListener('scroll', function () {
+    if (!ticking) {
+      requestAnimationFrame(function () {
+        navInner.classList.toggle('scrolled', window.scrollY > 60);
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }, { passive: true });
+})();
+
+// ────────────────────────────────────────────────────────────
+// 5. PROGRESS BAR animation (triggered when card enters view)
+// ────────────────────────────────────────────────────────────
+(function () {
+  var bar = document.getElementById('progress-bar');
+  var pct = document.getElementById('progress-pct');
+  if (!bar) return;
+  var done = false;
+  function run() {
+    if (done) return;
+    done = true;
+    setTimeout(function () { bar.style.width = '72%'; }, 900);
+  }
+  // Trigger when hero canvas starts (page load)
+  setTimeout(run, 400);
+})();
+
+// ────────────────────────────────────────────────────────────
+// 6. SCROLL REVEAL for content sections
+// ────────────────────────────────────────────────────────────
+(function () {
+  var ro = new IntersectionObserver(function (es) {
+    es.forEach(function (e) {
+      if (e.isIntersecting) { e.target.classList.add('on'); ro.unobserve(e.target); }
+    });
+  }, { threshold: 0.07, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(function (el) { ro.observe(el); });
+})();
+
+// ────────────────────────────────────────────────────────────
+// CTA CARD (situation section) entrance — port of framer-motion
+// whileInView stagger on the two columns
+// ────────────────────────────────────────────────────────────
+(function () {
+  var opts = { threshold: 0.12, rootMargin: '0px 0px -30px 0px' };
+  var ctaObs = new IntersectionObserver(function (es) {
+    es.forEach(function (e) {
+      if (e.isIntersecting) { e.target.classList.add('on'); ctaObs.unobserve(e.target); }
+    });
+  }, opts);
+  document.querySelectorAll('.cta-anim').forEach(function (el) { ctaObs.observe(el); });
+})();
+
+// ────────────────────────────────────────────────────────────
+// FOOTER entrance — port of AnimatedContainer (motion/react)
+// blur(4px) + translateY(-8px) → clear on scroll-into-view
+// ────────────────────────────────────────────────────────────
+(function () {
+  var foObs = new IntersectionObserver(function (es) {
+    es.forEach(function (e) {
+      if (e.isIntersecting) { e.target.classList.add('on'); foObs.unobserve(e.target); }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -20px 0px' });
+  document.querySelectorAll('.fa').forEach(function (el) { foObs.observe(el); });
+})();
+
+// ────────────────────────────────────────────────────────────
+// 7. VISUAL PROCESS TIMELINE
+// Timeline functionality for the "How it works" section
+// ────────────────────────────────────────────────────────────
+(function () {
+  var timeline = document.getElementById('process-timeline');
+  if (!timeline) return;
+  // Timeline is fully visual, no additional JS interactions needed
+  // Scroll reveal handled by main reveal observer
+})();
+
+// ────────────────────────────────────────────────────────────
+// 8. CASE STUDIES (STATIC CARDS)
+// Simple grid layout with hover effects. No carousel rotation needed.
+// ────────────────────────────────────────────────────────────
+// Static cards are handled entirely by CSS — no JS needed
+
+// ────────────────────────────────────────────────────────────
+// 8. INTERACTIVE BOOKING MODAL
+// Modal calendar with month navigation and time slots
+// ────────────────────────────────────────────────────────────
+(function () {
+  var modal = document.getElementById('booking-modal');
+  var overlay = document.getElementById('booking-modal-overlay');
+  var closeBtn = document.getElementById('modal-close');
+  var openBtns = document.querySelectorAll('[id^="booking-btn"]');
+
+  if (!modal) return;
+
+  var currentDate = new Date(2026, 5); // June 2026
+  var selectedDate = null;
+
+  // Open modal
+  openBtns.forEach(function (btn) {
+    btn.addEventListener('click', function (e) {
+      e.preventDefault();
+      modal.style.display = 'block';
+      overlay.style.display = 'block';
+      renderCalendar();
+    });
+  });
+
+  // Close modal
+  closeBtn.addEventListener('click', closeModal);
+  overlay.addEventListener('click', closeModal);
+
+  function closeModal() {
+    modal.style.display = 'none';
+    overlay.style.display = 'none';
+  }
+
+  // Navigate months
+  document.getElementById('cal-prev-month').addEventListener('click', function () {
+    currentDate.setMonth(currentDate.getMonth() - 1);
+    renderCalendar();
+  });
+
+  document.getElementById('cal-next-month').addEventListener('click', function () {
+    currentDate.setMonth(currentDate.getMonth() + 1);
+    renderCalendar();
+  });
+
+  function renderCalendar() {
+    var monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+                      'July', 'August', 'September', 'October', 'November', 'December'];
+    var year = currentDate.getFullYear();
+    var month = currentDate.getMonth();
+
+    document.getElementById('cal-modal-month').textContent = monthNames[month] + ' ' + year;
+    document.getElementById('cal-preview-month').textContent = monthNames[month] + ' ' + year;
+
+    var firstDay = new Date(year, month, 1).getDay();
+    var daysInMonth = new Date(year, month + 1, 0).getDate();
+    var daysInPrevMonth = new Date(year, month, 0).getDate();
+
+    var calendarGrid = document.getElementById('booking-calendar');
+    calendarGrid.innerHTML = '';
+
+    // Day headers
+    var dayHeaders = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    dayHeaders.forEach(function (day) {
+      var header = document.createElement('div');
+      header.className = 'cal-day-header';
+      header.textContent = day;
+      calendarGrid.appendChild(header);
+    });
+
+    // Previous month's days
+    for (var i = firstDay - 1; i >= 0; i--) {
+      var dayEl = document.createElement('div');
+      dayEl.className = 'cal-day other-month';
+      dayEl.textContent = daysInPrevMonth - i;
+      calendarGrid.appendChild(dayEl);
+    }
+
+    // Current month's days
+    for (var day = 1; day <= daysInMonth; day++) {
+      var dayEl = document.createElement('div');
+      dayEl.className = 'cal-day available';
+      dayEl.textContent = day;
+
+      var dateObj = new Date(year, month, day);
+      var isToday = new Date().toDateString() === dateObj.toDateString();
+      var isPast = dateObj < new Date();
+
+      if (isPast) {
+        dayEl.className = 'cal-day disabled';
+      }
+
+      dayEl.addEventListener('click', function () {
+        if (!isPast) {
+          selectedDate = dateObj;
+          document.querySelectorAll('.cal-day.selected').forEach(function (d) {
+            d.classList.remove('selected');
+          });
+          dayEl.classList.add('selected');
+          renderTimeSlots();
+        }
+      });
+
+      calendarGrid.appendChild(dayEl);
+    }
+
+    // Next month's days
+    var remainingDays = 42 - (firstDay + daysInMonth);
+    for (var day = 1; day <= remainingDays; day++) {
+      var dayEl = document.createElement('div');
+      dayEl.className = 'cal-day other-month';
+      dayEl.textContent = day;
+      calendarGrid.appendChild(dayEl);
+    }
+  }
+
+  function renderTimeSlots() {
+    var monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+                      'July', 'August', 'September', 'October', 'November', 'December'];
+    var dateStr = monthNames[selectedDate.getMonth()] + ' ' + selectedDate.getDate();
+
+    document.getElementById('selected-date-display').textContent = 'Available times for ' + dateStr;
+    document.getElementById('timezone-note').style.display = 'block';
+
+    var slotsContainer = document.getElementById('time-slots-grid');
+    slotsContainer.innerHTML = '';
+
+    // Create 24 hourly slots
+    for (var hour = 0; hour < 24; hour++) {
+      var timeStr = ('0' + hour).slice(-2) + ':00';
+      var slot = document.createElement('button');
+      slot.className = 'time-slot';
+      slot.textContent = timeStr;
+      slot.type = 'button';
+
+      // Randomly mark some as unavailable (30% chance)
+      if (Math.random() < 0.3) {
+        slot.className = 'time-slot unavailable';
+        slot.disabled = true;
+      }
+
+      slot.addEventListener('click', function () {
+        if (!this.classList.contains('unavailable')) {
+          const timeStr = this.textContent;
+          const dateStr = selectedDate.toISOString().split('T')[0];
+          const bookingData = {
+            date: dateStr,
+            time: timeStr
+          };
+          sessionStorage.setItem('bookingData', JSON.stringify(bookingData));
+          closeModal();
+          window.location.href = '/booking-confirmation.html';
+        }
+      });
+
+      slotsContainer.appendChild(slot);
+    }
+  }
+})();
+
+// ────────────────────────────────────────────────────────────
+// 9. BOOKING CALENDAR
+// Translated from the React calendar component.
+// Shows the current month with available slots highlighted
+// in Stenward navy. Today is marked in teal.
+// Clicking any available day adds a "selected" state.
+// ────────────────────────────────────────────────────────────
+(function () {
+  var grid = document.getElementById('cal-grid');
+  var lbl  = document.getElementById('cal-month-label');
+  if (!grid) return;
+
+  var DAY_NAMES = ['SUN','MON','TUE','WED','THU','FRI','SAT'];
+  var MONTH_NAMES = ['January','February','March','April','May','June',
+                     'July','August','September','October','November','December'];
+
+  var now        = new Date();
+  var year       = now.getFullYear();
+  var month      = now.getMonth();
+  var today      = now.getDate();
+  var firstDOW   = new Date(year, month, 1).getDay();
+  var daysInMo   = new Date(year, month + 1, 0).getDate();
+
+  // Mark Mon–Thu after today as available (skip ~30% randomly for realism)
+  var available = new Set();
+  for (var d = 1; d <= daysInMo; d++) {
+    var dow = new Date(year, month, d).getDay();
+    if (d >= today && dow >= 1 && dow <= 4 && Math.random() > 0.28) {
+      available.add(d);
+    }
+  }
+
+  // Month label
+  if (lbl) lbl.textContent = MONTH_NAMES[month] + ' ' + year;
+
+  // Build grid HTML
+  var html = '';
+
+  // Day-name headers
+  DAY_NAMES.forEach(function (n) {
+    html += '<div class="cal-dh">' + n + '</div>';
+  });
+
+  // Empty offset cells
+  for (var i = 0; i < firstDOW; i++) {
+    html += '<div class="cal-dc empty"></div>';
+  }
+
+  // Day cells
+  for (var d = 1; d <= daysInMo; d++) {
+    var cls = 'cal-dc';
+    if (d === today)          cls += ' today';
+    else if (d < today)       cls += ' past';
+    else if (available.has(d)) cls += ' avail';
+    html += '<div class="' + cls + '" data-day="' + d + '">' + d + '</div>';
+  }
+
+  grid.innerHTML = html;
+
+  // Click interaction: select an available day (visual only — real booking on cal.com)
+  grid.addEventListener('click', function (e) {
+    var cell = e.target.closest('.cal-dc.avail');
+    if (!cell) return;
+    e.preventDefault(); // don't follow cal-card-link while choosing a day
+    e.stopPropagation();
+    grid.querySelectorAll('.cal-dc.selected').forEach(function (el) {
+      el.classList.remove('selected');
+    });
+    cell.classList.add('selected');
+    // Brief delay then open booking link
+    setTimeout(function () {
+      window.open('https://cal.com/stenward', '_blank', 'noopener');
+    }, 320);
+  });
+})();
+
+// ────────────────────────────────────────────────────────────
+// 10. SMOOTH PAGE TRANSITIONS
+// Fade out effect when clicking links to service pages
+// ────────────────────────────────────────────────────────────
+(function () {
+  document.addEventListener('click', function (e) {
+    var link = e.target.closest('a[href$=".html"]');
+    if (!link) return;
+    if (link.target === '_blank') return;
+    if (link.getAttribute('href').startsWith('#')) return;
+
+    e.preventDefault();
+    var href = link.getAttribute('href');
+
+    // Mark that we're navigating to a service page
+    if (href.startsWith('service-')) {
+      sessionStorage.setItem('returnToServices', 'true');
+    }
+
+    document.body.classList.add('page-exit');
+    setTimeout(function () {
+      window.location.href = href;
+    }, 300);
+  });
+
+  // On page load, if returning from a service page, scroll to services section
+  if (sessionStorage.getItem('returnToServices') === 'true') {
+    sessionStorage.removeItem('returnToServices');
+    var servicesSection = document.getElementById('services');
+    if (servicesSection) {
+      setTimeout(function () {
+        servicesSection.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    }
+  }
+})();
+
+// ────────────────────────────────────────────────────────────
+// 11. COOKIES BANNER
+// Simple cookie consent banner
+// ────────────────────────────────────────────────────────────
+(function () {
+  var banner = document.getElementById('cookiesBanner');
+  var acceptBtn = document.getElementById('acceptCookies');
+  var declineBtn = document.getElementById('declineCookies');
+
+  if (!banner) return;
+
+  // Check if user has already made a choice
+  if (localStorage.getItem('cookiesConsent')) {
+    banner.classList.add('hidden');
+    return;
+  }
+
+  acceptBtn.addEventListener('click', function () {
+    localStorage.setItem('cookiesConsent', 'accepted');
+    document.cookie = 'cookies_accepted=true; path=/; max-age=' + (60 * 60 * 24 * 365);
+    banner.classList.add('hidden');
+  });
+
+  declineBtn.addEventListener('click', function () {
+    localStorage.setItem('cookiesConsent', 'declined');
+    banner.classList.add('hidden');
+  });
+})();
+</script>
+</body>
+</html>

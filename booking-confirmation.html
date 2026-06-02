@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Booking Confirmation — Stenward</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    :root{--navy:#0F1A2A;--teal:#00fdb3;--charcoal:#444444;--muted-grey:#595959;--light-surface:#F2F2F2}
+    html{scroll-behavior:smooth}
+    body{font-family:'DM Sans',sans-serif;color:var(--charcoal);background:#fff;-webkit-font-smoothing:antialiased;line-height:1.6}
+
+    .booking-page{padding:60px 20px}
+    .booking-wrapper{
+      max-width:1100px;margin:0 auto;
+      display:grid;grid-template-columns:1fr 320px;gap:40px;
+    }
+
+    .booking-form-section h1{
+      font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:700;
+      color:var(--navy);margin-bottom:12px;letter-spacing:-0.03em;
+    }
+
+    .booking-form-section>p{
+      color:var(--muted-grey);margin-bottom:32px;font-size:1rem;
+    }
+
+    .form-group{margin-bottom:24px}
+
+    .form-group label{
+      display:block;font-weight:600;color:var(--navy);
+      margin-bottom:8px;font-size:0.95rem;
+    }
+
+    .form-group input,
+    .form-group textarea{
+      width:100%;padding:12px;border:1.5px solid #e5e7eb;
+      border-radius:8px;font-family:'DM Sans',sans-serif;
+      font-size:0.95rem;color:var(--charcoal);
+      transition:border-color 0.2s;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus{
+      outline:none;border-color:var(--teal);
+    }
+
+    .form-group textarea{
+      resize:vertical;min-height:100px;
+    }
+
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+
+    .form-required{color:var(--teal);font-weight:600}
+
+    .submit-btn{
+      background:var(--navy);color:#fff;padding:14px 32px;
+      border:none;border-radius:8px;font-weight:700;
+      cursor:pointer;font-size:0.95rem;width:100%;
+      transition:opacity 0.2s;margin-top:8px;
+    }
+
+    .submit-btn:hover{opacity:0.9}
+
+    .submit-btn:active{transform:translateY(1px)}
+
+    /* Sidebar */
+    .booking-sidebar{
+      display:flex;flex-direction:column;gap:20px;
+    }
+
+    .sidebar-section{
+      background:var(--light-surface);padding:20px;border-radius:8px;
+      border:2px solid var(--navy);
+    }
+
+    .sidebar-section h3{
+      font-family:'Playfair Display',serif;font-size:1.1rem;
+      font-weight:700;color:var(--navy);margin-bottom:12px;
+    }
+
+    .sidebar-detail{
+      display:flex;align-items:center;gap:10px;margin-bottom:12px;
+    }
+
+    .sidebar-detail:last-child{margin-bottom:0}
+
+    .sidebar-detail-icon{font-size:1.2rem}
+
+    .sidebar-detail-value{
+      color:var(--charcoal);font-weight:500;font-size:0.9rem;
+      line-height:1.4;
+    }
+
+    /* Success state */
+    .success-state{
+      display:none;
+      text-align:center;padding:60px 40px;
+    }
+
+    .success-state.active{display:block}
+
+    .success-icon{
+      font-size:64px;margin-bottom:20px;
+    }
+
+    .success-state h2{
+      font-family:'Playfair Display',serif;font-size:2rem;
+      font-weight:700;color:var(--navy);margin-bottom:16px;
+    }
+
+    .success-state p{
+      color:var(--muted-grey);font-size:1.05rem;line-height:1.8;
+      margin-bottom:12px;
+    }
+
+    .back-home{
+      margin-top:32px;
+      display:inline-block;
+      color:var(--teal);text-decoration:none;font-weight:600;
+      transition:color 0.2s;
+    }
+
+    .back-home:hover{color:var(--navy)}
+
+    @media (max-width:900px){
+      .booking-wrapper{
+        grid-template-columns:1fr;
+        gap:24px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="booking-page">
+    <div class="booking-wrapper">
+      <!-- Form Section -->
+      <div class="booking-form-section">
+        <!-- Form (initially visible) -->
+        <div id="formState">
+          <h1>Complete Your Booking</h1>
+          <p>Fill in your details below and we'll confirm your 30-minute consultation</p>
+
+          <form id="bookingForm">
+            <div class="form-group">
+              <label for="fullName">Full Name <span class="form-required">*</span></label>
+              <input type="text" id="fullName" name="fullName" required>
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email <span class="form-required">*</span></label>
+              <input type="email" id="email" name="email" required>
+            </div>
+
+            <div class="form-group">
+              <label for="company">Company <span class="form-required">*</span></label>
+              <input type="text" id="company" name="company" required>
+            </div>
+
+            <div class="form-group">
+              <label for="phone">Phone Number</label>
+              <input type="tel" id="phone" name="phone">
+            </div>
+
+            <div class="form-group">
+              <label for="message">Tell us a bit about your situation</label>
+              <textarea id="message" name="message" placeholder="What's your current security posture? What challenges are you facing?"></textarea>
+            </div>
+
+            <button type="submit" class="submit-btn">Confirm Booking</button>
+          </form>
+        </div>
+
+        <!-- Success State (initially hidden) -->
+        <div id="successState" class="success-state">
+          <div class="success-icon">✓</div>
+          <h2>Thank You!</h2>
+          <p>Your booking has been confirmed.</p>
+          <p>We'll review your details and get back to you soon to discuss your specific situation.</p>
+          <a href="/" class="back-home">← Back to home</a>
+        </div>
+      </div>
+
+      <!-- Sidebar -->
+      <div class="booking-sidebar">
+        <div class="sidebar-section">
+          <h3>Your Booking</h3>
+
+          <div class="sidebar-detail">
+            <span class="sidebar-detail-icon">📅</span>
+            <span class="sidebar-detail-value" id="sidebarDate">Loading...</span>
+          </div>
+
+          <div class="sidebar-detail">
+            <span class="sidebar-detail-icon">⏰</span>
+            <span class="sidebar-detail-value" id="sidebarTime">Loading...</span>
+          </div>
+
+          <div class="sidebar-detail">
+            <span class="sidebar-detail-icon">⏱</span>
+            <span class="sidebar-detail-value">30 minutes</span>
+          </div>
+
+          <div class="sidebar-detail">
+            <span class="sidebar-detail-icon">🌍</span>
+            <span class="sidebar-detail-value">US Eastern Time</span>
+          </div>
+        </div>
+
+        <div class="sidebar-section" style="background:rgba(0,253,179,0.1);border-color:var(--teal)">
+          <h3 style="color:var(--navy)">What to Expect</h3>
+          <p style="font-size:0.9rem;color:var(--charcoal);line-height:1.6">
+            A straightforward conversation about your current situation, security goals, and what ISO 27001 looks like for your business. No pressure, no sales pitch.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function formatDate(dateStr) {
+      const date = new Date(dateStr);
+      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      return date.toLocaleDateString('en-US', options);
+    }
+
+    function loadBookingDetails() {
+      const bookingData = JSON.parse(sessionStorage.getItem('bookingData') || '{}');
+
+      if (bookingData.date) {
+        document.getElementById('sidebarDate').textContent = formatDate(bookingData.date);
+      }
+
+      if (bookingData.time) {
+        document.getElementById('sidebarTime').textContent = bookingData.time + ' ET';
+      }
+    }
+
+    document.getElementById('bookingForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      // Get form data
+      const fullName = document.getElementById('fullName').value;
+      const email = document.getElementById('email').value;
+      const company = document.getElementById('company').value;
+      const phone = document.getElementById('phone').value;
+      const message = document.getElementById('message').value;
+
+      // Get booking data
+      const bookingData = JSON.parse(sessionStorage.getItem('bookingData') || '{}');
+
+      // Create submission data
+      const submissionData = {
+        fullName,
+        email,
+        company,
+        phone,
+        message,
+        date: bookingData.date,
+        time: bookingData.time,
+        timestamp: new Date().toISOString()
+      };
+
+      // Log to console (in production, send to backend)
+      console.log('Booking submission:', submissionData);
+
+      // Store in localStorage for reference
+      localStorage.setItem('lastBooking', JSON.stringify(submissionData));
+
+      // Show success state
+      document.getElementById('formState').style.display = 'none';
+      document.getElementById('successState').classList.add('active');
+
+      // Optionally clear session data
+      sessionStorage.removeItem('bookingData');
+    });
+
+    // Load booking details on page load
+    loadBookingDetails();
+  </script>
+</body>
+</html>

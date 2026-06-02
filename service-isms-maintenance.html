@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ISMS Maintenance — Stenward</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    :root{--navy:#0F1A2A;--teal:#00fdb3;--charcoal:#444444;--muted-grey:#595959;--light-surface:#F2F2F2;--border:#e5e7eb}
+    html{scroll-behavior:smooth}
+    body{font-family:'DM Sans',sans-serif;color:var(--charcoal);background:#fff;-webkit-font-smoothing:antialiased;line-height:1.6}
+    .service-header{background:var(--navy);color:#fff;padding:4rem 2rem;text-align:center}
+    .service-header h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,3.2rem);font-weight:700;margin-bottom:.75rem;letter-spacing:-.03em}
+    .service-header p{font-size:1.1rem;color:rgba(255,255,255,.8);max-width:600px;margin:0 auto}
+    .back-link{display:inline-flex;align-items:center;gap:.5rem;padding:1rem 2rem;color:var(--navy);text-decoration:none;font-weight:600;margin-bottom:2rem;margin-top:2rem}
+    .back-link:hover{color:var(--teal)}
+    .service-body{max-width:800px;margin:0 auto;padding:3rem 2rem}
+    .service-intro{font-size:1.05rem;line-height:1.8;margin-bottom:3rem;color:var(--charcoal)}
+    .section-title{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;color:var(--navy);margin:3rem 0 1.5rem;line-height:1.3;letter-spacing:-.02em}
+    .section-text{font-size:1rem;color:var(--charcoal);line-height:1.8;margin-bottom:1.5rem}
+    .checklist{display:grid;grid-template-columns:1fr;gap:1rem;margin:2rem 0}
+    .checklist-item{display:flex;gap:1rem;font-size:.95rem;color:var(--charcoal);line-height:1.7}
+    .checklist-item::before{content:'✓';color:var(--teal);font-weight:700;min-width:20px}
+    .tier-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin:2rem 0}
+    .tier-card{background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:2.5rem 2rem;text-align:center;box-shadow:0 4px 12px rgba(15,26,42,.06);transition:all .3s ease}
+    .tier-card:hover{border-color:var(--teal);box-shadow:0 8px 24px rgba(0,253,179,.12);transform:translateY(-4px)}
+    .tier-name{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:#fff;margin-bottom:1.5rem;background:var(--navy);padding:1rem;border-radius:8px;margin:-2.5rem -2rem 1.5rem}
+    .tier-items{font-size:.9rem;color:var(--charcoal);line-height:1.7;text-align:left}
+    .tier-items li{margin:.5rem 0;list-style:none;padding-left:1.5rem;position:relative}
+    .tier-items li::before{content:'•';position:absolute;left:0;color:var(--teal)}
+    .note-box{background:var(--light-surface);border-left:4px solid var(--teal);padding:1.5rem;margin:2rem 0;border-radius:6px}
+    .note-box p{font-size:.95rem;color:var(--charcoal);line-height:1.7;margin:0}
+    .cta-footer{background:var(--navy);color:#fff;padding:4rem 2rem;text-align:center;margin-top:4rem}
+    .cta-footer h2{font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;margin-bottom:1rem;letter-spacing:-.02em}
+    .cta-footer p{font-size:1.05rem;color:rgba(255,255,255,.8);margin-bottom:2rem;max-width:600px;margin-left:auto;margin-right:auto}
+    .cta-button{display:inline-block;background:#fff;color:var(--navy);padding:.9rem 2rem;border-radius:8px;text-decoration:none;font-weight:700;margin:0 .5rem;transition:opacity .2s}
+    .cta-button:hover{opacity:.9}
+    .cta-text{color:rgba(255,255,255,.75);font-size:.95rem;margin-top:1rem}
+    @media (max-width:900px){.tier-cards{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <a href="/" class="back-link">← Back to home</a>
+
+  <div class="service-header">
+    <h1>ISMS Maintenance</h1>
+    <p>Ongoing senior oversight that keeps your certification alive — without hiring a full-time compliance team.</p>
+  </div>
+
+  <div class="service-body">
+    <p class="service-intro">Certification is the start, not the finish. Every year brings a surveillance audit, and an ISMS that drifts out of date quietly puts your certificate at risk. Stenward stays on as your ongoing compliance capability, keeping everything audit-ready so you keep the benefit of a compliance function without carrying one on your payroll.</p>
+
+    <h2 class="section-title">What ongoing support covers</h2>
+    <div class="checklist">
+      <div class="checklist-item">Surveillance audit preparation and attendance</div>
+      <div class="checklist-item">Internal audit cycles</div>
+      <div class="checklist-item">Finding and nonconformity management</div>
+      <div class="checklist-item">Documentation kept current as you change</div>
+      <div class="checklist-item">Management review cadence</div>
+      <div class="checklist-item">Support with customer security questionnaires</div>
+      <div class="checklist-item">A senior practitioner on call for the security questions that come up as you grow</div>
+    </div>
+
+    <h2 class="section-title">How it's structured</h2>
+    <p class="section-text">Your ISMS needs vary over time. Some months you need light-touch oversight; others you need hands-on involvement. We structure ongoing support around your actual needs, scaled to how much support you need:</p>
+
+    <div class="tier-cards">
+      <div class="tier-card">
+        <div class="tier-name">Light</div>
+        <ul class="tier-items">
+          <li>Quarterly check-ins</li>
+          <li>Annual surveillance prep</li>
+          <li>Light finding management</li>
+          <li>For companies that need a steady hand, not constant involvement</li>
+        </ul>
+      </div>
+      <div class="tier-card">
+        <div class="tier-name">Standard</div>
+        <ul class="tier-items">
+          <li>Monthly check-ins</li>
+          <li>Full surveillance prep and attendance</li>
+          <li>Internal audit management</li>
+          <li>The right fit for most certified companies</li>
+        </ul>
+      </div>
+      <div class="tier-card">
+        <div class="tier-name">Active</div>
+        <ul class="tier-items">
+          <li>Frequent involvement</li>
+          <li>Continuous documentation upkeep</li>
+          <li>Questionnaire support</li>
+          <li>For companies with heavy customer-assurance demands</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="note-box">
+      <p><strong>We'll recommend the right level of support for where you are — and adjust it as you grow.</strong></p>
+    </div>
+  </div>
+
+  <div class="cta-footer">
+    <h2>Not sure if this is the right fit?</h2>
+    <p>The first step is a short, no-pressure conversation about your situation.</p>
+    <a href="https://cal.com/stenward" target="_blank" rel="noopener" class="cta-button">Book a call →</a>
+    <p class="cta-text">Or email us at info@stenward.com</p>
+  </div>
+</body>
+</html>
