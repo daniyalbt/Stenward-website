@@ -118,16 +118,16 @@
 
     /* ── Entrance animations ── */
     @keyframes heroBlurIn{
-      from{opacity:0;filter:blur(12px);transform:translateY(14px)}
-      to{opacity:1;filter:blur(0px);transform:translateY(0)}
+      from{opacity:0;transform:translateY(14px)}
+      to{opacity:1;transform:translateY(0)}
     }
     @keyframes pageExitFade{
       from{opacity:1;transform:translateY(0)}
       to{opacity:0;transform:translateY(10px)}
     }
-    .hero-eyebrow{animation:heroBlurIn .75s cubic-bezier(.22,1,.36,1) .15s both}
-    .hero h1{animation:heroBlurIn 1s cubic-bezier(.22,1,.36,1) .3s both}
-    .hero-sub{animation:heroBlurIn .85s cubic-bezier(.22,1,.36,1) .5s both}
+    .hero-eyebrow{animation:heroBlurIn .4s ease-out .05s both;will-change:opacity,transform}
+    .hero h1{animation:heroBlurIn .5s ease-out .1s both;will-change:opacity,transform}
+    .hero-sub{animation:heroBlurIn .45s ease-out .15s both;will-change:opacity,transform}
     .why-stenward-box{
       background:var(--navy);color:#fff;border-radius:12px;
       padding:2rem;margin:2rem 0 3rem;
@@ -140,8 +140,8 @@
     .why-stenward-content p{
       font-size:1rem;color:rgba(255,255,255,.85);line-height:1.8;
     }
-    .hero-ctas{animation:heroBlurIn .8s cubic-bezier(.22,1,.36,1) .65s both}
-    .hero-visual{animation:heroBlurIn .9s cubic-bezier(.22,1,.36,1) .85s both}
+    .hero-ctas{animation:heroBlurIn .4s ease-out .2s both;will-change:opacity,transform}
+    .hero-visual{animation:heroBlurIn .5s ease-out .25s both;will-change:opacity,transform}
 
     @keyframes rowSlideIn{
       from{opacity:0;transform:translateX(-10px)}
@@ -696,12 +696,12 @@
     /* ─── CTA ─── */
     .cta-content{max-width:46rem;margin:0 auto;text-align:center}
     .cta-actions{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;margin-top:2.5rem}
-    .btn-cta{font-size:.95rem;font-weight:700;color:var(--navy);background:#fff;padding:.7rem 1.75rem;border-radius:10px;text-decoration:none;transition:all .3s cubic-bezier(.4,0,.2,1);box-shadow:0 4px 16px rgba(0,0,0,.08)}
-    .btn-cta:hover{opacity:.95;transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.15)}
-    .btn-cta:active{transform:translateY(-1px)}
+    .btn-cta{font-size:.95rem;font-weight:700;color:var(--navy);background:#fff;padding:.7rem 1.75rem;border-radius:10px;text-decoration:none;transition:all .2s ease-out;box-shadow:0 4px 16px rgba(0,0,0,.08);will-change:transform,box-shadow}
+    .btn-cta:hover{opacity:.95;transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.12)}
+    .btn-cta:active{transform:translateY(0)}
     .btn-cta:focus-visible{outline:2px solid #fff;outline-offset:2px}
-    .btn-cta-ghost{font-size:.95rem;font-weight:500;color:rgba(255,255,255,.72);text-decoration:none;display:inline-flex;align-items:center;gap:5px;padding:.68rem 1.2rem;border-radius:10px;border:1px solid rgba(255,255,255,.18);transition:all .3s cubic-bezier(.4,0,.2,1)}
-    .btn-cta-ghost:hover{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.35);transform:translateY(-2px)}
+    .btn-cta-ghost{font-size:.95rem;font-weight:500;color:rgba(255,255,255,.72);text-decoration:none;display:inline-flex;align-items:center;gap:5px;padding:.68rem 1.2rem;border-radius:10px;border:1px solid rgba(255,255,255,.18);transition:all .2s ease-out;will-change:transform,background,border-color}
+    .btn-cta-ghost:hover{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.35);transform:translateY(-1px)}
 
     /* ─── SITUATION SECTION: CTA card (call-to-action-cta component) ─── */
     .situation-sec{padding:3rem clamp(1.5rem,5vw,4rem)}
@@ -864,7 +864,7 @@
     .booking-modal-overlay{
       position:fixed;top:0;left:0;right:0;bottom:0;
       background:rgba(0,0,0,.5);z-index:999;
-      opacity:0;transition:opacity .3s cubic-bezier(.4,0,.2,1);
+      opacity:0;transition:opacity .2s ease-out;will-change:opacity;
     }
     .booking-modal-overlay.show{
       opacity:1;
@@ -872,7 +872,7 @@
     .booking-modal{
       position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(.95);
       z-index:1000;width:90%;max-width:900px;max-height:90vh;overflow-y:auto;
-      opacity:0;transition:all .4s cubic-bezier(.22,1,.36,1);
+      opacity:0;transition:all .25s ease-out;will-change:transform,opacity;
     }
     .booking-modal.show{
       transform:translate(-50%,-50%) scale(1);
@@ -936,12 +936,12 @@
       aspect-ratio:1;display:flex;align-items:center;justify-content:center;
       border-radius:8px;cursor:pointer;border:1px solid var(--border);
       font-size:.9rem;color:var(--charcoal);
-      transition:all .25s cubic-bezier(.4,0,.2,1);
+      transition:all .15s ease-out;will-change:transform,background,border-color,box-shadow;
     }
     .cal-day:not(.other-month):hover{
       background:var(--light-surface);border-color:var(--teal);
-      transform:scale(1.05);
-      box-shadow:0 2px 8px rgba(0,253,179,.1);
+      transform:scale(1.03);
+      box-shadow:0 2px 6px rgba(0,253,179,.08);
     }
     .cal-day.other-month{
       color:#d1d5db;cursor:default;
@@ -951,7 +951,7 @@
     }
     .cal-day.selected{
       background:var(--navy);color:#fff;border-color:var(--navy);font-weight:700;
-      box-shadow:0 4px 12px rgba(15,26,42,.2);
+      box-shadow:0 2px 8px rgba(15,26,42,.15);
     }
     .cal-day.disabled{
       color:#d1d5db;cursor:not-allowed;opacity:.5;
@@ -966,17 +966,18 @@
     .time-slot{
       padding:1rem;border:1.5px solid var(--border);border-radius:8px;
       text-align:center;cursor:pointer;
-      transition:all .25s cubic-bezier(.4,0,.2,1);
+      transition:all .15s ease-out;
       font-size:.9rem;font-weight:500;color:var(--charcoal);
+      will-change:transform,background,border-color,box-shadow;
     }
     .time-slot:hover:not(.unavailable){
       border-color:var(--teal);background:var(--light-surface);
-      transform:translateY(-2px);
-      box-shadow:0 4px 12px rgba(0,253,179,.15);
+      transform:translateY(-1px);
+      box-shadow:0 2px 8px rgba(0,253,179,.1);
     }
     .time-slot.selected{
       background:var(--navy);color:#fff;border-color:var(--navy);font-weight:700;
-      box-shadow:0 4px 12px rgba(15,26,42,.2);
+      box-shadow:0 2px 8px rgba(15,26,42,.12);
     }
     .time-slot.unavailable{
       color:#d1d5db;background:#f9fafb;cursor:not-allowed;opacity:.6;
@@ -1423,12 +1424,12 @@
           <div class="framework-item">PCI DSS</div>
           <div class="framework-item">GDPR</div>
           <div class="framework-item">Cyber Essentials</div>
-          <div class="framework-item framework-coming-soon" style="position:relative;overflow:hidden;background:linear-gradient(135deg,rgba(0,253,179,.25),rgba(0,253,179,.15));border:2px solid var(--teal);cursor:pointer;transition:all .3s cubic-bezier(.4,0,.2,1);box-shadow:0 0 30px rgba(0,253,179,.3);">
+          <div class="framework-item framework-coming-soon" style="position:relative;overflow:hidden;background:linear-gradient(135deg,rgba(0,253,179,.25),rgba(0,253,179,.15));border:2px solid var(--teal);cursor:pointer;transition:all .2s ease-out;box-shadow:0 0 30px rgba(0,253,179,.3);will-change:transform,box-shadow;">
             <div style="position:relative;z-index:2;">
               <div style="font-weight:700;color:var(--teal);margin-bottom:6px;font-size:1.05rem;text-shadow:0 0 20px rgba(0,253,179,.3);">ISO 42001</div>
               <div style="font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);opacity:1;">🚀 Coming Q4 2026</div>
             </div>
-            <div style="position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(90deg,transparent,rgba(0,253,179,.2),transparent);opacity:0;animation:shimmer 2.5s infinite;" aria-hidden="true"></div>
+            <div style="position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(90deg,transparent,rgba(0,253,179,.2),transparent);opacity:0;animation:shimmer 1.5s infinite;will-change:opacity,transform;" aria-hidden="true"></div>
           </div>
           <style>
             @keyframes shimmer {
@@ -2238,10 +2239,10 @@
           };
           sessionStorage.setItem('bookingData', JSON.stringify(bookingData));
           closeModal();
-          document.body.style.animation = 'pageExitFade .4s cubic-bezier(.4,0,.2,1) forwards';
+          document.body.style.animation = 'pageExitFade .25s ease-out forwards';
           setTimeout(() => {
             window.location.href = '/booking-confirmation.html';
-          }, 400);
+          }, 250);
         }
       });
 

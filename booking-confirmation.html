@@ -16,13 +16,13 @@
 
     .booking-page{
       padding:60px 20px;
-      animation:pageSlideIn .5s cubic-bezier(.22,1,.36,1);
+      animation:pageSlideIn .3s ease-out;
     }
 
     @keyframes pageSlideIn {
       from {
         opacity:0;
-        transform:translateY(10px);
+        transform:translateY(8px);
       }
       to {
         opacity:1;
@@ -33,14 +33,15 @@
     .booking-wrapper{
       max-width:1100px;margin:0 auto;
       display:grid;grid-template-columns:1fr 320px;gap:40px;
-      animation:contentFadeIn .6s cubic-bezier(.22,1,.36,1) .15s forwards;
+      animation:contentFadeIn .3s ease-out .08s forwards;
       opacity:0;
+      will-change:opacity,transform;
     }
 
     @keyframes contentFadeIn {
       from {
         opacity:0;
-        transform:translateY(15px);
+        transform:translateY(8px);
       }
       to {
         opacity:1;
@@ -129,13 +130,14 @@
       display:none;
       text-align:center;padding:60px 40px;
       opacity:0;
-      animation:successFadeIn .6s cubic-bezier(.22,1,.36,1) forwards;
+      animation:successFadeIn .35s ease-out forwards;
+      will-change:opacity,transform;
     }
 
     @keyframes successFadeIn {
       from {
         opacity:0;
-        transform:translateY(20px);
+        transform:translateY(12px);
       }
       to {
         opacity:1;
@@ -148,34 +150,33 @@
     .success-icon{
       font-size:64px;margin-bottom:20px;
       display:inline-block;
-      animation:successIconBounce .8s cubic-bezier(.22,1,.36,1) .2s forwards;
+      animation:successIconBounce .4s ease-out .08s forwards;
+      will-change:transform,opacity;
     }
 
     @keyframes successIconBounce {
       0% {
         opacity:0;
-        transform:scale(0.5) translateY(10px);
-      }
-      50% {
-        transform:scale(1.05);
+        transform:scale(0.8);
       }
       100% {
         opacity:1;
-        transform:scale(1) translateY(0);
+        transform:scale(1);
       }
     }
 
     .success-state h2{
       font-family:'Playfair Display',serif;font-size:2rem;
       font-weight:700;color:var(--navy);margin-bottom:16px;
-      animation:successTextFadeIn .8s cubic-bezier(.22,1,.36,1) .3s forwards;
+      animation:successTextFadeIn .35s ease-out .15s forwards;
       opacity:0;
+      will-change:opacity,transform;
     }
 
     @keyframes successTextFadeIn {
       from {
         opacity:0;
-        transform:translateY(10px);
+        transform:translateY(8px);
       }
       to {
         opacity:1;
@@ -186,8 +187,9 @@
     .success-state p{
       color:var(--muted-grey);font-size:1.05rem;line-height:1.8;
       margin-bottom:12px;
-      animation:successTextFadeIn .8s cubic-bezier(.22,1,.36,1) .4s forwards;
+      animation:successTextFadeIn .35s ease-out .22s forwards;
       opacity:0;
+      will-change:opacity,transform;
     }
 
     .back-home{
