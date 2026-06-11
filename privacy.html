@@ -11,32 +11,37 @@
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
     :root{
-      --navy:#031432;--navy-deep:#020c1e;--navy-mid:#0d3883;
-      --teal:#00fdb3;--blue:#43a6f7;
-      --subtle:#6b7280;--border:#e5e7eb;--bg-alt:#f9fafb;
+      --navy:#0F1A2A;--navy-dark:#0a0f18;--navy-light:#1a2d47;
+      --teal:#00fdb3;
+      --charcoal:#444444;--muted-grey:#595959;--light-surface:#F2F2F2;
+      --border:#e5e7eb;
     }
     html{scroll-behavior:smooth}
-    body{font-family:'DM Sans',sans-serif;color:var(--navy);background:#fff;-webkit-font-smoothing:antialiased;line-height:1.6}
+    body{font-family:'DM Sans',sans-serif;color:var(--charcoal);background:#fff;-webkit-font-smoothing:antialiased;line-height:1.6}
 
-    .privacy-container{max-width:56rem;margin:0 auto;padding:4rem 2rem}
-    .privacy-header{margin-bottom:3rem;text-align:center}
-    .privacy-header h1{font-family:'DM Sans',sans-serif;font-size:2.4rem;font-weight:600;color:var(--navy);margin-bottom:1rem;line-height:1.2;letter-spacing:-.03em}
-    .privacy-header p{font-size:1rem;color:#6b7280}
+    /* Matches the service ("learn more") pages exactly */
+    .service-header{background:var(--navy);color:#fff;padding:4rem 2rem;text-align:center;position:relative;overflow:hidden}
+    .service-header h1{font-family:'DM Sans',sans-serif;font-size:clamp(2rem,5vw,3.2rem);font-weight:600!important;margin-bottom:.75rem;letter-spacing:-.03em}
+    .service-header p{font-size:1.1rem;color:rgba(255,255,255,.8);max-width:600px;margin:0 auto}
 
-    .privacy-content h2{font-family:'DM Sans',sans-serif;font-size:1.4rem;font-weight:700;color:var(--navy);margin-top:2.5rem;margin-bottom:1rem;line-height:1.3;letter-spacing:-.02em}
-    .privacy-content h2:first-of-type{margin-top:0}
-    .privacy-content p{font-size:.95rem;color:#4b5563;line-height:1.8;margin-bottom:1rem}
-    .privacy-content ul{margin:1rem 0 1rem 1.5rem}
-    .privacy-content li{font-size:.95rem;color:#4b5563;line-height:1.8;margin-bottom:.5rem}
-    .privacy-content a{color:var(--blue);text-decoration:none;font-weight:500;border-bottom:1px solid transparent;transition:border-color .2s}
-    .privacy-content a:hover{border-bottom-color:var(--blue)}
+    .service-body{max-width:800px;margin:0 auto;padding:3rem 2rem}
+    .service-intro{font-size:1.05rem;line-height:1.8;margin-bottom:2.5rem;color:var(--charcoal)}
+    .updated-label{font-size:.85rem;color:var(--muted-grey);margin-bottom:2.5rem;display:block}
 
-    .privacy-footer{margin-top:4rem;padding-top:2rem;border-top:1px solid var(--border);text-align:center}
-    .privacy-footer p{font-size:.85rem;color:#9ca3af}
-    .back-link{display:inline-block;margin-bottom:2rem;color:var(--navy);text-decoration:none;font-size:.9rem;font-weight:500;padding:.5rem 1rem;border-radius:6px;transition:background .2s;border:1px solid transparent}
-    .back-link:hover{background:var(--bg-alt);border-color:var(--border)}
-  
-    :root{--navy:#0F1A2A;--teal:#00FDB3}
+    .section-title{font-family:'DM Sans',sans-serif;font-size:1.6rem;font-weight:700;color:var(--navy);margin:2.75rem 0 1.25rem;line-height:1.3;letter-spacing:-.02em}
+    .section-text{font-size:1rem;color:var(--charcoal);line-height:1.8;margin-bottom:1.25rem}
+    .service-body ul{margin:1rem 0 1.5rem 1.25rem}
+    .service-body li{font-size:1rem;color:var(--charcoal);line-height:1.8;margin-bottom:.6rem}
+    .service-body li strong{color:var(--navy)}
+    .service-body a{color:var(--navy);text-decoration:none;font-weight:600;border-bottom:1.5px solid var(--teal);padding-bottom:1px;transition:opacity .15s}
+    .service-body a:hover{opacity:.65}
+
+    .cta-footer{background:var(--navy);color:#fff;padding:4rem 2rem;text-align:center;margin-top:4rem}
+    .cta-footer h2{font-family:'DM Sans',sans-serif;font-size:2rem;font-weight:600;margin-bottom:1rem;letter-spacing:-.02em}
+    .cta-footer p{font-size:1.05rem;color:rgba(255,255,255,.8);margin-bottom:1.5rem;max-width:600px;margin-left:auto;margin-right:auto}
+    .cta-button{display:inline-block;background:#fff;color:var(--navy);padding:.9rem 2rem;border-radius:8px;text-decoration:none;font-weight:700;transition:opacity .2s}
+    .cta-button:hover{opacity:.9}
+
     .branded-nav{background:var(--navy);padding:.85rem 2rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;border-bottom:1px solid rgba(255,255,255,.10)}
     .branded-nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
     .branded-nav-logo img{width:28px;height:28px;border-radius:6px}
@@ -44,88 +49,87 @@
     .branded-nav-back{font-family:'DM Sans',sans-serif;font-size:.88rem;color:rgba(255,255,255,.65);text-decoration:none;transition:color .15s;display:flex;align-items:center;gap:6px}
     .branded-nav-back:hover{color:var(--teal)}
     .sq-m{position:absolute;border:1.5px solid rgba(255,255,255,.22);transform:rotate(45deg);pointer-events:none}
-    .service-header{position:relative;overflow:hidden}
-    .service-header h1{font-weight:600!important}
   </style>
 </head>
 <body>
-  <div class="privacy-container">
-    <nav class="branded-nav">
-  <a href="/" class="branded-nav-logo">
-    <img src="brand_assets/Rounded Corners Update (3).png" alt="Stenward">
-    <span class="wm"><span style="color:#fff">Sten</span><span style="color:#00FDB3">ward</span></span>
-  </a>
-  <a href="/" class="branded-nav-back">&#8592; Back to home</a>
-</nav>
+  <nav class="branded-nav">
+    <a href="index.html" class="branded-nav-logo">
+      <img src="brand_assets/Rounded Corners Update (3).png" alt="Stenward">
+      <span class="wm"><span style="color:#fff">Sten</span><span style="color:#00FDB3">ward</span></span>
+    </a>
+    <a href="index.html" class="branded-nav-back">&#8592; Back to home</a>
+  </nav>
 
-    <div class="privacy-header">
-      <h1>Privacy Policy</h1>
-      <p>Last updated: June 2026</p>
-    </div>
-
-    <div class="privacy-content">
-      <h2>Introduction</h2>
-      <p>Stenward ("we," "our," or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and otherwise handle your information when you visit our website and interact with our services.</p>
-
-      <h2>Information We Collect</h2>
-      <p>We collect information you provide directly to us, including:</p>
-      <ul>
-        <li><strong>Contact Information:</strong> Name, email address, company name, job title, and phone number when you book a call or contact us</li>
-        <li><strong>Communication Data:</strong> Information you provide in emails or messages to us</li>
-        <li><strong>Usage Data:</strong> Information about how you interact with our website, including pages visited, time spent, and referring URLs</li>
-      </ul>
-
-      <h2>How We Use Your Information</h2>
-      <p>We use the information we collect to:</p>
-      <ul>
-        <li>Respond to your inquiries and provide customer support</li>
-        <li>Schedule and conduct consultation calls</li>
-        <li>Send you relevant updates about our services (with your consent)</li>
-        <li>Analyze website usage to improve our services and user experience</li>
-        <li>Comply with legal obligations</li>
-      </ul>
-
-      <h2>Data Security</h2>
-      <p>We implement appropriate technical and organizational measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction. However, no method of transmission over the internet or electronic storage is completely secure, and we cannot guarantee absolute security.</p>
-
-      <h2>Third-Party Services</h2>
-      <p>Our website uses third-party services including:</p>
-      <ul>
-        <li><strong>Cal.com:</strong> For booking consultation calls. Cal.com's privacy policy governs the data you provide through their booking widget</li>
-        <li><strong>Analytics:</strong> We may use analytics services to understand how visitors use our site</li>
-      </ul>
-      <p>These third parties have their own privacy policies governing their use of your information.</p>
-
-      <h2>Your Rights</h2>
-      <p>You have the right to:</p>
-      <ul>
-        <li>Access the personal information we hold about you</li>
-        <li>Request correction or deletion of your information</li>
-        <li>Opt out of marketing communications</li>
-        <li>Request that we restrict how we use your information</li>
-      </ul>
-      <p>To exercise these rights, please contact us at <a href="mailto:info@stenward.com">info@stenward.com</a>.</p>
-
-      <h2>Cookies</h2>
-      <p>Our website may use cookies and similar tracking technologies to enhance your experience. You can control cookie settings through your browser. Note that disabling cookies may affect site functionality.</p>
-
-      <h2>Retention</h2>
-      <p>We retain your personal information only as long as necessary to provide our services and fulfill the purposes outlined in this Privacy Policy. When you request deletion or when information is no longer needed, we securely delete or anonymize it.</p>
-
-      <h2>Changes to This Policy</h2>
-      <p>We may update this Privacy Policy from time to time. We will notify you of any material changes by updating the "Last updated" date at the top of this page. Your continued use of our website constitutes acceptance of the updated Privacy Policy.</p>
-
-      <h2>Contact Us</h2>
-      <p>If you have questions about this Privacy Policy or our privacy practices, please contact us at:</p>
-      <ul>
-        <li>Email: <a href="mailto:info@stenward.com">info@stenward.com</a></li>
-        <li>Website: <a href="https://stenward.com">stenward.com</a></li>
-      </ul>
-    </div>
-
-    <div class="privacy-footer">
-      <p>© 2026 Stenward. All rights reserved.</p>
-    </div>
+  <div class="service-header">
+    <span class="sq-m" style="top:18%;left:6%;width:120px;height:120px" aria-hidden="true"></span>
+    <span class="sq-m" style="bottom:10%;right:7%;width:90px;height:90px;opacity:.3" aria-hidden="true"></span>
+    <h1>Privacy Policy</h1>
+    <p>How Stenward collects, uses, and protects your information.</p>
   </div>
+
+  <div class="service-body">
+    <span class="updated-label">Last updated: June 2026</span>
+
+    <p class="service-intro">Stenward (&#8220;we,&#8221; &#8220;our,&#8221; or &#8220;us&#8221;) is committed to protecting your privacy. This policy explains how we collect, use, disclose, and otherwise handle your information when you visit our website and interact with our services.</p>
+
+    <h2 class="section-title">Information we collect</h2>
+    <p class="section-text">We collect information you provide directly to us, including:</p>
+    <ul>
+      <li><strong>Contact information:</strong> Name, email address, company name, job title, and phone number when you book a call or contact us</li>
+      <li><strong>Communication data:</strong> Information you provide in emails or messages to us</li>
+      <li><strong>Usage data:</strong> Information about how you interact with our website, including pages visited, time spent, and referring URLs</li>
+    </ul>
+
+    <h2 class="section-title">How we use your information</h2>
+    <p class="section-text">We use the information we collect to:</p>
+    <ul>
+      <li>Respond to your inquiries and provide customer support</li>
+      <li>Schedule and conduct consultation calls</li>
+      <li>Send you relevant updates about our services (with your consent)</li>
+      <li>Analyse website usage to improve our services and user experience</li>
+      <li>Comply with legal obligations</li>
+    </ul>
+
+    <h2 class="section-title">Data security</h2>
+    <p class="section-text">We implement appropriate technical and organisational measures to protect your personal information against unauthorised access, alteration, disclosure, or destruction. However, no method of transmission over the internet or electronic storage is completely secure, and we cannot guarantee absolute security.</p>
+
+    <h2 class="section-title">Third-party services</h2>
+    <p class="section-text">Our website uses third-party services including:</p>
+    <ul>
+      <li><strong>Booking tools:</strong> For scheduling consultation calls. The provider&#8217;s privacy policy governs the data you provide through their booking widget</li>
+      <li><strong>Analytics:</strong> We may use analytics services to understand how visitors use our site</li>
+    </ul>
+    <p class="section-text">These third parties have their own privacy policies governing their use of your information.</p>
+
+    <h2 class="section-title">Your rights</h2>
+    <p class="section-text">You have the right to:</p>
+    <ul>
+      <li>Access the personal information we hold about you</li>
+      <li>Request correction or deletion of your information</li>
+      <li>Opt out of marketing communications</li>
+      <li>Request that we restrict how we use your information</li>
+    </ul>
+    <p class="section-text">To exercise these rights, please contact us at <a href="mailto:info@stenward.com">info@stenward.com</a>.</p>
+
+    <h2 class="section-title">Cookies</h2>
+    <p class="section-text">Our website may use cookies and similar tracking technologies to enhance your experience. You can control cookie settings through your browser. Note that disabling cookies may affect site functionality.</p>
+
+    <h2 class="section-title">Retention</h2>
+    <p class="section-text">We retain your personal information only as long as necessary to provide our services and fulfil the purposes outlined in this policy. When you request deletion, or when information is no longer needed, we securely delete or anonymise it.</p>
+
+    <h2 class="section-title">Changes to this policy</h2>
+    <p class="section-text">We may update this Privacy Policy from time to time. We will notify you of any material changes by updating the &#8220;Last updated&#8221; date at the top of this page. Your continued use of our website constitutes acceptance of the updated policy.</p>
+
+    <h2 class="section-title">Contact us</h2>
+    <p class="section-text">If you have questions about this policy or our privacy practices, contact us at <a href="mailto:info@stenward.com">info@stenward.com</a>.</p>
+  </div>
+
+  <div class="cta-footer">
+    <h2>Questions about your data?</h2>
+    <p>We&#8217;re happy to walk you through how we handle and protect your information.</p>
+    <a href="mailto:info@stenward.com" class="cta-button">Email us &#8594;</a>
+  </div>
+
+  <script src="page-transitions.js"></script>
 </body>
 </html>

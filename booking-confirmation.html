@@ -226,6 +226,13 @@
   </style>
 </head>
 <body>
+  <nav class="branded-nav">
+    <a href="index.html" class="branded-nav-logo">
+      <img src="brand_assets/Rounded Corners Update (3).png" alt="Stenward">
+      <span class="wm"><span style="color:#fff">Sten</span><span style="color:#00FDB3">ward</span></span>
+    </a>
+    <a href="index.html" class="branded-nav-back">&#8592; Back to home</a>
+  </nav>
   <div class="booking-page">
     <div class="booking-wrapper">
       <!-- Form Section -->
@@ -271,7 +278,7 @@
           <h2>Thank You!</h2>
           <p>Your booking has been confirmed.</p>
           <p>We'll review your details and get back to you soon to discuss your specific situation.</p>
-          <a href="/" class="back-home">← Back to home</a>
+          <a href="index.html" class="back-home">← Back to home</a>
         </div>
       </div>
 
@@ -330,47 +337,61 @@
       }
     }
 
-    document.getElementById('bookingForm').addEventListener('submit', function(e) {
+    document.getElementById('bookingForm').addEventListener('submit', async function(e) {
       e.preventDefault();
 
-      // Get form data
-      const fullName = document.getElementById('fullName').value;
-      const email = document.getElementById('email').value;
-      const company = document.getElementById('company').value;
-      const phone = document.getElementById('phone').value;
-      const message = document.getElementById('message').value;
+      const form = this;
+      const btn = form.querySelector('.submit-btn');
+      const original = btn.textContent;
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
 
-      // Get booking data
+      // Get booking data (date/time chosen on the calendar)
       const bookingData = JSON.parse(sessionStorage.getItem('bookingData') || '{}');
 
-      // Create submission data
-      const submissionData = {
-        fullName,
-        email,
-        company,
-        phone,
-        message,
-        date: bookingData.date,
-        time: bookingData.time,
-        timestamp: new Date().toISOString()
-      };
+      // Build the payload that lands in info@stenward.com
+      const fd = new FormData(form);
+      fd.append('Preferred date', bookingData.date || 'Not specified');
+      fd.append('Preferred time', bookingData.time ? bookingData.time + ' ET' : 'Not specified');
+      fd.append('_subject', 'New consultation booking — Stenward');
+      fd.append('_template', 'table');
+      fd.append('_captcha', 'false');
 
-      // Log to console (in production, send to backend)
-      console.log('Booking submission:', submissionData);
+      localStorage.setItem('lastBooking', JSON.stringify(Object.fromEntries(fd)));
 
-      // Store in localStorage for reference
-      localStorage.setItem('lastBooking', JSON.stringify(submissionData));
+      // Deliver to the Stenward inbox.
+      // FormSubmit routes the submission to info@stenward.com with no backend
+      // required (one-time activation email confirms the address).
+      try {
+        const res = await fetch('https://formsubmit.co/ajax/info@stenward.com', {
+          method: 'POST',
+          headers: { 'Accept': 'application/json' },
+          body: fd
+        });
+        if (!res.ok) throw new Error('Submission failed');
+      } catch (err) {
+        // Fallback: open the visitor's mail client addressed to the inbox
+        const body = encodeURIComponent(
+          'Name: ' + (fd.get('fullName') || '') + '\n' +
+          'Email: ' + (fd.get('email') || '') + '\n' +
+          'Company: ' + (fd.get('company') || '') + '\n' +
+          'Phone: ' + (fd.get('phone') || '') + '\n' +
+          'Preferred: ' + (bookingData.date || '') + ' ' + (bookingData.time || '') + '\n\n' +
+          (fd.get('message') || '')
+        );
+        window.location.href = 'mailto:info@stenward.com?subject=' +
+          encodeURIComponent('New consultation booking — Stenward') + '&body=' + body;
+      }
 
       // Show success state
       document.getElementById('formState').style.display = 'none';
       document.getElementById('successState').classList.add('active');
-
-      // Optionally clear session data
       sessionStorage.removeItem('bookingData');
     });
 
     // Load booking details on page load
     loadBookingDetails();
   </script>
+  <script src="page-transitions.js"></script>
 </body>
 </html>

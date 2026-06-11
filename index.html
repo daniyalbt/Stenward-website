@@ -994,12 +994,14 @@
       display:flex;align-items:center;gap:14px;
       margin-bottom:2rem;
     }
-    .booking-avatar-wrap{position:relative;flex-shrink:0;width:56px;height:56px;display:flex;align-items:center;justify-content:center;border-radius:50%}
+    .booking-avatar-wrap{position:relative;flex-shrink:0;width:56px;height:56px}
+    .booking-avatar-clip{position:absolute;inset:0;border-radius:50%;overflow:hidden;border:2px solid rgba(255,255,255,.18)}
     .booking-avatar-img{
-      width:100%;height:100%;border-radius:50%;
-      object-fit:cover;object-position:center;
-      border:2px solid rgba(255,255,255,.18);
+      width:100%;height:100%;
+      object-fit:cover;
       display:block;
+      /* Zoom-crop so Zorain's face sits in the very centre of the circle */
+      transform:translate(-33.2%,-10.8%) scale(1.6);transform-origin:0 0;
     }
     .booking-avatar-dot{
       position:absolute;bottom:2px;right:2px;
@@ -1686,7 +1688,7 @@
     <div>
       <div class="booking-avatar-row">
         <div class="booking-avatar-wrap">
-          <img src="zorain.png" alt="Zorain Choudhary" class="booking-avatar-img">
+          <span class="booking-avatar-clip"><img src="zorain.png" alt="Zorain Choudhary" class="booking-avatar-img"></span>
           <span class="booking-avatar-dot" title="Available"></span>
         </div>
         <div>
@@ -2139,18 +2141,30 @@
   var selectedDate = null;
 
   // Open modal
+  function openBooking() {
+    modal.style.display = 'block';
+    overlay.style.display = 'block';
+    setTimeout(function () {
+      modal.classList.add('show');
+      overlay.classList.add('show');
+    }, 10);
+    renderCalendar();
+  }
+
   openBtns.forEach(function (btn) {
     btn.addEventListener('click', function (e) {
       e.preventDefault();
-      modal.style.display = 'block';
-      overlay.style.display = 'block';
-      setTimeout(function () {
-        modal.classList.add('show');
-        overlay.classList.add('show');
-      }, 10);
-      renderCalendar();
+      openBooking();
     });
   });
+
+  // Arriving from a service page "Book a call" → open the calendar automatically
+  try {
+    if (sessionStorage.getItem('openBooking') === '1') {
+      sessionStorage.removeItem('openBooking');
+      setTimeout(openBooking, 450);
+    }
+  } catch (e) {}
 
   // Close modal
   closeBtn.addEventListener('click', closeModal);
@@ -2284,7 +2298,7 @@
           closeModal();
           document.body.style.animation = 'pageExitFade .25s ease-out forwards';
           setTimeout(() => {
-            window.location.href = '/booking-confirmation.html';
+            window.location.href = 'booking-confirmation.html';
           }, 250);
         }
       });
