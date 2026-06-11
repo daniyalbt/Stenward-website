@@ -7,7 +7,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
     :root{
@@ -20,7 +20,7 @@
     body{font-family:'DM Sans',sans-serif;color:var(--charcoal);background:#fff;-webkit-font-smoothing:antialiased;line-height:1.6}
 
     .service-header{background:var(--navy);color:#fff;padding:4rem 2rem;text-align:center}
-    .service-header h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,3.2rem);font-weight:700;margin-bottom:.75rem;letter-spacing:-.03em}
+    .service-header h1{font-family:'DM Sans',sans-serif;font-size:clamp(2rem,5vw,3.2rem);font-weight:600;margin-bottom:.75rem;letter-spacing:-.03em}
     .service-header p{font-size:1.1rem;color:rgba(255,255,255,.8);max-width:600px;margin:0 auto}
 
     .back-link{display:inline-flex;align-items:center;gap:.5rem;padding:1rem 2rem;color:var(--navy);text-decoration:none;font-weight:600;margin-bottom:2rem;margin-top:2rem}
@@ -29,7 +29,7 @@
     .service-body{max-width:800px;margin:0 auto;padding:3rem 2rem}
     .service-intro{font-size:1.05rem;line-height:1.8;margin-bottom:3rem;color:var(--charcoal)}
 
-    .section-title{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;color:var(--navy);margin:3rem 0 1.5rem;line-height:1.3;letter-spacing:-.02em}
+    .section-title{font-family:'DM Sans',sans-serif;font-size:1.6rem;font-weight:700;color:var(--navy);margin:3rem 0 1.5rem;line-height:1.3;letter-spacing:-.02em}
 
     .section-text{font-size:1rem;color:var(--charcoal);line-height:1.8;margin-bottom:1.5rem}
 
@@ -45,7 +45,7 @@
     .note-box p{font-size:.95rem;color:var(--charcoal);line-height:1.7;margin:0}
 
     .cta-footer{background:var(--navy);color:#fff;padding:4rem 2rem;text-align:center;margin-top:4rem}
-    .cta-footer h2{font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;margin-bottom:1rem;letter-spacing:-.02em}
+    .cta-footer h2{font-family:'DM Sans',sans-serif;font-size:2rem;font-weight:600;margin-bottom:1rem;letter-spacing:-.02em}
     .cta-footer p{font-size:1.05rem;color:rgba(255,255,255,.8);margin-bottom:2rem;max-width:600px;margin-left:auto;margin-right:auto}
     .cta-button{display:inline-block;background:#fff;color:var(--navy);padding:.9rem 2rem;border-radius:8px;text-decoration:none;font-weight:700;margin:0 .5rem;transition:opacity .2s}
     .cta-button:hover{opacity:.9}
@@ -54,10 +54,27 @@
     @media (max-width:900px){
       .gap-item{display:block;margin:0.5rem 0}
     }
+  
+    :root{--navy:#0F1A2A;--teal:#00FDB3}
+    .branded-nav{background:var(--navy);padding:.85rem 2rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;border-bottom:1px solid rgba(255,255,255,.10)}
+    .branded-nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+    .branded-nav-logo img{width:28px;height:28px;border-radius:6px}
+    .branded-nav-logo .wm{font-family:'DM Sans',sans-serif;font-size:1.1rem;font-weight:600;letter-spacing:-.02em}
+    .branded-nav-back{font-family:'DM Sans',sans-serif;font-size:.88rem;color:rgba(255,255,255,.65);text-decoration:none;transition:color .15s;display:flex;align-items:center;gap:6px}
+    .branded-nav-back:hover{color:var(--teal)}
+    .sq-m{position:absolute;border:1.5px solid rgba(255,255,255,.22);transform:rotate(45deg);pointer-events:none}
+    .service-header{position:relative;overflow:hidden}
+    .service-header h1{font-weight:600!important}
   </style>
 </head>
 <body>
-  <a href="/" class="back-link">← Back to home</a>
+  <nav class="branded-nav">
+  <a href="/" class="branded-nav-logo">
+    <img src="brand_assets/Rounded Corners Update (3).png" alt="Stenward">
+    <span class="wm"><span style="color:#fff">Sten</span><span style="color:#00FDB3">ward</span></span>
+  </a>
+  <a href="/" class="branded-nav-back">&#8592; Back to home</a>
+</nav>
 
   <div class="service-header">
     <h1>Gap Analysis</h1>

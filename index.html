@@ -7,7 +7,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
     :root{
@@ -32,7 +32,7 @@
     .nav-brand{display:flex;align-items:center;gap:8px;text-decoration:none}
     .nav-brand img{width:26px;height:26px;border-radius:6px}
     .nav-brand span{
-      font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:600;
+      font-family:'DM Sans',sans-serif;font-size:1.2rem;font-weight:600;
       letter-spacing:-.02em;
       color:#fff;
       transition:color .35s;
@@ -84,7 +84,7 @@
     /* Canvas for animated beams */
     #hero-canvas{
       position:absolute;inset:0;width:100%;height:100%;
-      filter:blur(15px);
+      filter:blur(32px);
       pointer-events:none;z-index:0;
     }
 
@@ -92,10 +92,10 @@
     .hero-cursor-glow{
       position:absolute;width:600px;height:600px;border-radius:50%;
       background:radial-gradient(circle, rgba(0,253,179,.07) 0%, rgba(67,166,247,.04) 40%, transparent 70%);
-      transform:translate(-50%,-50%);
+      left:0;top:0;transform:translate(-50%,-50%);
       pointer-events:none;z-index:1;
       transition:opacity .5s;opacity:0;
-      will-change:left,top;
+      will-change:transform;
     }
 
     /* Subtle center radial overlay to boost text readability */
@@ -134,7 +134,7 @@
       border-left:4px solid var(--teal);
     }
     .why-stenward-content h3{
-      font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;
+      font-family:'DM Sans',sans-serif;font-size:1.3rem;font-weight:700;
       margin-bottom:1rem;line-height:1.3;
     }
     .why-stenward-content p{
@@ -174,10 +174,10 @@
     .hero-eyebrow-dot{animation:pulse 2.5s ease-in-out infinite}
 
     .hero h1{
-      font-family:'Playfair Display',serif;
+      font-family:'DM Sans',sans-serif;
       font-size:clamp(2.6rem,5.5vw,4.5rem);
-      font-weight:700;color:#fff;
-      line-height:1.1;letter-spacing:-.04em;margin-bottom:1.4rem;
+      font-weight:600;color:#fff;
+      line-height:1.1;letter-spacing:-.03em;margin-bottom:1.4rem;
     }
     .hero h1 em{font-style:italic;font-weight:400;color:rgba(255,255,255,.72)}
 
@@ -250,8 +250,8 @@
     .eyebrow{font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted-grey);margin-bottom:.75rem;display:block;flex-shrink:0}
     .eyebrow-navy{font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:.75rem;display:block;flex-shrink:0}
 
-    .sec-h{font-family:'Playfair Display',serif;font-size:clamp(1.85rem,3vw,2.55rem);font-weight:700;color:var(--navy);letter-spacing:-.03em;line-height:1.2;margin-bottom:1.25rem}
-    .sec-h-white{font-family:'Playfair Display',serif;font-size:clamp(1.85rem,3vw,2.55rem);font-weight:700;color:#fff;letter-spacing:-.03em;line-height:1.2;margin-bottom:1.25rem}
+    .sec-h{font-family:'DM Sans',sans-serif;font-size:clamp(1.85rem,3vw,2.55rem);font-weight:600;color:var(--navy);letter-spacing:-.02em;line-height:1.2;margin-bottom:1.25rem}
+    .sec-h-white{font-family:'DM Sans',sans-serif;font-size:clamp(1.85rem,3vw,2.55rem);font-weight:600;color:#fff;letter-spacing:-.02em;line-height:1.2;margin-bottom:1.25rem}
     .sec-h-xl{font-size:clamp(2rem,3.5vw,3rem)}
 
     .sec-body{font-size:1.05rem;color:var(--charcoal);line-height:1.82}
@@ -370,58 +370,39 @@
       animation:orbA 20s ease-in-out infinite reverse 3s;
     }
 
-    /* ─── FEATURES-1 CARDS (replaces pillar grid) ─── */
+    /* ─── FEATURES CARDS (navy, sq-motif style matching outcomes cards) ─── */
     .features-grid{
       display:grid;grid-template-columns:repeat(3,1fr);
       gap:1.5rem;margin-top:2.5rem;
     }
     .feat-card{
-      text-align:center;
-      border:1.5px solid var(--border);border-radius:14px;border-top:3px solid var(--navy);
-      background:#fff;
-      box-shadow:0 2px 8px rgba(3,20,50,.03);
-      transition:box-shadow .22s,border-color .22s,transform .22s;
+      display:flex;flex-direction:column;
+      background:var(--navy);border-radius:16px;overflow:hidden;
+      transition:transform .3s cubic-bezier(.22,1,.36,1);
     }
-    .feat-card:hover{
-      box-shadow:0 10px 36px rgba(3,20,50,.09);
-      border-color:#c5cad8;transform:translateY(-3px);
-    }
+    .feat-card:hover{transform:translateY(-4px)}
     .feat-card-header{
-      padding:1.75rem 1.5rem .75rem;
-      display:flex;flex-direction:column;align-items:center;
+      position:relative;height:110px;flex-shrink:0;
+      border-bottom:1px solid rgba(255,255,255,.16);
+      display:flex;align-items:center;justify-content:center;overflow:hidden;
     }
-    /* Masked grid + icon decorator — direct port of CardDecorator */
-    .feat-decorator{
-      position:relative;width:9rem;height:9rem;
-      mask-image:radial-gradient(ellipse 50% 50% at 50% 50%,#000 70%,transparent 100%);
-      -webkit-mask-image:radial-gradient(ellipse 50% 50% at 50% 50%,#000 70%,transparent 100%);
+    .feat-card-header .sq-motif{display:none}
+    .feat-tag{
+      position:relative;
+      font-size:.75rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+      color:var(--teal);
     }
-    .feat-decorator-grid{
-      position:absolute;inset:0;
-      background-image:
-        linear-gradient(to right,rgba(3,20,50,.14) 1px,transparent 1px),
-        linear-gradient(to bottom,rgba(3,20,50,.14) 1px,transparent 1px);
-      background-size:24px 24px;
-    }
-    .feat-decorator-icon{
-      position:absolute;inset:0;margin:auto;
-      width:3rem;height:3rem;
-      display:flex;align-items:center;justify-content:center;
-      background:#fff;
-      border-top:1px solid var(--border);
-      border-left:1px solid var(--border);
-      color:var(--navy);
-    }
+    .feat-card-content{padding:1.5rem 1.75rem 1.75rem;flex:1;display:flex;flex-direction:column}
     .feat-card-title{
-      font-size:1rem;font-weight:700;color:var(--navy);
-      margin-top:1.25rem;line-height:1.3;
+      font-size:1.12rem;font-weight:600;line-height:1.35;letter-spacing:-.01em;
+      color:#fff;margin-bottom:.75rem;
     }
     .feat-card-body{
-      padding:.5rem 1.5rem 1.75rem;
-      font-size:.875rem;color:#6b7280;line-height:1.75;
+      font-size:.95rem;line-height:1.7;
+      color:rgba(255,255,255,.72);flex:1;
     }
     @media(max-width:900px){
-      .features-grid{grid-template-columns:1fr;max-width:22rem;margin-left:auto;margin-right:auto}
+      .features-grid{grid-template-columns:1fr}
     }
 
     /* ─── DIFFERENTIATION ─── */
@@ -436,7 +417,7 @@
       padding:.75rem;text-align:center;
       background:var(--light-surface);border-radius:8px;
     }
-    .diff-quote{font-family:'Playfair Display',serif;font-size:clamp(1.2rem,2vw,1.5rem);font-weight:500;font-style:italic;color:var(--navy);line-height:1.55;padding-left:1.5rem;border-left:4px solid var(--navy);margin-bottom:1.5rem}
+    .diff-quote{font-family:'DM Sans',sans-serif;font-size:clamp(1.2rem,2vw,1.5rem);font-weight:500;font-style:italic;color:var(--navy);line-height:1.55;padding-left:1.5rem;border-left:4px solid var(--navy);margin-bottom:1.5rem}
 
     /* ─── APPROACH ─── */
     .approach-inner{max-width:52rem;margin:0 auto}
@@ -447,7 +428,7 @@
       margin-top:2.5rem;align-items:start;
     }
     .credibility-text h3{
-      font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;
+      font-family:'DM Sans',sans-serif;font-size:1.3rem;font-weight:700;
       color:var(--navy);margin:0 0 1rem;
     }
     .credibility-text p{
@@ -474,7 +455,7 @@
       position:sticky;top:2rem;
     }
     .credibility-highlight h4{
-      font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;
+      font-family:'DM Sans',sans-serif;font-size:1.05rem;font-weight:700;
       color:var(--navy);margin:0 0 .75rem;
     }
     .credibility-highlight p{
@@ -489,7 +470,7 @@
     .stats-row{display:flex;gap:0;border:1.5px solid var(--border);border-radius:14px;border-top:3px solid var(--navy);overflow:hidden;margin-bottom:2.5rem}
     .stat-item{flex:1;padding:1.5rem 1.75rem;border-right:1.5px solid var(--border)}
     .stat-item:last-child{border-right:none}
-    .stat-num{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;color:var(--navy);letter-spacing:-.03em;line-height:1;margin-bottom:.35rem}
+    .stat-num{font-family:'DM Sans',sans-serif;font-size:1.6rem;font-weight:700;color:var(--navy);letter-spacing:-.03em;line-height:1;margin-bottom:.35rem}
     .stat-lbl{font-size:.88rem;color:var(--charcoal);line-height:1.5}
 
     /* ─── AMBIENT GRADIENTS: flow the navy/teal palette through the whole page ─── */
@@ -532,43 +513,32 @@
     .case-card{
       display:flex;flex-direction:column;
       border-radius:16px;overflow:hidden;
-      background:#fff;
-      border:2px solid var(--navy);
-      box-shadow:0 2px 8px rgba(0,0,0,.04);
-      transition:box-shadow .3s,border-color .3s;
+      background:var(--navy);
+      transition:transform .3s cubic-bezier(.22,1,.36,1);
     }
-    .case-card:hover{
-      box-shadow:0 12px 32px rgba(0,0,0,.1);
-      border-color:#d1d5db;
+    .case-card:hover{transform:translateY(-4px)}
+    .case-top{
+      position:relative;height:120px;flex-shrink:0;
+      border-bottom:1px solid rgba(255,255,255,.16);
+      display:flex;align-items:center;justify-content:center;overflow:hidden;
     }
-    .case-bg{
-      position:relative;width:100%;height:220px;overflow:hidden;background:#f0f0f0}
-    .case-img{
-      position:absolute;inset:0;width:100%;height:100%;
-      object-fit:cover;transition:transform .4s cubic-bezier(.22,1,.36,1);
-    }
-    .case-card:hover .case-img{transform:scale(1.06)}
-    .case-overlay{
-      position:absolute;inset:0;
-      background:linear-gradient(135deg,rgba(3,20,50,.15),rgba(67,166,247,.1));
-    }
+    .case-top .sq-motif{display:none}
     .case-content{
       padding:1.75rem;flex:1;display:flex;flex-direction:column;
     }
     .case-tag{
-      font-size:.65rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
-      color:var(--teal);background:rgba(0,253,179,.1);
-      padding:4px 10px;border-radius:100px;
-      display:inline-block;margin-bottom:.9rem;width:fit-content;
+      position:relative;
+      font-size:.75rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+      color:var(--teal);
     }
     .case-title{
-      font-family:'Playfair Display',serif;
-      font-size:1.1rem;font-weight:700;line-height:1.4;
-      color:var(--navy);margin-bottom:.8rem;
+      font-family:'DM Sans',sans-serif;
+      font-size:1.12rem;font-weight:600;line-height:1.35;letter-spacing:-.01em;
+      color:#fff;margin-bottom:.8rem;
     }
     .case-body{
       font-size:.95rem;line-height:1.7;
-      color:var(--charcoal);flex:1;
+      color:rgba(255,255,255,.72);flex:1;
     }
     @media (max-width:900px){
       .case-grid{grid-template-columns:1fr}
@@ -601,7 +571,7 @@
     }
     .service-card-hero .service-icon-wrap{background:rgba(0,253,179,.2);color:var(--teal)}
     .service-card-title{
-      font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;
+      font-family:'DM Sans',sans-serif;font-size:1.1rem;font-weight:700;
       color:var(--navy);margin-bottom:.75rem;line-height:1.3;
     }
     .service-card-hero .service-card-title{color:#fff;font-size:1.3rem}
@@ -669,7 +639,7 @@
       border-left:4px solid var(--teal);
     }
     .phase-title{
-      font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;
+      font-family:'DM Sans',sans-serif;font-size:1.2rem;font-weight:700;
       color:var(--navy);margin:0 0 .75rem;
     }
     .phase-desc{
@@ -729,9 +699,9 @@
       color:rgba(255,255,255,.45);margin-bottom:.75rem;display:block;
     }
     .cta-card-heading{
-      font-family:'Playfair Display',serif;
+      font-family:'DM Sans',sans-serif;
       font-size:clamp(1.6rem,3vw,2.3rem);
-      font-weight:700;color:#fff;
+      font-weight:600;color:#fff;
       line-height:1.15;letter-spacing:-.035em;margin-bottom:1.1rem;
     }
     .cta-card-text{
@@ -770,7 +740,7 @@
     /* ─── FOOTER (footer-section component) ─── */
     footer{background:var(--navy-deep)}
     footer{
-      background:var(--navy);width:100%;margin-top:auto;
+      background:var(--navy);width:100%;margin-top:auto;overflow:hidden;position:relative;
     }
     .site-footer{
       width:100%;max-width:72rem;margin:0 auto;
@@ -790,18 +760,20 @@
       border-radius:100px;
       filter:blur(2px);
     }
-    .footer-grid{display:grid;grid-template-columns:1fr 2.2fr;gap:3rem}
+    .footer-top{display:grid;grid-template-columns:280px 1fr;gap:4.5rem;padding-bottom:2.5rem;margin-bottom:1.5rem;border-bottom:1px solid rgba(255,255,255,.12)}
+    .footer-bottom{display:flex;align-items:center}
     .footer-brand-block img{width:26px;height:26px;border-radius:6px}
     .footer-brand-name{
-      font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:600;
+      font-family:'DM Sans',sans-serif;font-size:1.1rem;font-weight:600;
       color:#fff;letter-spacing:-.02em;margin-left:8px;vertical-align:middle;
     }
     .footer-brand-desc{font-size:.9rem;color:rgba(255,255,255,.65);line-height:1.65;max-width:220px;margin-top:.85rem}
     .footer-brand-copy{font-size:.73rem;color:rgba(255,255,255,.45);margin-top:1.5rem}
-    .footer-col-group{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem}
+    .footer-col-group{display:grid;grid-template-columns:repeat(3,1fr);gap:3.5rem}
     .footer-col-label{
-      font-size:.7rem;font-weight:700;color:rgba(255,255,255,.65);
-      text-transform:uppercase;letter-spacing:.1em;margin-bottom:.9rem;
+      font-size:.8rem;font-weight:700;color:#fff;
+      text-transform:uppercase;letter-spacing:.12em;margin-bottom:1.1rem;
+      font-family:'DM Sans',sans-serif;
     }
     .footer-col-links{list-style:none;display:flex;flex-direction:column;gap:.55rem}
     .footer-col-links a{
@@ -821,7 +793,7 @@
     .fa.d3{transition-delay:.3s}.fa.d4{transition-delay:.4s}
     @media(max-width:900px){
       .cta-card-content{grid-template-columns:1fr;padding:2.5rem 2rem;gap:2rem}
-      .footer-grid{grid-template-columns:1fr}
+      .footer-top{grid-template-columns:1fr}
       .footer-col-group{grid-template-columns:repeat(2,1fr)}
     }
     @media(max-width:520px){
@@ -831,11 +803,27 @@
     .divider{width:100%;height:2px;background:linear-gradient(90deg,transparent,var(--navy),transparent);max-width:68rem;margin:0 auto;opacity:.4}
 
     /* ─── SCROLL REVEAL ─── */
-    .reveal{opacity:0;transform:translateY(18px);transition:opacity .65s ease,transform .65s ease}
+    .reveal{opacity:0;transform:translateY(18px);transition:opacity .7s cubic-bezier(.22,1,.36,1),transform .7s cubic-bezier(.22,1,.36,1)}
     .reveal.on{opacity:1;transform:translateY(0)}
     .reveal-delay-1{transition-delay:.1s}
     .reveal-delay-2{transition-delay:.2s}
     .reveal-delay-3{transition-delay:.3s}
+
+    /* ─── SQUARE MOTIF (thin rotated-square linework, one per dark section) ─── */
+    .sq-motif{position:absolute;border:1.5px solid rgba(255,255,255,.18);transform:rotate(45deg);pointer-events:none}
+
+    /* ─── HERO SQUARE FIELD ─── */
+    .hero-sq-field{position:absolute;inset:0;z-index:3;pointer-events:none;overflow:hidden}
+    .hero-sq-cluster{position:absolute;pointer-events:none}
+    .hsq{position:absolute;display:block;border:1.5px solid #fff;transform:rotate(45deg)}
+    .hero-sq-cluster .hsq{top:50%;left:50%;transform:translate(-50%,-50%) rotate(45deg)}
+    @keyframes sqFloatCluster{0%,100%{transform:translateY(0)} 50%{transform:translateY(-24px)}}
+    @keyframes sqFloat{0%,100%{transform:translateY(0) rotate(45deg)} 50%{transform:translateY(-20px) rotate(45deg)}}
+    .hero-sq-cluster{animation:sqFloatCluster 5s ease-in-out infinite}
+    .hsq-anim{animation:sqFloat 5s ease-in-out infinite}
+    @media (prefers-reduced-motion: reduce) {
+      .hero-sq-cluster,.hsq-anim{animation:none}
+    }
 
     /* ─── RESPONSIVE ─── */
     @media(max-width:900px){
@@ -887,7 +875,7 @@
       padding:2rem;border-bottom:1px solid var(--border);
     }
     .booking-modal-header h2{
-      font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;
+      font-family:'DM Sans',sans-serif;font-size:1.6rem;font-weight:700;
       color:var(--navy);margin:0;
     }
     .modal-close{
@@ -921,7 +909,7 @@
     }
     .cal-nav-btn:hover{background:var(--light-surface);border-color:var(--navy)}
     .cal-current-month{
-      font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;
+      font-family:'DM Sans',sans-serif;font-size:1.1rem;font-weight:700;
       color:var(--navy);
     }
 
@@ -1026,7 +1014,7 @@
     }
     .booking-avatar-dot{animation:onlinePulse 2.2s ease-in-out infinite}
     .booking-person-name{
-      font-family:'Playfair Display',serif;
+      font-family:'DM Sans',sans-serif;
       font-size:1rem;font-weight:600;color:#fff;
       letter-spacing:-.01em;line-height:1.2;
     }
@@ -1054,7 +1042,7 @@
       margin-bottom:16px;
     }
     .cal-card-title{
-      font-family:'Playfair Display',serif;
+      font-family:'DM Sans',sans-serif;
       font-size:1.05rem;font-weight:700;color:#031432;
       letter-spacing:-.02em;margin-bottom:4px;
     }
@@ -1133,7 +1121,7 @@
   <div class="nav-inner" id="nav-inner">
     <a href="#" class="nav-brand">
       <img src="brand_assets/Rounded Corners Update (3).png" alt="Stenward">
-      <span>Stenward</span>
+      <span><span>Sten</span><span style="color:var(--teal)">ward</span></span>
     </a>
     <ul class="nav-links">
       <li><a href="#offer">The Offer</a></li>
@@ -1170,6 +1158,33 @@
   <!-- Floor fade into navy -->
   <div class="hero-floor-fade" aria-hidden="true"></div>
 
+  <!-- Hero square field -->
+  <div class="hero-sq-field" aria-hidden="true">
+    <!-- Concentric anchor cluster (top-right) -->
+    <div class="hero-sq-cluster" style="top:11%;right:8%">
+      <span class="hsq" style="width:220px;height:220px;opacity:.07"></span>
+      <span class="hsq" style="width:156px;height:156px;opacity:.13"></span>
+      <span class="hsq" style="width:102px;height:102px;opacity:.20"></span>
+      <span class="hsq" style="width:58px;height:58px;opacity:.28"></span>
+      <span class="hsq" style="width:22px;height:22px;opacity:.38"></span>
+    </div>
+    <!-- Satellite squares -->
+    <span class="hsq hsq-anim" style="top:54%;right:4%;width:82px;height:82px;opacity:.13;animation-duration:6s;animation-delay:1s"></span>
+    <span class="hsq" style="top:76%;right:17%;width:46px;height:46px;opacity:.19"></span>
+    <span class="hsq hsq-anim" style="top:4%;right:32%;width:38px;height:38px;opacity:.21;animation-duration:4s;animation-delay:.5s"></span>
+    <span class="hsq" style="top:36%;right:24%;width:18px;height:18px;opacity:.30"></span>
+    <span class="hsq" style="top:22%;right:19%;width:12px;height:12px;opacity:.26"></span>
+    <!-- Left accents -->
+    <span class="hsq hsq-anim" style="top:70%;left:2%;width:92px;height:92px;opacity:.09;animation-duration:7s;animation-delay:2s"></span>
+    <span class="hsq hsq-anim" style="top:46%;left:5%;width:40px;height:40px;opacity:.15;animation-duration:5s;animation-delay:1.5s"></span>
+    <span class="hsq" style="top:18%;left:2%;width:16px;height:16px;opacity:.24"></span>
+    <!-- Tiny accent squares -->
+    <span class="hsq" style="top:59%;right:37%;width:12px;height:12px;opacity:.28"></span>
+    <span class="hsq" style="top:29%;right:43%;width:10px;height:10px;opacity:.22"></span>
+    <span class="hsq" style="top:84%;right:44%;width:14px;height:14px;opacity:.20"></span>
+    <span class="hsq" style="top:88%;left:20%;width:10px;height:10px;opacity:.18"></span>
+  </div>
+
   <!-- ── Hero content ── -->
   <div class="hero-content">
     <div class="hero-eyebrow" aria-hidden="true">
@@ -1201,7 +1216,7 @@
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid #f3f4f6;">
         <div style="display:flex;align-items:center;gap:8px;">
           <img src="brand_assets/Rounded Corners Update (3).png" alt="" style="width:20px;height:20px;border-radius:4px;">
-          <span style="font-family:'Playfair Display',serif;font-size:.88rem;font-weight:600;color:#031432;letter-spacing:-.01em;">Stenward ISMS</span>
+          <span style="font-family:'DM Sans',sans-serif;font-size:.88rem;font-weight:600;color:#031432;letter-spacing:-.01em;">Stenward ISMS</span>
         </div>
         <div style="display:flex;align-items:center;gap:8px;">
           <div style="font-size:.68rem;font-weight:700;color:#0d3883;background:#eef2ff;padding:2px 10px;border-radius:100px;letter-spacing:.04em;">ISO 27001</div>
@@ -1302,6 +1317,7 @@
         aria-hidden="true"
       >
       <div class="cta-card-overlay" aria-hidden="true"></div>
+      <span class="sq-motif" style="bottom:-55px;right:9%;width:150px;height:150px;z-index:4" aria-hidden="true"></span>
 
       <div class="cta-card-content">
 
@@ -1330,7 +1346,7 @@
 
 <!-- ═══════════════ SECTION 3 — THE OFFER (3 pillars) ═══════════════ -->
 <section class="sec sec-alt reveal" id="offer">
-  <div class="sec-inner" style="max-width:58rem;">
+  <div class="sec-inner">
     <div style="text-align:center;margin-bottom:.5rem;">
       <span class="eyebrow" style="display:inline-block;">The offer</span>
       <h2 class="sec-h">ISO 27001 implementation,<br>end to end.</h2>
@@ -1342,46 +1358,34 @@
       <!-- Card 1: Senior-led -->
       <div class="feat-card reveal reveal-delay-1">
         <div class="feat-card-header">
-          <div class="feat-decorator" aria-hidden="true">
-            <div class="feat-decorator-grid"></div>
-            <div class="feat-decorator-icon">
-              <!-- Award — senior practitioner, credentialled expertise -->
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
-            </div>
-          </div>
-          <h3 class="feat-card-title">Senior-led from start to finish</h3>
+          <span class="feat-tag">Senior-led</span>
         </div>
-        <p class="feat-card-body">Every engagement is led personally by a senior practitioner who has built and defended ISMS programmes in real environments. You work directly with the person doing the work &#8212; not a sales team that hands you to a junior once the contract is signed.</p>
+        <div class="feat-card-content">
+          <h3 class="feat-card-title">Senior-led from start to finish</h3>
+          <p class="feat-card-body">Every engagement is led personally by a senior practitioner who has built and defended ISMS programmes in real environments. You work directly with the person doing the work &#8212; not a sales team that hands you to a junior once the contract is signed.</p>
+        </div>
       </div>
 
       <!-- Card 2: Built for how you work -->
       <div class="feat-card reveal reveal-delay-2">
         <div class="feat-card-header">
-          <div class="feat-decorator" aria-hidden="true">
-            <div class="feat-decorator-grid"></div>
-            <div class="feat-decorator-icon">
-              <!-- Sliders — proportionate controls, fit to your business -->
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg>
-            </div>
-          </div>
-          <h3 class="feat-card-title">Built for how you work</h3>
+          <span class="feat-tag">Proportionate</span>
         </div>
-        <p class="feat-card-body">We design controls that fit your business, your size, and your stage &#8212; not a generic template bolted on from the outside. The result is an ISMS your team adopts naturally, because it reflects how you already operate.</p>
+        <div class="feat-card-content">
+          <h3 class="feat-card-title">Built for how you work</h3>
+          <p class="feat-card-body">We design controls that fit your business, your size, and your stage &#8212; not a generic template bolted on from the outside. The result is an ISMS your team adopts naturally, because it reflects how you already operate.</p>
+        </div>
       </div>
 
       <!-- Card 3: Made to last -->
       <div class="feat-card reveal reveal-delay-3">
         <div class="feat-card-header">
-          <div class="feat-decorator" aria-hidden="true">
-            <div class="feat-decorator-grid"></div>
-            <div class="feat-decorator-icon">
-              <!-- Refresh-CW — ISMS that survives every surveillance audit, keeps maturing -->
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>
-            </div>
-          </div>
-          <h3 class="feat-card-title">Made to last beyond the audit</h3>
+          <span class="feat-tag">Built to last</span>
         </div>
-        <p class="feat-card-body">Certification is the start, not the finish. We build an ISMS you can sustain through every surveillance audit that follows &#8212; with a clear roadmap for what matures as you grow.</p>
+        <div class="feat-card-content">
+          <h3 class="feat-card-title">Made to last beyond the audit</h3>
+          <p class="feat-card-body">Certification is the start, not the finish. We build an ISMS you can sustain through every surveillance audit that follows &#8212; with a clear roadmap for what matures as you grow.</p>
+        </div>
       </div>
 
     </div>
@@ -1550,14 +1554,12 @@
     <h2 class="sec-h">Client outcomes that speak for themselves.</h2>
 
     <div class="case-grid">
-      <!-- Case 1: Build from scratch -->
+      <!-- Case 1: Built from scratch -->
       <div class="case-card">
-        <div class="case-bg">
-          <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=900&auto=format&fit=crop&q=80" alt="" class="case-img">
-          <div class="case-overlay" aria-hidden="true"></div>
+        <div class="case-top">
+          <span class="case-tag">Built from scratch</span>
         </div>
         <div class="case-content">
-          <span class="case-tag">Build from scratch</span>
           <h3 class="case-title">Building an ISMS from scratch, against the clock</h3>
           <p class="case-body">A remote-first technology company needed ISO 27001 certification readiness with a hard deadline and no existing management system. Stenward built the entire ISMS from a blank page — scope, risk assessment, controls, policies, evidence — and had the organisation certification-ready within roughly three months.</p>
         </div>
@@ -1565,12 +1567,10 @@
 
       <!-- Case 2: Breadth under pressure -->
       <div class="case-card">
-        <div class="case-bg">
-          <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=900&auto=format&fit=crop&q=80" alt="" class="case-img">
-          <div class="case-overlay" aria-hidden="true"></div>
+        <div class="case-top">
+          <span class="case-tag">Breadth under pressure</span>
         </div>
         <div class="case-content">
-          <span class="case-tag">Breadth under pressure</span>
           <h3 class="case-title">Five frameworks through a high-stakes acquisition</h3>
           <p class="case-body">After an acquisition dissolved an established compliance team, an enterprise software company faced surveillance audits across ISO 27001, ISO 27701, ISO 22301, SOC 2, and PCI DSS with no one to run them. Stenward took on the entire estate single-handedly — maintaining every certification through the disruption.</p>
         </div>
@@ -1578,12 +1578,10 @@
 
       <!-- Case 3: Ongoing maintenance -->
       <div class="case-card">
-        <div class="case-bg">
-          <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=900&auto=format&fit=crop&q=80" alt="" class="case-img">
-          <div class="case-overlay" aria-hidden="true"></div>
+        <div class="case-top">
+          <span class="case-tag">Ongoing maintenance</span>
         </div>
         <div class="case-content">
-          <span class="case-tag">Ongoing maintenance</span>
           <h3 class="case-title">Maintaining and maturing an ISMS</h3>
           <p class="case-body">A construction-technology SaaS company needed its ISO 27001 ISMS maintained and matured while handling enterprise security questionnaires. Stenward kept the ISMS audit-ready and supported a move into SOC 2 — earning an invitation to return a year after the engagement ended.</p>
         </div>
@@ -1646,12 +1644,12 @@
         </div>
         <div class="phase-content">
           <h3 class="phase-title">Audit Preparation</h3>
-          <p class="phase-desc">Six to eight weeks before your stage 2 audit, we conduct an internal audit to stress-test your ISMS against the standard. We identify gaps while there's still time to fix them, document findings, and work with your team on remediation. We also conduct a management review and ensure all evidence is organized and audit-ready. This phase is typically 6-8 weeks and dramatically reduces surprises during the real audit.</p>
+          <p class="phase-desc">Six to eight weeks before your stage 2 audit, we conduct an internal audit to stress-test your ISMS against the standard. We identify gaps while there's still time to fix them, document findings, and work with your team on remediation. We also conduct a management review and ensure all evidence is organised and audit-ready. This phase is typically 6-8 weeks and dramatically reduces surprises during the real audit.</p>
           <div class="phase-details">
             <div class="detail-item">✓ Internal audit</div>
             <div class="detail-item">✓ Management review</div>
-            <div class="detail-item">✓ Finding remediation</div>
-            <div class="detail-item">✓ Evidence organization</div>
+            <div class="detail-item">✓ Findings remediation</div>
+            <div class="detail-item">✓ Evidence organisation</div>
           </div>
         </div>
       </div>
@@ -1663,7 +1661,7 @@
         </div>
         <div class="phase-content">
           <h3 class="phase-title">Certification & Beyond</h3>
-          <p class="phase-desc">We attend both your stage 1 (documentation audit) and stage 2 (compliance audit) with your certification body, supporting you through every question and clarification. Once certified, you have an ISMS that's genuinely audit-ready and that your team understands. Many clients ask us to stay on as ongoing compliance support — surveillance audits, finding management, documentation updates, and new questionnaires — without the cost of hiring in-house.</p>
+          <p class="phase-desc">We attend both your stage 1 (documentation audit) and stage 2 (compliance audit) with your certification body, supporting you through every question and clarification. Once certified, you have an ISMS that's genuinely audit-ready and that your team understands. Many clients ask us to stay on as ongoing compliance support — surveillance audits, findings management, documentation updates, and new questionnaires — without the cost of hiring in-house.</p>
           <div class="phase-details">
             <div class="detail-item">✓ Stage 1 & 2 support</div>
             <div class="detail-item">✓ Certification</div>
@@ -1677,8 +1675,12 @@
 </section>
 
 <!-- ═══════════════ SECTION 10 — BOOKING / CONTACT ═══════════════ -->
-<section class="sec sec-dark" id="contact">
-  <div class="booking-grid">
+<section class="sec sec-dark" id="contact" style="position:relative;overflow:hidden">
+  <span class="sq-motif" style="top:14%;left:4%;width:140px;height:140px" aria-hidden="true"></span>
+  <span class="sq-motif" style="bottom:12%;right:5%;width:110px;height:110px" aria-hidden="true"></span>
+  <span class="sq-motif" style="top:48%;right:20%;width:44px;height:44px;opacity:.28" aria-hidden="true"></span>
+  <span class="sq-motif" style="top:6%;right:10%;width:24px;height:24px;opacity:.32" aria-hidden="true"></span>
+  <div class="booking-grid" style="position:relative">
 
     <!-- ── Left: avatar + copy + CTA ── -->
     <div>
@@ -1789,17 +1791,29 @@
 
 <!-- ═══════════════ FOOTER (footer-section component) ═══════════════ -->
 <footer>
+  <!-- Footer square field: positioned relative to full-width footer -->
+  <span class="sq-motif hsq-anim" style="top:10%;right:6%;width:200px;height:200px;opacity:.38;animation-duration:4s;animation-delay:0s" aria-hidden="true"></span>
+  <span class="sq-motif" style="top:10%;right:6%;width:120px;height:120px;opacity:.34" aria-hidden="true"></span>
+  <span class="sq-motif hsq-anim" style="bottom:8%;left:5%;width:160px;height:160px;opacity:.34;animation-duration:5s;animation-delay:.8s" aria-hidden="true"></span>
+  <span class="sq-motif" style="bottom:8%;left:5%;width:88px;height:88px;opacity:.30" aria-hidden="true"></span>
+  <span class="sq-motif hsq-anim" style="top:20%;left:20%;width:70px;height:70px;opacity:.36;animation-duration:3.5s;animation-delay:.3s" aria-hidden="true"></span>
+  <span class="sq-motif hsq-anim" style="top:55%;right:22%;width:58px;height:58px;opacity:.34;animation-duration:3s;animation-delay:1.5s" aria-hidden="true"></span>
+  <span class="sq-motif" style="top:30%;right:40%;width:40px;height:40px;opacity:.38" aria-hidden="true"></span>
+  <span class="sq-motif" style="bottom:25%;left:38%;width:34px;height:34px;opacity:.40" aria-hidden="true"></span>
+  <span class="sq-motif" style="top:10%;left:48%;width:22px;height:22px;opacity:.42" aria-hidden="true"></span>
+  <span class="sq-motif" style="bottom:15%;right:12%;width:26px;height:26px;opacity:.40" aria-hidden="true"></span>
+  <span class="sq-motif" style="top:65%;left:14%;width:18px;height:18px;opacity:.42" aria-hidden="true"></span>
+  <span class="sq-motif" style="top:42%;right:56%;width:14px;height:14px;opacity:.44" aria-hidden="true"></span>
   <div class="site-footer">
-    <div class="footer-grid">
+    <div class="footer-top">
 
       <!-- Brand column -->
       <div class="fa" id="fa0">
         <div style="display:flex;align-items:center;margin-bottom:.9rem;">
           <img src="brand_assets/Rounded Corners Update (3).png" alt="Stenward" class="footer-brand-block" style="width:26px;height:26px;border-radius:6px;display:inline-block;vertical-align:middle;">
-          <span class="footer-brand-name">Stenward</span>
+          <span class="footer-brand-name"><span>Sten</span><span style="color:var(--teal)">ward</span></span>
         </div>
         <p class="footer-brand-desc">Information security,<br>on your terms.</p>
-        <p class="footer-brand-copy">&#169; 2026 Stenward. All rights reserved.</p>
       </div>
 
       <!-- Link columns -->
@@ -1839,9 +1853,12 @@
           </ul>
         </div>
 
-      </div>
+      </div><!-- /footer-col-group -->
+    </div><!-- /footer-top -->
+    <div class="footer-bottom">
+      <p class="footer-brand-copy">&#169; 2026 Stenward. All rights reserved.</p>
     </div>
-  </div>
+  </div><!-- /site-footer -->
 </footer>
 
 <!-- ═══════════════ SCRIPTS ═══════════════ -->
@@ -1891,16 +1908,18 @@
     b.opacity = 0.15 + Math.random() * 0.1;
   }
 
+  // Render at reduced resolution — the canvas is heavily blurred anyway, and
+  // this cuts per-frame fill cost dramatically (smoother scrolling everywhere).
+  var SCALE = 0.5;
   function resize() {
-    var dpr = window.devicePixelRatio || 1;
     var parent = canvas.parentElement;
     W = parent.clientWidth;
     H = parent.clientHeight;
-    canvas.width = Math.round(W * dpr);
-    canvas.height = Math.round(H * dpr);
+    canvas.width = Math.max(1, Math.round(W * SCALE));
+    canvas.height = Math.max(1, Math.round(H * SCALE));
     canvas.style.width = W + 'px';
     canvas.style.height = H + 'px';
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.setTransform(SCALE, 0, 0, SCALE, 0, 0);
     beams = Array.from({ length: BEAM_COUNT }, makeBeam);
   }
 
@@ -1923,21 +1942,39 @@
 
   function tick() {
     ctx.clearRect(0, 0, W, H);
-    ctx.save();
-    ctx.filter = 'blur(35px)';
     beams.forEach(function (b, i) {
       b.y -= b.speed;
       b.pulse += b.pulseSpeed;
       if (b.y + b.len < -100) resetBeam(b, i);
       drawBeam(b);
     });
-    ctx.restore();
-    animId = requestAnimationFrame(tick);
+    if (running) animId = requestAnimationFrame(tick);
   }
+
+  var running = false;
+  function start() { if (!running) { running = true; animId = requestAnimationFrame(tick); } }
+  function stop() { running = false; if (animId) cancelAnimationFrame(animId); }
 
   resize();
   window.addEventListener('resize', resize, { passive: true });
-  tick();
+
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    tick(); // draw a single static frame
+  } else {
+    // Only animate while the hero is on screen and the tab is visible
+    var onScreen = true;
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (es) {
+        onScreen = es[0].isIntersecting;
+        if (onScreen && !document.hidden) start(); else stop();
+      }, { threshold: 0 });
+      io.observe(canvas.parentElement);
+    }
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden) stop(); else if (onScreen) start();
+    });
+    start();
+  }
 })();
 
 // ────────────────────────────────────────────────────────────
@@ -1949,12 +1986,18 @@
   if (!hero || !glow) return;
 
   var visible = false;
+  var gx = 0, gy = 0, glowQueued = false;
   hero.addEventListener('mousemove', function (e) {
     var rect = hero.getBoundingClientRect();
-    var x = e.clientX - rect.left;
-    var y = e.clientY - rect.top;
-    glow.style.left = x + 'px';
-    glow.style.top = y + 'px';
+    gx = e.clientX - rect.left;
+    gy = e.clientY - rect.top;
+    if (!glowQueued) {
+      glowQueued = true;
+      requestAnimationFrame(function () {
+        glow.style.transform = 'translate(' + gx + 'px,' + gy + 'px) translate(-50%,-50%)';
+        glowQueued = false;
+      });
+    }
     if (!visible) { glow.style.opacity = '1'; visible = true; }
   }, { passive: true });
 

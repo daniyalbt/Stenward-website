@@ -7,7 +7,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
     :root{--navy:#0F1A2A;--teal:#00fdb3;--charcoal:#444444;--muted-grey:#595959;--light-surface:#F2F2F2}
@@ -50,7 +50,7 @@
     }
 
     .booking-form-section h1{
-      font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:700;
+      font-family:'DM Sans',sans-serif;font-size:2.2rem;font-weight:700;
       color:var(--navy);margin-bottom:12px;letter-spacing:-0.03em;
     }
 
@@ -108,7 +108,7 @@
     }
 
     .sidebar-section h3{
-      font-family:'Playfair Display',serif;font-size:1.1rem;
+      font-family:'DM Sans',sans-serif;font-size:1.1rem;
       font-weight:700;color:var(--navy);margin-bottom:12px;
     }
 
@@ -166,7 +166,7 @@
     }
 
     .success-state h2{
-      font-family:'Playfair Display',serif;font-size:2rem;
+      font-family:'DM Sans',sans-serif;font-size:2rem;
       font-weight:700;color:var(--navy);margin-bottom:16px;
       animation:successTextFadeIn .35s ease-out .15s forwards;
       opacity:0;
@@ -212,6 +212,17 @@
         gap:24px;
       }
     }
+  
+    :root{--navy:#0F1A2A;--teal:#00FDB3}
+    .branded-nav{background:var(--navy);padding:.85rem 2rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;border-bottom:1px solid rgba(255,255,255,.10)}
+    .branded-nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+    .branded-nav-logo img{width:28px;height:28px;border-radius:6px}
+    .branded-nav-logo .wm{font-family:'DM Sans',sans-serif;font-size:1.1rem;font-weight:600;letter-spacing:-.02em}
+    .branded-nav-back{font-family:'DM Sans',sans-serif;font-size:.88rem;color:rgba(255,255,255,.65);text-decoration:none;transition:color .15s;display:flex;align-items:center;gap:6px}
+    .branded-nav-back:hover{color:var(--teal)}
+    .sq-m{position:absolute;border:1.5px solid rgba(255,255,255,.22);transform:rotate(45deg);pointer-events:none}
+    .service-header{position:relative;overflow:hidden}
+    .service-header h1{font-weight:600!important}
   </style>
 </head>
 <body>
