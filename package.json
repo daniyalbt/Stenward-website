@@ -1,4 +1,7 @@
 {
+  "dependencies": {
+    "resend": "^3.0.0"
+  },
   "devDependencies": {
     "puppeteer": "^25.1.0"
   }
