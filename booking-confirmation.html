@@ -359,32 +359,17 @@
 
       localStorage.setItem('lastBooking', JSON.stringify(Object.fromEntries(fd)));
 
-      // Send via Resend API
+      // Send via FormSubmit
       try {
-        const payload = {
-          fullName: fd.get('fullName'),
-          email: fd.get('email'),
-          company: fd.get('company'),
-          phone: fd.get('phone'),
-          message: fd.get('message'),
-          preferredDate: bookingData.date || 'Not specified',
-          preferredTime: bookingData.time ? bookingData.time + ' ET' : 'Not specified'
-        };
-
-        const res = await fetch('/api/send-booking', {
+        const res = await fetch('https://formsubmit.co/ajax/info@stenward.com', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
+          headers: { 'Accept': 'application/json' },
+          body: fd
         });
-
-        if (!res.ok) {
-          const error = await res.json();
-          throw new Error(error.error || 'Failed to send booking');
-        }
+        if (!res.ok) throw new Error('Submission failed');
       } catch (err) {
         console.error('Booking send error:', err);
-        const errMsg = err.message || 'Unknown error';
-        alert('Error: ' + errMsg);
+        alert('Unable to send booking. Please try again or contact info@stenward.com directly.');
         btn.disabled = false;
         btn.textContent = original;
         return;
