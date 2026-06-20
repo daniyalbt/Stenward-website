@@ -383,7 +383,8 @@
         }
       } catch (err) {
         console.error('Booking send error:', err);
-        alert('Unable to send booking. Please try again or contact info@stenward.com directly.');
+        const errMsg = err.message || 'Unknown error';
+        alert('Error: ' + errMsg);
         btn.disabled = false;
         btn.textContent = original;
         return;
