@@ -27,7 +27,7 @@ Message:
 ${message || 'No additional message'}`;
 
   const payload = {
-    from: 'onboarding@resend.dev',
+    from: 'booking@stenward.com',
     to: 'info@stenward.com',
     replyTo: email,
     subject: 'New consultation booking — Stenward',
