@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stenward — Service</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="fx.css" />
+  <script>document.documentElement.classList.add('has-js');</script>
+  <template id="__bundler_thumbnail">
+    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" fill="#070C14"/><rect x="28" y="28" width="44" height="44" fill="none" stroke="#00FDB3" stroke-width="2" transform="rotate(45 50 50)"/></svg>
+  </template>
+</head>
+<body>
+
+  <header class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="index.html#top">
+        <img class="mark" src="assets/logo-s-mark.png" alt="" />
+        <span class="wm"><span class="a">Sten</span><span class="b">ward</span></span>
+      </a>
+      <nav class="nav-links">
+        <a href="index.html#offer">The offer</a>
+        <a href="index.html#coverage">Coverage</a>
+        <a href="index.html#services">Services</a>
+        <a href="index.html#outcomes">Outcomes</a>
+        <a href="index.html#process">Process</a>
+        <a class="btn btn-accent btn-sm nav-cta" href="book.html" data-magnetic>Book a call</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ═══ SERVICE HERO ═══ -->
+  <section class="hero svc-hero" id="top">
+    <canvas id="lattice"></canvas>
+    <div class="hero-veil"></div>
+    <div class="scanlines"></div>
+    <div class="svc-hero-inner wrap">
+      <a class="svc-back mono" href="index.html#services">← All services</a>
+      <span class="eyebrow" style="margin-top:1.3rem"><span id="svc-no" class="mono">01 / 06</span></span>
+      <h1 class="hero-h svc-h1" id="svc-name">Service</h1>
+      <p class="hero-sub" id="svc-line"></p>
+      <div class="hero-ctas">
+        <a class="btn btn-accent" href="book.html" data-magnetic>Book a call <span class="ar">→</span></a>
+        <a class="btn btn-ghost" href="index.html#services" data-magnetic>See all services</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ SIGNATURE · unique visual per service ═══ -->
+  <section class="band panel sig-band">
+    <div class="wrap">
+      <div class="sec-head" data-reveal>
+        <span class="eyebrow" id="sig-eyebrow">How it works</span>
+        <h2 id="sig-title"></h2>
+      </div>
+      <div id="svc-sig" data-reveal></div>
+    </div>
+  </section>
+
+  <!-- ═══ OVERVIEW + INCLUDED ═══ -->
+  <section class="band deep">
+    <div class="wrap svc-grid">
+      <div data-reveal="left">
+        <span class="eyebrow">Overview</span>
+        <p class="svc-intro" id="svc-intro"></p>
+        <div class="svc-chip">
+          <span class="svc-chip-dia" aria-hidden="true"></span>
+          <div>
+            <div class="svc-chip-k mono">Typical timeline</div>
+            <div class="svc-chip-v" id="svc-timeline"></div>
+          </div>
+        </div>
+      </div>
+      <div data-reveal="right">
+        <span class="eyebrow">What's included</span>
+        <ul class="spec" id="svc-includes"></ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ WHAT YOU GET ═══ -->
+  <section class="band panel">
+    <div class="wrap">
+      <div class="sec-head" data-reveal>
+        <span class="eyebrow">What you get</span>
+        <h2>Outcomes you can take to the board.</h2>
+      </div>
+      <div class="dget-grid" id="svc-deliver" data-reveal></div>
+    </div>
+  </section>
+
+  <!-- ═══ RELATED ═══ -->
+  <section class="band deep">
+    <div class="wrap">
+      <div class="sec-head" data-reveal>
+        <span class="eyebrow">Explore more</span>
+        <h2>Related services.</h2>
+      </div>
+      <div class="rel-list" id="svc-related" data-reveal></div>
+    </div>
+  </section>
+
+  <!-- ═══ CTA ═══ -->
+  <section class="booking band" id="contact">
+    <canvas id="lattice-book"></canvas>
+    <div class="cta-band wrap" data-reveal>
+      <span class="diamond" aria-hidden="true"></span>
+      <span class="eyebrow">Get started</span>
+      <h2>A conversation is the first step.</h2>
+      <p>No pressure, no obligation — just a clear, honest view of what this will take for a company like yours.</p>
+      <div class="hero-ctas" style="justify-content:center">
+        <a class="btn btn-accent" href="book.html" data-magnetic>Book a call <span class="ar">→</span></a>
+        <a class="btn btn-ghost" href="mailto:info@stenward.com" data-magnetic>info@stenward.com</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="foot">
+      <div>
+        <div class="brand-row"><img class="mark" src="assets/logo-s-mark.png" alt="" /><span class="wm"><span class="a">Sten</span><span class="b">ward</span></span></div>
+        <p class="desc">Information security,<br />on your terms.</p>
+        <p class="copy">© 2026 Stenward. All rights reserved.</p>
+      </div>
+      <div>
+        <div class="col-label">Services</div>
+        <ul><li><a href="service.html?s=iso-27001">ISO 27001 Implementation</a></li><li><a href="service.html?s=gap-analysis">Gap Analysis</a></li><li><a href="service.html?s=isms-maintenance">ISMS Maintenance</a></li><li><a href="service.html?s=internal-audit">Internal Audit</a></li><li><a href="service.html?s=questionnaire">Questionnaire Response</a></li><li><a href="service.html?s=awareness-training">Awareness Training</a></li></ul>
+      </div>
+      <div>
+        <div class="col-label">Company</div>
+        <ul><li><a href="index.html#offer">The Offer</a></li><li><a href="index.html#outcomes">Client Outcomes</a></li><li><a href="book.html">Contact</a></li><li><a href="privacy.html">Privacy Policy</a></li></ul>
+      </div>
+      <div>
+        <div class="col-label">Contact</div>
+        <ul><li><a href="book.html">Book a call</a></li><li><a href="mailto:info@stenward.com">info@stenward.com</a></li><li><a href="https://www.linkedin.com/company/stenward" target="_blank" rel="noopener noreferrer">LinkedIn</a></li></ul>
+      </div>
+    </div>
+  </footer>
+
+  <script src="fx.js"></script>
+  <script src="service.js"></script>
+</body>
+</html>

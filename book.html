@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stenward — Book a call</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="fx.css" />
+  <script>document.documentElement.classList.add('has-js');</script>
+  <template id="__bundler_thumbnail">
+    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" fill="#070C14"/><rect x="28" y="28" width="44" height="44" fill="none" stroke="#00FDB3" stroke-width="2" transform="rotate(45 50 50)"/></svg>
+  </template>
+</head>
+<body>
+
+  <header class="nav scrolled">
+    <div class="nav-inner">
+      <a class="nav-brand" href="index.html#top">
+        <img class="mark" src="assets/logo-s-mark.png" alt="" />
+        <span class="wm"><span class="a">Sten</span><span class="b">ward</span></span>
+      </a>
+      <nav class="nav-links">
+        <a href="index.html#services">Services</a>
+        <a href="index.html#process">Process</a>
+        <a href="mailto:info@stenward.com">info@stenward.com</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="book-stage">
+    <canvas id="lattice-book"></canvas>
+    <div class="book-wrap">
+
+      <!-- LEFT: identity + reassurance + live summary -->
+      <aside class="book-aside" data-reveal="left">
+        <a class="svc-back mono" href="index.html#top">← Back to site</a>
+        <div class="person" style="margin-top:1.6rem">
+          <span class="pic"><img src="assets/zorain.png" alt="Zorain Choudhary" /><span class="on"></span></span>
+          <div>
+            <div class="nm">Zorain Choudhary</div>
+            <div class="tt">Client Success Lead</div>
+          </div>
+        </div>
+        <h1 class="book-h">Book a 30-minute call.</h1>
+        <p class="book-p">No pressure, no obligation — just a clear, honest view of what ISO 27001 will take for a company like yours.</p>
+        <ul class="expect">
+          <li>A senior practitioner, not a sales rep</li>
+          <li>An honest read on scope, effort and timeline</li>
+          <li>Clear next steps you can act on</li>
+        </ul>
+        <div class="bk-summary-card">
+          <div class="bk-sum-h mono">Your booking</div>
+          <div id="bk-summary"></div>
+        </div>
+      </aside>
+
+      <!-- RIGHT: stepper -->
+      <div class="book-main" data-reveal="right">
+        <!-- progress -->
+        <div class="stepper">
+          <div class="st-track"><span class="st-fill"></span></div>
+          <div class="st-nodes">
+            <button class="st-node active" data-i="1" type="button"><span class="st-dia"></span><span class="st-lbl">Date</span></button>
+            <button class="st-node" data-i="2" type="button"><span class="st-dia"></span><span class="st-lbl">Time</span></button>
+            <button class="st-node" data-i="3" type="button"><span class="st-dia"></span><span class="st-lbl">Details</span></button>
+            <button class="st-node" data-i="4" type="button"><span class="st-dia"></span><span class="st-lbl">Done</span></button>
+          </div>
+        </div>
+
+        <!-- STEP 1 — date -->
+        <div class="bk-panel on" data-step="1">
+          <div class="bk-cap"><span class="bk-cap-k mono">Step 1</span><h2>Pick a day</h2><span class="chip">June 2026 · GMT</span></div>
+          <div class="cal-dow"><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span></div>
+          <div class="cal-days bk-days" id="bk-days"></div>
+        </div>
+
+        <!-- STEP 2 — time -->
+        <div class="bk-panel" data-step="2">
+          <div class="bk-cap"><span class="bk-cap-k mono">Step 2</span><h2>Pick a time</h2><span class="chip" id="bk-time-date">—</span></div>
+          <div class="bk-times" id="bk-times"></div>
+          <div class="bk-actions">
+            <button class="btn btn-ghost" id="bk-back-1" type="button">← Change day</button>
+            <button class="btn btn-accent" id="bk-to-details" type="button" disabled>Continue <span class="ar">→</span></button>
+          </div>
+        </div>
+
+        <!-- STEP 3 — details -->
+        <div class="bk-panel" data-step="3">
+          <div class="bk-cap"><span class="bk-cap-k mono">Step 3</span><h2>Your details</h2></div>
+          <div class="bk-form">
+            <label class="fld"><span>Full name</span><input id="bk-name" type="text" placeholder="Jane Smith" autocomplete="name" /></label>
+            <label class="fld"><span>Work email</span><input id="bk-email" type="email" placeholder="jane@company.com" autocomplete="email" /></label>
+            <label class="fld"><span>Company</span><input id="bk-company" type="text" placeholder="Company Ltd" autocomplete="organization" /></label>
+            <label class="fld"><span>What prompted this? <em>(optional)</em></span><textarea id="bk-note" rows="3" placeholder="A customer is asking for ISO 27001…"></textarea></label>
+          </div>
+          <div class="bk-actions">
+            <button class="btn btn-ghost" id="bk-back-2" type="button">← Back</button>
+            <button class="btn btn-accent" id="bk-confirm" type="button">Confirm booking <span class="ar">→</span></button>
+          </div>
+        </div>
+
+        <!-- STEP 4 — confirmed -->
+        <div class="bk-panel bk-done" data-step="4">
+          <span class="check"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></span>
+          <h2>You’re booked in, <span id="bk-done-name">there</span >.</h2>
+          <p>A 30-minute call on <strong id="bk-done-when"></strong>. A calendar invite is on its way to your inbox — no preparation needed.</p>
+          <div class="bk-ref-row"><span class="mono">Reference</span><span class="bk-ref mono" id="bk-ref">STW-0000</span></div>
+          <div class="hero-ctas" style="margin-top:.4rem">
+            <a class="btn btn-accent" id="bk-ics" href="#" download="stenward-call.ics" data-magnetic>Add to calendar</a>
+            <a class="btn btn-ghost" href="index.html#top" data-magnetic>Back to site</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <script src="fx.js"></script>
+  <script src="book.js"></script>
+</body>
+</html>
