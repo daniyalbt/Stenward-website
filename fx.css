@@ -76,6 +76,11 @@ h1.hero-h .t{color:var(--teal);text-shadow:0 0 38px rgba(0,253,179,.35)}
 .sc-hidden{opacity:0}
 .hero-sub{margin-top:1.9rem;font-size:1.12rem;line-height:1.65;color:var(--soft);max-width:33rem}
 .hero-ctas{display:flex;gap:14px;margin-top:2.4rem;flex-wrap:wrap}
+/* hero proof band — flat on navy, full-width row beneath the hero grid */
+.hero-proof{grid-column:1 / -1;display:flex;gap:2.8rem;margin-top:1.2rem;flex-wrap:wrap}
+.hero-proof .pf{display:inline-flex;align-items:center;gap:.7rem;font-size:.78rem;line-height:1.4;color:#fff;letter-spacing:.005em}
+.hero-proof .pf::before{content:"";width:9px;height:9px;border:1.5px solid var(--teal);transform:rotate(45deg);flex-shrink:0;box-shadow:var(--tealglow)}
+@media (max-width:920px){.hero-proof{flex-direction:column;gap:1.1rem;margin-top:.4rem}}
 .hero-meta{margin-top:2.6rem;display:flex;gap:2.4rem;flex-wrap:wrap}
 .hero-meta .m .n{font-family:var(--mono);font-size:1.7rem;font-weight:700;color:#fff;letter-spacing:-.02em}
 .hero-meta .m .k{font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:var(--faint);margin-top:3px}
@@ -238,6 +243,21 @@ section.band{position:relative;padding:7rem 0}
 .case-body h3{color:#fff;font-size:1.14rem;font-weight:600;line-height:1.3;margin-bottom:.7rem;letter-spacing:-.01em}
 .case-body p{font-size:.92rem;line-height:1.6;color:var(--soft)}
 
+/* commitment panel — firm-level promise, highlighted-card treatment */
+.commit{position:relative;margin-top:2.8rem;border:1px solid rgba(0,253,179,.3);border-radius:18px;padding:3.2rem 3.4rem;background:linear-gradient(120deg,rgba(20,34,58,.55),rgba(12,22,38,.42));overflow:hidden}
+.commit::after{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--teal);box-shadow:var(--tealglow)}
+.commit .ghost{position:absolute;right:-70px;top:-70px;width:240px;height:240px;border:1px solid var(--line-2);transform:rotate(45deg);pointer-events:none}
+.commit .ghost::after{content:"";position:absolute;inset:34px;border:1px solid var(--line)}
+.commit .eyebrow{display:flex;width:fit-content;position:relative;z-index:1}
+.commit-h{position:relative;z-index:1;font-size:clamp(1.7rem,3.1vw,2.5rem);font-weight:600;color:#fff;letter-spacing:-.025em;line-height:1.13;margin:1.1rem 0 0;max-width:20ch;text-wrap:balance}
+.commit-sub{position:relative;z-index:1;margin-top:1.1rem;font-size:1.14rem;color:#fff;line-height:1.5;max-width:42rem}
+.commit-body{position:relative;z-index:1;margin-top:1.5rem;font-size:1.04rem;line-height:1.72;color:var(--soft);max-width:48rem}
+.commit-points{position:relative;z-index:1;margin-top:2.1rem;display:grid;gap:1.05rem;padding-top:1.9rem;border-top:1px solid var(--line)}
+.commit-points .cp{display:flex;align-items:flex-start;gap:.85rem;font-size:1rem;line-height:1.55;color:var(--soft)}
+.commit-points .cp::before{content:"";width:10px;height:10px;border:1.5px solid var(--teal);transform:rotate(45deg);flex-shrink:0;margin-top:.42em;box-shadow:var(--tealglow)}
+.commit-points .cp b{color:#fff;font-weight:600}
+@media (max-width:920px){.commit{padding:2.2rem 1.8rem}}
+
 /* process timeline — scroll-driven progress rail */
 .timeline{position:relative;margin-top:3.5rem;display:grid;gap:1.2rem;padding-left:0}
 .timeline .rail{position:absolute;left:25px;top:26px;bottom:26px;width:2px;background:var(--line);overflow:visible;z-index:0}
@@ -332,7 +352,7 @@ footer{background:var(--navy-deep);border-top:1px solid var(--line)}
 
 /* ════════════ OFFER · accordion spec-sheet ════════════ */
 .explore{margin-top:2.6rem;border-top:1px solid var(--line)}
-.exp-row{display:grid;grid-template-columns:auto 1fr auto;gap:1.6rem;align-items:start;width:100%;text-align:left;background:none;border:0;border-bottom:1px solid var(--line);padding:1.7rem .4rem;cursor:pointer;color:inherit;transition:background .25s var(--ease)}
+.exp-row{font-family:var(--font);display:grid;grid-template-columns:auto 1fr auto;gap:1.6rem;align-items:start;width:100%;text-align:left;background:none;border:0;border-bottom:1px solid var(--line);padding:1.7rem .4rem;cursor:pointer;color:inherit;transition:background .25s var(--ease)}
 .exp-row:hover{background:rgba(255,255,255,.02)}
 .exp-no{color:var(--faint);font-size:.82rem;padding-top:.35rem;transition:color .25s}
 .exp-row.open .exp-no{color:var(--teal)}
@@ -623,3 +643,6 @@ footer{background:var(--navy-deep);border-top:1px solid var(--line)}
 .bk-ref-row .mono{font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
 .bk-ref{color:var(--teal);font-weight:700;letter-spacing:.04em}
 .bk-done .hero-ctas{justify-content:center}
+.bk-fallback{font-size:.85rem;color:var(--faint);margin:1.3rem auto 0}
+.bk-fallback a{color:var(--soft);text-decoration:underline;text-underline-offset:2px}
+.bk-fallback a:hover{color:var(--teal)}
