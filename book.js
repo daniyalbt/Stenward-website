@@ -4,11 +4,10 @@
   var TIMES = ['09:00', '09:30', '10:00', '11:30', '13:00', '14:00', '15:30', '16:30'];
 
   /* ── Booking delivery ──────────────────────────────────────────────
-     To send submissions silently server-side, paste a Web3Forms access
-     key (free, issued to info@stenward.com at web3forms.com) into
-     WEB3FORMS_KEY below. While it's empty, the form composes the booking
-     email to info@stenward.com from the visitor's own mail app instead. */
-  var WEB3FORMS_KEY = '3a7ec708-ac09-4c51-9295-fd96f0023df9';            // ← paste Web3Forms access key here to switch to silent delivery
+     Submissions are sent to info@stenward.com via Web3Forms.
+     If the send ever fails, we DO NOT hijack the page — we just show a
+     manual "email us" link so the visitor (and the booking) is never lost. */
+  var WEB3FORMS_KEY = '3a7ec708-ac09-4c51-9295-fd96f0023df9';
   var INBOX = 'info@stenward.com';
   var STEP = 1, MAXSTEP = 4, MONTH = 'June 2026';
   function $(s) { return document.querySelector(s); }
@@ -105,8 +104,8 @@
     $('#bk-done-when').textContent = state.day + ' ' + MONTH + ' at ' + state.time + ' GMT';
     $('#bk-done-name').textContent = state.name.split(' ')[0] || 'there';
     $('#bk-ics').href = ics();
-    sendBooking();
-    go(4);
+    go(4);          // always show the confirmation screen
+    sendBooking();  // then fire the email (non-blocking, self-reporting)
   }
 
   function bookingText() {
@@ -126,45 +125,57 @@
     ].join('\n');
   }
 
+  // Update the small line under the confirmation with delivery status.
+  function setStatus(kind, msg) {
+    var el = $('.bk-fallback');
+    if (!el) return;
+    if (kind === 'ok') {
+      el.innerHTML = '<span style="color:var(--teal,#00FDB3)">✓ Sent to our team. We\'ll be in touch to confirm.</span>';
+    } else {
+      el.innerHTML = msg;
+    }
+  }
+
   function sendBooking() {
     var subject = 'Booking ' + state.ref + ' — ' + state.name + ' (' + state.day + ' ' + MONTH + ')';
     var body = bookingText();
-
-    // Silent server-side delivery when a Web3Forms key is configured.
-    if (WEB3FORMS_KEY) {
-      try {
-        fetch('https://api.web3forms.com/submit', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-          body: JSON.stringify({
-            access_key: WEB3FORMS_KEY,
-            subject: subject,
-            from_name: 'Stenward booking',
-            replyto: state.email,
-            botcheck: '',
-            name: state.name,
-            email: state.email,
-            company: state.company,
-            date: state.day + ' ' + MONTH,
-            time: state.time + ' GMT',
-            reference: state.ref,
-            message: state.note || '—'
-          })
-        }).catch(function () { mailtoFallback(subject, body); });
-      } catch (e) { mailtoFallback(subject, body); }
-      return;
-    }
-
-    // No backend key → hand off to the visitor's mail app.
-    mailtoFallback(subject, body);
-  }
-
-  function mailtoFallback(subject, body) {
-    var href = 'mailto:' + INBOX + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+    // keep the manual link populated as a safety net (no auto-navigation)
     var link = $('#bk-mailto');
-    if (link) link.href = href;
-    // Trigger within the confirm click gesture so the mail client opens.
-    try { window.location.href = href; } catch (e) {}
+    if (link) link.href = 'mailto:' + INBOX + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+
+    if (!WEB3FORMS_KEY) { return; }
+
+    setStatus('pending', 'Sending your booking…');
+
+    fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        access_key: WEB3FORMS_KEY,
+        subject: subject,
+        from_name: 'Stenward booking',
+        replyto: state.email,
+        botcheck: '',
+        name: state.name,
+        email: state.email,
+        company: state.company || '—',
+        date: state.day + ' ' + MONTH,
+        time: state.time + ' GMT',
+        reference: state.ref,
+        message: state.note || '—'
+      })
+    })
+    .then(function (r) { return r.json().catch(function () { return {}; }).then(function (d) { return { ok: r.ok, d: d }; }); })
+    .then(function (res) {
+      if (res.ok && res.d && res.d.success) {
+        setStatus('ok');
+      } else {
+        setStatus('err', 'Couldn\'t send automatically — <a id="bk-mailto" href="' + ($('#bk-mailto') ? $('#bk-mailto').href : 'mailto:' + INBOX) + '">email your booking to ' + INBOX + '</a> instead.');
+      }
+    })
+    .catch(function () {
+      setStatus('err', 'Couldn\'t send automatically — <a id="bk-mailto" href="' + ($('#bk-mailto') ? $('#bk-mailto').href : 'mailto:' + INBOX) + '">email your booking to ' + INBOX + '</a> instead.');
+    });
   }
 
   function init() {
