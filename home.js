@@ -100,15 +100,65 @@
   /* ── 4. CONTACT · preview calendar that deep-links to book.html ── */
   function previewCal() {
     var grid = document.getElementById('cal-preview'); if (!grid) return;
-    grid.innerHTML = '';
-    for (var d = 1; d <= 30; d++) {
-      var dow = (d - 1) % 7, weekend = dow === 5 || dow === 6, past = d < 9;
-      var b = document.createElement('a');
-      b.className = 'pc-day' + (weekend || past ? ' off' : '') + (d === 9 ? ' today' : '');
-      b.textContent = d;
-      if (!(weekend || past)) b.href = 'book.html?d=' + d;
-      grid.appendChild(b);
+    var label = document.querySelector('.cal-preview-card .cal-head .s');
+    var head  = document.querySelector('.cal-preview-card .cal-head');
+    var MONTH_NAMES = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    var today = new Date(); today.setHours(0, 0, 0, 0);
+    var view = { y: today.getFullYear(), m: today.getMonth() };
+    var MAX_AHEAD = 6;
+
+    function ym(v) { return v.y + '-' + ('0' + (v.m + 1)).slice(-2); }
+    function atCurrent() { return view.y === today.getFullYear() && view.m === today.getMonth(); }
+    function canNext() { return new Date(view.y, view.m + 1, 1) <= new Date(today.getFullYear(), today.getMonth() + MAX_AHEAD, 1); }
+
+    function render() {
+      if (label) label.textContent = MONTH_NAMES[view.m] + ' ' + view.y + ' \u00B7 GMT';
+      grid.innerHTML = '';
+      var firstDow = (new Date(view.y, view.m, 1).getDay() + 6) % 7; // Monday = 0
+      for (var i = 0; i < firstDow; i++) {
+        var pad = document.createElement('span'); pad.className = 'pc-day pc-pad'; grid.appendChild(pad);
+      }
+      var dim = new Date(view.y, view.m + 1, 0).getDate();
+      for (var d = 1; d <= dim; d++) {
+        var cd = new Date(view.y, view.m, d), dow = cd.getDay();
+        var off = dow === 0 || dow === 6 || cd < today;
+        var el;
+        if (off) { el = document.createElement('span'); el.className = 'pc-day off'; }
+        else { el = document.createElement('a'); el.className = 'pc-day'; el.href = 'book.html?d=' + d + '&m=' + ym(view); }
+        if (cd.getTime() === today.getTime()) el.className += ' today';
+        el.textContent = d;
+        grid.appendChild(el);
+      }
+      var p = document.getElementById('cp-prev'), n = document.getElementById('cp-next');
+      if (p) p.disabled = atCurrent();
+      if (n) n.disabled = !canNext();
     }
+
+    function shift(delta, ev) {
+      if (ev) { ev.preventDefault(); ev.stopPropagation(); }
+      var nd = new Date(view.y, view.m + delta, 1);
+      var lo = new Date(today.getFullYear(), today.getMonth(), 1);
+      var hi = new Date(today.getFullYear(), today.getMonth() + MAX_AHEAD, 1);
+      if (nd < lo || nd > hi) return;
+      view.y = nd.getFullYear(); view.m = nd.getMonth(); render();
+    }
+
+    if (head && !head.querySelector('.cal-nav')) {
+      var chip = head.querySelector('.chip');
+      var right = document.createElement('div'); right.className = 'cal-head-right';
+      var nav = document.createElement('div'); nav.className = 'cal-nav';
+      nav.innerHTML =
+        '<button type="button" id="cp-prev" aria-label="Previous month">\u2039</button>' +
+        '<button type="button" id="cp-next" aria-label="Next month">\u203A</button>';
+      right.appendChild(nav);
+      if (chip) right.appendChild(chip);
+      head.appendChild(right);
+      nav.addEventListener('click', function (e) { e.preventDefault(); e.stopPropagation(); });
+      document.getElementById('cp-prev').addEventListener('click', function (e) { shift(-1, e); });
+      document.getElementById('cp-next').addEventListener('click', function (e) { shift(1, e); });
+    }
+
+    render();
   }
 
   /* ── 5. COVERAGE · Annex A explorer ── */
