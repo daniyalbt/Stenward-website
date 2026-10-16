@@ -345,6 +345,11 @@
       var link = e.target.closest('a');
       if (!link || !link.href || link.target === '_blank' || link.hasAttribute('data-no-transition')) return;
       var href = link.getAttribute('href');
+
+      // Skip anchor links (same-page navigation) - let browser handle them
+      if (href.startsWith('#')) return;
+
+      // Apply transition only to internal page navigation
       if (!href.startsWith('http') || href.includes(window.location.hostname)) {
         e.preventDefault();
         document.body.style.animation = 'pageOut .3s ease-in forwards';
