@@ -1,34 +1,12 @@
-# Stenward Website Robots.txt
-# Allow all crawlers by default
+# Stenward Website - SEO Configuration
+# Allows all search engine crawlers to index the site
 
+# Allow all user agents
 User-agent: *
 Allow: /
 
-# Crawl delay for overly aggressive bots (optional)
-# Crawl-delay: 1
+# Reference to sitemap for search engines
+Sitemap: https://stenward.com/sitemap.xml
 
-# Specific rules for search engines
-User-agent: Googlebot
-Allow: /
-
-User-agent: Bingbot
-Allow: /
-
-# AI training crawlers - allow (helps with AI search discoverability)
-User-agent: GPTBot
-Allow: /
-
-User-agent: ClaudeBot
-Allow: /
-
-User-agent: PerplexityBot
-Allow: /
-
-User-agent: Applebot-Extended
-Allow: /
-
-User-agent: Bytespider
-Allow: /
-
-# Sitemap reference (required for comprehensive indexing)
-Sitemap: https://www.stenward.com/sitemap.xml
+# Crawl delay (optional - helps respect server resources)
+Crawl-delay: 1
