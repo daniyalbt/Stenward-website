@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A practitioner's honest answer to how long ISO 27001 certification takes for a SaaS company - the real timeline, what actually slows it down, and why the certified in weeks claims rarely tell the whole story.">
+    <title>How Long Does ISO 27001 Certification Actually Take? - Stenward</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../fx.css">
+    <style>
+        .blog-hero {
+            position: relative;
+            padding: 9rem 2rem 5rem;
+            background: radial-gradient(120% 100% at 70% 30%, #11203A 0%, var(--navy) 42%, var(--navy-deep) 100%);
+            overflow: hidden;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .blog-hero::before {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--teal), transparent);
+            opacity: 0.5;
+        }
+
+        .blog-hero-inner {
+            max-width: var(--maxw);
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .blog-back {
+            display: inline-flex;
+            align-items: center;
+            gap: .4rem;
+            color: var(--soft);
+            font-size: .8rem;
+            letter-spacing: .04em;
+            transition: color .2s;
+            margin-bottom: 2rem;
+        }
+
+        .blog-back:hover {
+            color: var(--teal);
+        }
+
+        .blog-back::before {
+            content: "←";
+        }
+
+        .blog-title {
+            font-size: clamp(2.4rem, 5vw, 4rem);
+            font-weight: 600;
+            color: #fff;
+            letter-spacing: -0.025em;
+            line-height: 1.12;
+            max-width: 54rem;
+            text-wrap: balance;
+            margin-bottom: 1.6rem;
+        }
+
+        .blog-meta {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 0;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .blog-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            font-family: var(--mono);
+            font-size: .68rem;
+            font-weight: 700;
+            letter-spacing: .28em;
+            text-transform: uppercase;
+            color: var(--teal);
+        }
+
+        .blog-tag::before {
+            content: "";
+            width: 8px;
+            height: 8px;
+            background: var(--teal);
+            transform: rotate(45deg);
+            flex-shrink: 0;
+            box-shadow: var(--tealglow);
+        }
+
+        .blog-date, .blog-time {
+            font-size: .88rem;
+            color: var(--faint);
+        }
+
+        .blog-band {
+            position: relative;
+            padding: 6rem 2rem 7rem;
+            background: linear-gradient(180deg, var(--navy-deep) 0%, rgba(17, 32, 58, .9) 50%, var(--navy-deep) 100%);
+            overflow: hidden;
+        }
+
+        .blog-band::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--teal), transparent);
+            opacity: 0.4;
+            z-index: 1;
+        }
+
+        .blog-band::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--teal), transparent);
+            opacity: 0.3;
+            z-index: 1;
+        }
+
+        .blog-wrapper {
+            max-width: var(--maxw);
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .blog-band .ghost {
+            position: absolute;
+            right: -80px;
+            top: 120px;
+            width: 360px;
+            height: 360px;
+            border: 1px solid var(--line-2);
+            transform: rotate(45deg);
+            opacity: 0.12;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .blog-band .ghost::after {
+            content: "";
+            position: absolute;
+            inset: 50px;
+            border: 1px solid var(--line);
+            opacity: 0.8;
+        }
+
+        .blog-content {
+            max-width: 52rem;
+            margin: 0 auto;
+            color: var(--soft);
+            line-height: 1.8;
+            font-size: 1.06rem;
+            font-family: var(--font);
+            position: relative;
+            z-index: 1;
+        }
+
+        .blog-content h2 {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #fff;
+            letter-spacing: -0.025em;
+            margin: 3.6rem 0 1.6rem;
+            line-height: 1.12;
+            text-wrap: balance;
+            font-family: var(--font);
+        }
+
+        .blog-content h2:first-child {
+            margin-top: 0;
+        }
+
+        .blog-content h3 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #fff;
+            margin: 2.4rem 0 1.1rem;
+            letter-spacing: -0.01em;
+            font-family: var(--font);
+        }
+
+        .blog-content p {
+            margin-bottom: 1.5rem;
+            color: var(--soft);
+            font-size: 1.06rem;
+        }
+
+        .blog-content p:last-child {
+            margin-bottom: 0;
+        }
+
+        .blog-content ul, .blog-content ol {
+            margin: 1.8rem 0 1.8rem 2.4rem;
+            color: var(--soft);
+        }
+
+        .blog-content li {
+            margin-bottom: .95rem;
+            color: var(--soft);
+            font-size: 1.04rem;
+            line-height: 1.65;
+        }
+
+        .blog-content strong {
+            color: #fff;
+            font-weight: 700;
+        }
+
+        .blog-callout {
+            position: relative;
+            border: 1px solid var(--line-2);
+            border-left: 3px solid var(--teal);
+            border-radius: 14px;
+            padding: 2rem 2.2rem;
+            background: linear-gradient(120deg, rgba(20, 34, 58, .5), rgba(12, 22, 38, .4));
+            margin: 2.6rem 0;
+            overflow: hidden;
+        }
+
+        .blog-callout::before {
+            content: "";
+            position: absolute;
+            top: -1px;
+            left: 20px;
+            right: 20px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--teal), transparent);
+            opacity: .5;
+        }
+
+        .blog-callout h4 {
+            color: var(--teal);
+            margin-bottom: 1.2rem;
+            font-weight: 600;
+            font-size: 1.1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .blog-callout ul {
+            margin: 0 0 0 1.8rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .blog-callout li {
+            margin-bottom: .7rem;
+            color: var(--soft);
+        }
+
+        .blog-two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2.2rem;
+            margin: 2.2rem 0;
+        }
+
+        .blog-two-col-item {
+            position: relative;
+            z-index: 1;
+        }
+
+        .blog-two-col h4 {
+            color: var(--teal);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            font-size: 1.06rem;
+        }
+
+        .blog-two-col ul {
+            margin: 0 0 0 1.6rem;
+        }
+
+        .blog-two-col li {
+            font-size: 0.98rem;
+            margin-bottom: .6rem;
+            color: var(--soft);
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-left: 2.2rem;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .timeline-item:last-child {
+            border-bottom: 0;
+        }
+
+        .timeline-item::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0.4em;
+            width: 16px;
+            height: 16px;
+            background: var(--teal);
+            border: 1.5px solid var(--teal);
+            border-radius: 50%;
+            box-shadow: 0 0 12px rgba(0, 253, 179, .4);
+            transform: translate(-8px, 0);
+        }
+
+        .timeline-item h4 {
+            color: #fff;
+            font-size: 1.08rem;
+            font-weight: 600;
+            margin-bottom: .6rem;
+            letter-spacing: -0.01em;
+        }
+
+        .timeline-item p {
+            font-size: 0.98rem;
+            color: var(--soft);
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--teal), transparent);
+            margin: 3rem 0;
+            opacity: .4;
+        }
+
+        .highlight-box {
+            position: relative;
+            background: radial-gradient(120% 80% at 60% 20%, rgba(0, 253, 179, .08), transparent 80%);
+            border: 1px solid rgba(0, 253, 179, .15);
+            border-radius: 16px;
+            padding: 2.2rem;
+            margin: 2.6rem 0;
+            overflow: hidden;
+        }
+
+        .highlight-box::before {
+            content: "";
+            position: absolute;
+            top: -1px;
+            left: 20px;
+            right: 20px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--teal), transparent);
+            opacity: .6;
+        }
+
+        .highlight-box p {
+            position: relative;
+            z-index: 1;
+            font-size: 1.08rem;
+            line-height: 1.7;
+            color: #fff;
+            margin: 0;
+        }
+
+        .key-insight {
+            display: grid;
+            grid-template-columns: 0.7fr 1.3fr;
+            gap: 3.6rem;
+            margin: 4.2rem 0;
+            align-items: center;
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        .insight-stat {
+            position: relative;
+        }
+
+        .stat-number {
+            font-size: 6rem;
+            font-weight: 700;
+            color: var(--teal);
+            line-height: 1;
+            letter-spacing: -0.03em;
+            text-shadow: 0 0 50px rgba(0, 253, 179, .3);
+            margin-bottom: 0.6rem;
+            font-family: var(--mono);
+        }
+
+        .stat-label {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #fff;
+            line-height: 1.3;
+            max-width: 16ch;
+            letter-spacing: -0.01em;
+            font-family: var(--font);
+        }
+
+        .stat-sub {
+            font-size: 0.95rem;
+            color: var(--soft);
+            margin-top: 1.1rem;
+            line-height: 1.65;
+            font-family: var(--font);
+        }
+
+        .insight-content h3 {
+            font-size: 1.7rem;
+            color: #fff;
+            font-weight: 600;
+            margin-bottom: 1.4rem;
+            letter-spacing: -0.02em;
+            font-family: var(--font);
+        }
+
+        .insight-content p {
+            font-size: 1.06rem;
+            color: var(--soft);
+            line-height: 1.75;
+            margin-bottom: 1.4rem;
+            font-family: var(--font);
+        }
+
+        .phase-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.6rem;
+            margin: 3rem 0;
+        }
+
+        .phase-card {
+            position: relative;
+            background: linear-gradient(180deg, rgba(20, 34, 58, .6), rgba(12, 22, 38, .5));
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            padding: 2.2rem;
+            transition: all .3s var(--ease);
+            overflow: hidden;
+        }
+
+        .phase-card::before {
+            content: "";
+            position: absolute;
+            top: -1px;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--teal), transparent);
+            opacity: 0;
+            transition: opacity .3s;
+        }
+
+        .phase-card::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: 16px;
+            background: radial-gradient(380px circle at var(--gx, 50%) var(--gy, 50%), rgba(0, 253, 179, .08), transparent 60%);
+            opacity: 0;
+            transition: opacity .3s;
+            pointer-events: none;
+        }
+
+        .phase-card:hover {
+            border-color: var(--line-2);
+            background: linear-gradient(180deg, rgba(20, 34, 58, .75), rgba(12, 22, 38, .65));
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, .3);
+        }
+
+        .phase-card:hover::before {
+            opacity: .5;
+        }
+
+        .phase-card:hover::after {
+            opacity: 1;
+        }
+
+        .phase-num {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            background: rgba(0, 253, 179, .1);
+            border: 1.5px solid var(--teal);
+            border-radius: 10px;
+            color: var(--teal);
+            font-family: var(--mono);
+            font-weight: 700;
+            font-size: 1.15rem;
+            margin-bottom: 1.2rem;
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 0 16px rgba(0, 253, 179, .15);
+        }
+
+        .phase-card h4 {
+            color: #fff;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.9rem;
+            letter-spacing: -0.01em;
+            position: relative;
+            z-index: 1;
+            font-family: var(--font);
+        }
+
+        .phase-card p {
+            color: var(--soft);
+            font-size: 0.98rem;
+            line-height: 1.68;
+            margin: 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .stat-box {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.8rem;
+            margin: 3.2rem 0;
+        }
+
+        .stat-item {
+            position: relative;
+            background: linear-gradient(135deg, rgba(0, 253, 179, .06), rgba(0, 253, 179, .02));
+            border: 1px solid rgba(0, 253, 179, .18);
+            border-radius: 14px;
+            padding: 2rem 1.8rem;
+            text-align: center;
+            overflow: hidden;
+            transition: all .3s var(--ease);
+        }
+
+        .stat-item::before {
+            content: "";
+            position: absolute;
+            top: -1px;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--teal), transparent);
+            opacity: .4;
+        }
+
+        .stat-item:hover {
+            border-color: rgba(0, 253, 179, .3);
+            background: linear-gradient(135deg, rgba(0, 253, 179, .1), rgba(0, 253, 179, .03));
+            transform: translateY(-2px);
+        }
+
+        .stat-item-val {
+            font-size: 3.2rem;
+            font-weight: 700;
+            color: var(--teal);
+            line-height: 1;
+            margin-bottom: 0.7rem;
+            text-shadow: 0 0 24px rgba(0, 253, 179, .25);
+            font-family: var(--mono);
+        }
+
+        .stat-item-key {
+            font-size: 0.85rem;
+            color: #fff;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            font-family: var(--mono);
+        }
+
+        .section-head {
+            position: relative;
+            margin: 4.4rem 0 2.8rem;
+            padding-bottom: 1.8rem;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .section-head::after {
+            content: "";
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 140px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--teal), transparent);
+            box-shadow: var(--tealglow);
+        }
+
+        .section-head h2 {
+            margin: 0;
+            font-size: 1.95rem;
+            font-weight: 600;
+            color: #fff;
+            letter-spacing: -0.025em;
+            font-family: var(--font);
+        }
+
+        .key-point {
+            position: relative;
+            margin: 0.9rem 0;
+            padding: 1.2rem 2.1rem;
+            padding-left: 3.4rem;
+            background: linear-gradient(90deg, rgba(0, 253, 179, .07), transparent);
+            border-left: 3px solid var(--teal);
+            border-radius: 10px;
+            border-top: 1px solid rgba(0, 253, 179, .1);
+            border-bottom: 1px solid rgba(0, 253, 179, .05);
+            transition: all .2s var(--ease);
+        }
+
+        .key-point:hover {
+            border-left-color: var(--teal);
+            background: linear-gradient(90deg, rgba(0, 253, 179, .1), transparent);
+            padding-left: 3.6rem;
+        }
+
+        .key-point::before {
+            content: "→";
+            position: absolute;
+            left: 1.1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--teal);
+            font-weight: 700;
+            font-size: 1.3rem;
+            transition: transform .2s var(--ease);
+        }
+
+        .key-point:hover::before {
+            transform: translateY(-50%) translateX(2px);
+        }
+
+        .key-point-label {
+            display: inline-block;
+            font-family: var(--mono);
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: var(--teal);
+            margin-bottom: 0.5rem;
+        }
+
+        .key-point-text {
+            font-size: 1.06rem;
+            color: #fff;
+            line-height: 1.68;
+            margin: 0;
+            font-family: var(--font);
+        }
+
+        .cta-final {
+            position: relative;
+            margin-top: 5.5rem;
+            padding: 3.8rem 3.5rem;
+            background: linear-gradient(135deg, rgba(0, 253, 179, .09), rgba(0, 253, 179, .02));
+            border: 1px solid rgba(0, 253, 179, .22);
+            border-radius: 18px;
+            text-align: center;
+            overflow: hidden;
+            transition: all .3s var(--ease);
+        }
+
+        .cta-final::before {
+            content: "";
+            position: absolute;
+            top: -1px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--teal), transparent);
+        }
+
+        .cta-final::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: 18px;
+            background: radial-gradient(120% 100% at 50% 0%, rgba(0, 253, 179, .1), transparent 80%);
+            opacity: 0;
+            transition: opacity .3s;
+            pointer-events: none;
+        }
+
+        .cta-final:hover {
+            border-color: rgba(0, 253, 179, .35);
+            background: linear-gradient(135deg, rgba(0, 253, 179, .13), rgba(0, 253, 179, .04));
+            transform: translateY(-2px);
+        }
+
+        .cta-final:hover::after {
+            opacity: 1;
+        }
+
+        .cta-final h3 {
+            position: relative;
+            z-index: 1;
+            font-size: 1.75rem;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 1.2rem;
+            letter-spacing: -0.025em;
+            font-family: var(--font);
+        }
+
+        .cta-final p {
+            position: relative;
+            z-index: 1;
+            font-size: 1.1rem;
+            color: var(--soft);
+            line-height: 1.72;
+            margin: 0 auto 2.2rem;
+            max-width: 48rem;
+            font-family: var(--font);
+        }
+
+        @media (max-width: 920px) {
+            .key-insight {
+                grid-template-columns: 1fr;
+            }
+
+            .phase-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stat-box {
+                grid-template-columns: 1fr;
+            }
+
+            .stat-number {
+                font-size: 3.5rem;
+            }
+            .blog-hero {
+                padding: 6rem 2rem 3rem;
+            }
+
+            .blog-title {
+                font-size: clamp(2rem, 4vw, 3rem);
+            }
+
+            .blog-band {
+                padding: 3rem 2rem 4rem;
+            }
+
+            .blog-content h2 {
+                font-size: 1.5rem;
+                margin: 2.2rem 0 1rem;
+            }
+
+            .blog-content h3 {
+                font-size: 1.2rem;
+            }
+
+            .blog-two-col {
+                grid-template-columns: 1fr;
+                gap: 1.6rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <header class="nav">
+        <div class="nav-inner">
+            <a class="nav-brand" href="/">
+                <img class="mark" src="../assets/logo-s-mark.png" alt="" />
+                <span class="wm"><span class="a">Sten</span><span class="b">ward</span></span>
+            </a>
+            <nav class="nav-links">
+                <a href="/#offer">The offer</a>
+                <a href="/#coverage">Coverage</a>
+                <a href="/#services">Services</a>
+                <a href="/#outcomes">Outcomes</a>
+                <a href="/#process">Process</a>
+                <a href="/insights">Insights</a>
+                <a class="btn btn-accent btn-sm nav-cta" href="/#contact">Book a call</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Blog Hero -->
+    <section class="blog-hero">
+        <div class="blog-hero-inner">
+            <a href="/insights" class="blog-back">Back to Insights</a>
+            <h1 class="blog-title">How Long Does ISO 27001 Certification Actually <span style="color: var(--teal); text-shadow: 0 0 38px rgba(0, 253, 179, .35);">Take?</span></h1>
+            <div class="blog-meta">
+                <span class="blog-tag">ISO 27001</span>
+                <span class="blog-date">16 October 2026</span>
+                <span class="blog-time">6 min read</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Content -->
+    <section class="blog-band">
+        <span class="ghost"></span>
+        <div class="blog-wrapper">
+            <div class="blog-content">
+            <p>How long does ISO 27001 certification actually take? If a customer has just made it a condition of a deal, that's the first question on your mind - and it deserves an honest answer, not a marketing one.</p>
+
+            <div class="key-insight">
+                <div class="insight-stat">
+                    <div class="stat-number">6-9</div>
+                    <div class="stat-label">Months</div>
+                    <div class="stat-sub">Realistic timeline for most SaaS companies starting from scratch</div>
+                </div>
+                <div class="insight-content">
+                    <h3>The Honest Answer</h3>
+                    <p>It's rarely a matter of weeks, and seldom as quick as three months. Companies that already have solid security practices in place tend to move faster, while those with a broad scope, limited internal capacity, or very little to build on will usually need longer. For most, six to nine months is the realistic middle ground, and it's the figure we'd encourage you to plan around.</p>
+                    <p style="color: var(--faint); font-size: 0.95rem; margin-top: 1.4rem;">There's also one part of the timeline that no amount of budget or effort can shorten - and it's worth understanding why early on.</p>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <h2 class="section-head">The Two Phases You Need to Understand</h2>
+
+            <p style="margin-top: 2rem;">ISO 27001 certification isn't one thing. It's two sequential phases, and they move at completely different speeds.</p>
+
+            <div class="phase-grid">
+                <div class="phase-card">
+                    <div class="phase-num">1</div>
+                    <h4>Build the System</h4>
+                    <p>Scope definition. Risk assessment. Policies. Controls. Evidence. How long this takes entirely depends on where you're starting from.</p>
+                </div>
+                <div class="phase-card">
+                    <div class="phase-num">2</div>
+                    <h4>The Certification Audit</h4>
+                    <p>Independent body assessment. Governed by fixed rules, so more predictable. But includes something non-negotiable that you cannot compress.</p>
+                </div>
+            </div>
+
+            <div class="key-point">
+                <span class="key-point-label">Critical Detail</span>
+                <p class="key-point-text">A company with mature security practices already in place moves through the build phase faster than one starting from scratch. Your existing documentation, controls, and evidence accumulation matter enormously. The gap between these two starting points can easily be several months on its own.</p>
+            </div>
+
+            <div class="divider"></div>
+
+            <h2 class="section-head">The Part You Cannot Compress</h2>
+
+            <p style="margin-top: 2rem;">ISO 27001 doesn't certify that you've written a security management system. It certifies that you genuinely operate one. The standard requires evidence that your controls are working in practice, and that you've completed an internal audit and a management review before certification. In practice, that means your system needs to have been running for a period before the Stage 2 audit - certification bodies typically look for a few months of operating history, often around three, so there's enough evidence to show the controls actually function over time rather than on paper.</p>
+
+            <div class="stat-box">
+                <div class="stat-item">
+                    <div class="stat-item-val">~3</div>
+                    <div class="stat-item-key">Months (Typical)</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-item-val">No</div>
+                    <div class="stat-item-key">Shortcuts</div>
+                </div>
+            </div>
+
+            <p>This is the part that tends to surprise people. You can bring in an excellent consultant, work evenings and weekends, and have every policy written within a fortnight - but you still can't be certified until your controls have been running long enough to leave a credible trail. Access reviews have to have actually taken place. Logs have to span real time, not a single afternoon. It's a floor that effort alone can't lower.</p>
+
+            <div class="key-point">
+                <span class="key-point-label">Myth to Ignore</span>
+                <p class="key-point-text">Headlines promising certification in a matter of weeks almost always describe companies that were already operating mature security controls before they began - so they walked in with the operating history already behind them. If you're starting with little in place, that operating period is simply part of the journey, and it's not one you can leap over.</p>
+            </div>
+
+            <div class="divider"></div>
+
+            <h2 class="section-head">The Actual Timeline</h2>
+
+            <div style="margin-top: 2rem; display: grid; gap: 1.2rem;">
+                <div class="key-point" style="padding-left: 3.2rem;">
+                    <span class="key-point-label">Weeks 1-4</span>
+                    <p class="key-point-text">Scoping. Define what gets certified. Narrow scope = faster. Too wide = months of extra work.</p>
+                </div>
+                <div class="key-point" style="padding-left: 3.2rem;">
+                    <span class="key-point-label">Weeks 4-12</span>
+                    <p class="key-point-text">Risk assessment. The demanding phase. Most teams underestimate it. It drives everything downstream.</p>
+                </div>
+                <div class="key-point" style="padding-left: 3.2rem;">
+                    <span class="key-point-label">Weeks 8-20</span>
+                    <p class="key-point-text">Implementation. Put controls in place and run them. The 3-month waiting period lives here.</p>
+                </div>
+                <div class="key-point" style="padding-left: 3.2rem;">
+                    <span class="key-point-label">Weeks 16-20</span>
+                    <p class="key-point-text">Internal audit. You audit your own system first. Non-negotiable. Stage 1 failures trace back to skipping this.</p>
+                </div>
+                <div class="key-point" style="padding-left: 3.2rem;">
+                    <span class="key-point-label">Months 5-8</span>
+                    <p class="key-point-text">Certification audits. Stage 1 confirms readiness. Stage 2 tests whether controls actually work. Clear both = certified.</p>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <h2 class="section-head">What Actually Derails Timelines</h2>
+
+            <div style="margin-top: 2rem; display: grid; gap: 1.2rem;">
+                <div class="key-point">
+                    <span class="key-point-label">Mistake 1</span>
+                    <p class="key-point-text"><strong>Scope creep.</strong> Certifying the entire company when a narrower scope would have met the customer's requirement. Kills timelines instantly.</p>
+                </div>
+                <div class="key-point">
+                    <span class="key-point-label">Mistake 2</span>
+                    <p class="key-point-text"><strong>Weak ownership.</strong> Handed to someone without authority to make decisions or free up resources. The project stalls.</p>
+                </div>
+                <div class="key-point">
+                    <span class="key-point-label">Mistake 3</span>
+                    <p class="key-point-text"><strong>Underestimating documentation.</strong> Teams budget weeks. Risk assessment and Statement of Applicability take months.</p>
+                </div>
+                <div class="key-point">
+                    <span class="key-point-label">Mistake 4</span>
+                    <p class="key-point-text"><strong>Late gap discovery.</strong> Problems found at internal audit or Stage 1 force rework. Should surface at scoping.</p>
+                </div>
+                <div class="key-point">
+                    <span class="key-point-label">Mistake 5</span>
+                    <p class="key-point-text"><strong>Auditor delays.</strong> Good certification bodies are booked out months in advance. Plan Stage 1 and 2 early.</p>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <h2 class="section-head">The Platform Question</h2>
+
+            <p style="margin-top: 2rem;">GRC platforms (Vanta, Drata, Sprinto) do one thing really well: continuous evidence collection and monitoring. They pull logs, flag misconfigurations, track policy acknowledgements. That saves real time.</p>
+
+            <p>What they aren't, though, is a management system. A platform can't decide what scope makes sense for your business, it can't run your risk assessment, and it can't justify to an auditor why a particular control doesn't apply to you. Those are judgement calls, not data-collection tasks.</p>
+
+            <p>We've seen how this plays out more than once. A company buys a platform, works through the checklist, watches the dashboard turn green, and arrives at the Stage 2 audit feeling confident - only to face questions the tool was never able to answer. The risk assessment turns out to be thin, the scope doesn't quite match how the business really works, and the Statement of Applicability doesn't line up with the risks. None of these are things software gets wrong; they're things software simply can't do, because they call for judgement rather than monitoring.</p>
+
+            <div class="key-point">
+                <span class="key-point-label">What Actually Works</span>
+                <p class="key-point-text">Platform + experienced practitioner. The platform handles evidence. The person handles decisions. Together, it's the fastest and most reliable route. Platform alone produces a green dashboard and a difficult audit.</p>
+            </div>
+
+            <div class="divider"></div>
+
+            <h2 class="section-head">Bottom Line</h2>
+
+            <p style="margin-top: 2rem;">Plan for 6-9 months. If you have SOC 2 or mature security practices, you might hit the faster end. If you're starting from scratch, protect the 3-month operating period and don't let anyone tell you it can be skipped.</p>
+
+            <p>And treat any timeline that sounds too good to be true with a little caution. The one part of this process nobody can shorten is the part that proves your system genuinely works - which, when you think about it, is the whole point of the certificate.</p>
+
+            <div class="cta-final">
+                <h3>Ready to Understand Your Timeline?</h3>
+                <p>Stenward helps Series A and B SaaS companies through ISO 27001 - senior-led, end-to-end, with realistic timelines from day one. We've done this dozens of times. We know the gaps, the gotchas, and how to move efficiently through each phase.</p>
+                <a href="/#contact" class="btn btn-accent">Get an honest assessment</a>
+            </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cursor & JS -->
+    <div class="cursor"></div>
+    <div class="cursor-dot"></div>
+    <script src="../fx.js"></script>
+</body>
+</html>
