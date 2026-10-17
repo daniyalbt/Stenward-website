@@ -454,8 +454,10 @@ footer{background:var(--navy-deep);border-top:1px solid var(--line)}
   .situation{padding:2rem}
   .svc-grid{grid-template-columns:1fr;gap:2rem}
   .book-wrap{grid-template-columns:1fr;gap:2rem;padding:7rem 1.3rem 3rem}
-  .book-aside{position:static}
+  .book-aside{position:static;margin-bottom:2rem}
   .bk-form{grid-template-columns:1fr}
+  .bk-panel{padding:1.8rem}
+  .bk-cap{margin-bottom:1.2rem}
 }
 
 /* ════════════════════════════════════════════════════════════
@@ -634,12 +636,12 @@ footer{background:var(--navy-deep);border-top:1px solid var(--line)}
 .bk-days button.today{border-color:rgba(0,253,179,.45);color:var(--teal)}
 .bk-days button.sel{border-color:var(--teal);background:rgba(0,253,179,.16);color:var(--teal);box-shadow:0 0 18px rgba(0,253,179,.3)}
 .bk-days{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
-@media(max-width:600px){.bk-days{grid-template-columns:repeat(3,1fr);gap:8px}.bk-days button{font-size:.85rem;padding:.5rem}}
+@media(max-width:600px){.bk-days{grid-template-columns:repeat(3,1fr);gap:12px;margin-top:1.5rem}.bk-days button{font-size:.95rem;padding:.8rem .5rem;height:auto;aspect-ratio:auto;min-height:50px}}
 .bk-times{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
 .bk-times button{padding:.9rem;border-radius:8px;font-family:var(--mono);font-size:.9rem;border:1px solid var(--line);background:transparent;color:#fff;transition:all .15s}
 .bk-times button:hover{border-color:var(--teal);background:rgba(0,253,179,.08)}
 .bk-times button.sel{border-color:var(--teal);background:rgba(0,253,179,.16);color:var(--teal);box-shadow:0 0 18px rgba(0,253,179,.3)}
-@media(max-width:600px){.bk-times{grid-template-columns:repeat(2,1fr);gap:8px}.bk-times button{padding:.7rem;font-size:.8rem}}
+@media(max-width:600px){.bk-times{grid-template-columns:repeat(2,1fr);gap:12px;margin-top:1.5rem}.bk-times button{padding:.9rem .7rem;font-size:.9rem;min-height:50px}}
 .bk-actions{display:flex;justify-content:space-between;gap:12px;margin-top:2rem;flex-wrap:wrap}
 .bk-form{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .fld{display:flex;flex-direction:column;gap:.5rem;font-size:.82rem;color:var(--soft)}
