@@ -303,18 +303,18 @@
 
     btn.addEventListener('click', function (e) {
       e.stopPropagation();
-      btn.classList.toggle('open');
+      menu.classList.toggle('open');
     });
 
     menu.addEventListener('click', function (e) {
       if (e.target.tagName === 'A') {
-        btn.classList.remove('open');
+        menu.classList.remove('open');
       }
     });
 
     document.addEventListener('click', function (e) {
-      if (btn.classList.contains('open') && !btn.contains(e.target) && !menu.contains(e.target)) {
-        btn.classList.remove('open');
+      if (menu.classList.contains('open') && !btn.contains(e.target) && !menu.contains(e.target)) {
+        menu.classList.remove('open');
       }
     });
   }
