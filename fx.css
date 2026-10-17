@@ -13,7 +13,7 @@
   --maxw:74rem; --ease:cubic-bezier(.22,.61,.36,1);
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;background:var(--navy-deep);border-top:5px solid var(--teal)}
+html{scroll-behavior:smooth;background:var(--navy-deep)}
 body{font-family:var(--font);color:var(--soft);background:var(--navy-deep);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;animation:pageIn .6s ease-out}
 
 /* Page transition animations */
@@ -64,12 +64,12 @@ a{color:inherit;text-decoration:none}
 .nav-links a{font-size:.82rem;font-weight:500;color:var(--soft);padding:.5rem .9rem;border-radius:6px;transition:color .2s,background .2s}
 .nav-links a:hover{color:var(--teal)}
 .nav-cta{margin-left:10px}
-.nav-menu-btn{display:none;background:none;border:none;color:var(--teal);font-size:1.4rem;cursor:pointer;padding:.5rem;z-index:201}
+.nav-menu-btn{display:none;background:none;border:none;width:40px;height:40px;align-items:center;justify-content:center;color:var(--teal);font-size:1.6rem;cursor:pointer;z-index:201;transition:color .2s;flex-shrink:0}
 .nav-menu-btn:hover{color:#fff}
-.nav-mobile{display:none;position:fixed;top:60px;left:0;right:0;background:rgba(7,12,20,.95);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);z-index:199;flex-direction:column;gap:0;padding:0;max-height:calc(100vh - 60px);overflow-y:auto}
+.nav-mobile{display:none;position:fixed;top:60px;left:0;right:0;bottom:0;background:rgba(7,12,20,.98);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);z-index:199;flex-direction:column;gap:0;padding:0;overflow-y:auto}
 .nav-mobile.open{display:flex}
-.nav-mobile a{padding:1rem 2rem;color:var(--soft);font-size:.9rem;border-bottom:1px solid var(--line);transition:color .2s,background .2s;text-decoration:none}
-.nav-mobile a:last-child{border-bottom:0}
+.nav-mobile a{padding:1.2rem 2rem;color:var(--soft);font-size:.95rem;border-bottom:1px solid rgba(255,255,255,.05);transition:color .2s,background .2s;text-decoration:none;flex-shrink:0}
+.nav-mobile a:first-child{padding-top:1.5rem;color:var(--teal);font-weight:500}
 .nav-mobile a:hover{background:rgba(0,253,179,.08);color:var(--teal)}
 
 /* ════════════ HERO ════════════ */
@@ -453,11 +453,12 @@ footer{background:var(--navy-deep);border-top:1px solid var(--line)}
   .phase .items{grid-template-columns:1fr}
   .situation{padding:2rem}
   .svc-grid{grid-template-columns:1fr;gap:2rem}
-  .book-wrap{grid-template-columns:1fr;gap:2rem;padding:7rem 1.3rem 3rem}
-  .book-aside{position:static;margin-bottom:2rem}
+  .book-wrap{grid-template-columns:1fr;gap:1.5rem;padding:6rem 1rem 2rem}
+  .book-aside{position:static;margin-bottom:1.5rem;padding:0 .5rem}
   .bk-form{grid-template-columns:1fr}
-  .bk-panel{padding:1.8rem}
+  .bk-panel{padding:1.5rem 1.2rem;max-height:calc(100vh - 180px);overflow-y:auto}
   .bk-cap{margin-bottom:1.2rem}
+  .bk-main{overflow-y:auto;max-height:calc(100vh - 120px)}
 }
 
 /* ════════════════════════════════════════════════════════════
