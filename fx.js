@@ -295,9 +295,35 @@
     targets = still;
   }
 
+  /* ════════════════ MOBILE MENU ════════════════ */
+  function mobileMenu() {
+    var btn = document.getElementById('nav-menu-toggle');
+    var menu = document.getElementById('nav-mobile');
+    if (!btn || !menu) return;
+
+    btn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      btn.classList.toggle('open');
+    });
+
+    menu.addEventListener('click', function (e) {
+      if (e.target.tagName === 'A') {
+        btn.classList.remove('open');
+      }
+    });
+
+    document.addEventListener('click', function (e) {
+      if (btn.classList.contains('open') && !btn.contains(e.target) && !menu.contains(e.target)) {
+        btn.classList.remove('open');
+      }
+    });
+  }
+
   /* ───────────────────────── BOOT ───────────────────────── */
   function init() {
     if (STATIC) document.documentElement.classList.add('no-anim');
+
+    mobileMenu();
 
     var heroCanvas = document.getElementById('lattice');
     if (heroCanvas) Lattice(heroCanvas, { density: 150 });

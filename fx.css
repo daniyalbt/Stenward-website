@@ -64,6 +64,12 @@ a{color:inherit;text-decoration:none}
 .nav-links a{font-size:.82rem;font-weight:500;color:var(--soft);padding:.5rem .9rem;border-radius:6px;transition:color .2s,background .2s}
 .nav-links a:hover{color:var(--teal)}
 .nav-cta{margin-left:10px}
+.nav-menu-btn{display:none;background:none;border:none;color:var(--teal);font-size:1.4rem;cursor:pointer;padding:.5rem;z-index:201}
+.nav-menu-btn:hover{color:#fff}
+.nav-mobile{display:none;position:fixed;top:60px;left:0;right:0;background:rgba(7,12,20,.95);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);z-index:199;flex-direction:column;gap:0;padding:0}
+.nav-mobile a{padding:1rem 2rem;color:var(--soft);font-size:.9rem;border-bottom:1px solid var(--line);transition:color .2s,background .2s}
+.nav-mobile a:last-child{border-bottom:0}
+.nav-mobile a:hover{background:rgba(0,253,179,.08);color:var(--teal)}
 
 /* ════════════ HERO ════════════ */
 .hero{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden;background:radial-gradient(120% 90% at 70% 30%, #11203A 0%, var(--navy) 42%, var(--navy-deep) 100%)}
@@ -312,6 +318,7 @@ section.band{position:relative;padding:7rem 0}
 .cal-dow span{text-align:center;font-family:var(--mono);font-size:.62rem;color:var(--faint)}
 .cal-days{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
 .cal-days button{aspect-ratio:1;border:1px solid var(--line);background:transparent;border-radius:7px;color:#fff;font-family:var(--mono);font-size:.82rem;transition:all .15s}
+@media(max-width:600px){.cal-dow{grid-template-columns:repeat(7,1fr)}.cal-days{grid-template-columns:repeat(3,1fr)}}
 .cal-days button:hover:not(:disabled){border-color:var(--teal);background:rgba(0,253,179,.1);box-shadow:0 0 18px rgba(0,253,179,.18)}
 .cal-days button:disabled{color:var(--faint);opacity:.35;cursor:default}
 .cal-days button.today{border-color:rgba(0,253,179,.45);color:var(--teal)}
@@ -438,6 +445,8 @@ footer{background:var(--navy-deep);border-top:1px solid var(--line)}
   .hero-inner,.situation-grid,.booking-grid,.phase .ph-body{grid-template-columns:1fr;gap:2rem}
   .grid3,.stats,.cases{grid-template-columns:1fr}
   .nav-links{display:none}
+  .nav-menu-btn{display:block}
+  .nav-menu-btn.open + .nav-mobile{display:flex}
   .hud-wrap{order:-1}
   .foot{grid-template-columns:1fr 1fr}
   .phase{grid-template-columns:1fr}
@@ -628,6 +637,7 @@ footer{background:var(--navy-deep);border-top:1px solid var(--line)}
 .bk-times button{padding:.9rem;border-radius:8px;font-family:var(--mono);font-size:.9rem;border:1px solid var(--line);background:transparent;color:#fff;transition:all .15s}
 .bk-times button:hover{border-color:var(--teal);background:rgba(0,253,179,.08)}
 .bk-times button.sel{border-color:var(--teal);background:rgba(0,253,179,.16);color:var(--teal);box-shadow:0 0 18px rgba(0,253,179,.3)}
+@media(max-width:600px){.bk-times{grid-template-columns:repeat(2,1fr);gap:8px}.bk-times button{padding:.7rem;font-size:.8rem}}
 .bk-actions{display:flex;justify-content:space-between;gap:12px;margin-top:2rem;flex-wrap:wrap}
 .bk-form{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .fld{display:flex;flex-direction:column;gap:.5rem;font-size:.82rem;color:var(--soft)}
