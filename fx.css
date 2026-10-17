@@ -633,6 +633,8 @@ footer{background:var(--navy-deep);border-top:1px solid var(--line)}
 .bk-days button:disabled{color:var(--faint);opacity:.35}
 .bk-days button.today{border-color:rgba(0,253,179,.45);color:var(--teal)}
 .bk-days button.sel{border-color:var(--teal);background:rgba(0,253,179,.16);color:var(--teal);box-shadow:0 0 18px rgba(0,253,179,.3)}
+.bk-days{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+@media(max-width:600px){.bk-days{grid-template-columns:repeat(3,1fr);gap:8px}.bk-days button{font-size:.85rem;padding:.5rem}}
 .bk-times{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
 .bk-times button{padding:.9rem;border-radius:8px;font-family:var(--mono);font-size:.9rem;border:1px solid var(--line);background:transparent;color:#fff;transition:all .15s}
 .bk-times button:hover{border-color:var(--teal);background:rgba(0,253,179,.08)}
