@@ -454,11 +454,11 @@ footer{background:var(--navy-deep);border-top:1px solid var(--line)}
   .situation{padding:2rem}
   .svc-grid{grid-template-columns:1fr;gap:2rem}
   .book-wrap{grid-template-columns:1fr;gap:1.5rem;padding:6rem 1rem 2rem;overflow-y:visible}
-  .book-aside{position:static;margin-bottom:1.5rem;padding:0 .5rem;order:1}
+  .book-aside{position:static;margin-bottom:1.5rem;padding:0 .5rem;order:1;display:none}
   .bk-form{grid-template-columns:1fr}
   .bk-panel{padding:1.5rem 1.2rem;min-height:auto}
   .bk-cap{margin-bottom:1.2rem}
-  .bk-main{order:2}
+  .bk-main{order:2;max-width:100%}
 }
 
 /* ════════════════════════════════════════════════════════════
@@ -645,7 +645,7 @@ footer{background:var(--navy-deep);border-top:1px solid var(--line)}
 @media(max-width:600px){.bk-times{grid-template-columns:repeat(2,1fr);gap:12px;margin-top:1.5rem}.bk-times button{padding:.9rem .7rem;font-size:.9rem;min-height:50px}}
 .bk-actions{display:flex;justify-content:space-between;gap:12px;margin-top:2rem;flex-wrap:wrap}
 .bk-form{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-@media(max-width:750px){.bk-form{grid-template-columns:1fr !important}.bk-form .fld:nth-child(2){grid-column:1}}
+@media(max-width:750px){.bk-form{grid-template-columns:1fr !important}.bk-form .fld{grid-column:1 !important}.bk-done{padding:2rem 1.5rem !important}}
 .fld{display:flex;flex-direction:column;gap:.5rem;font-size:.82rem;color:var(--soft)}
 .fld:nth-child(4){grid-column:1 / -1}
 .fld em{color:var(--faint);font-style:normal}

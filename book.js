@@ -197,6 +197,7 @@
         access_key: WEB3FORMS_KEY,
         subject: subject,
         from_name: 'Stenward booking',
+        from_email: 'bookings@stenward.com',
         replyto: state.email,
         botcheck: '',
         name: state.name,
@@ -206,7 +207,9 @@
         time: state.time + ' GMT',
         reference: state.ref,
         message: state.note || '—',
-        _cc_email: state.email
+        _template: 'box',
+        _autoresponse_email: state.email,
+        _autoresponse_subject: 'Your booking confirmation — Stenward'
       })
     })
     .then(function (r) { return r.json().catch(function () { return {}; }).then(function (d) { return { ok: r.ok, d: d }; }); })
