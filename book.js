@@ -205,7 +205,8 @@
         date: state.day + ' ' + MONTH,
         time: state.time + ' GMT',
         reference: state.ref,
-        message: state.note || '—'
+        message: state.note || '—',
+        _cc_email: state.email
       })
     })
     .then(function (r) { return r.json().catch(function () { return {}; }).then(function (d) { return { ok: r.ok, d: d }; }); })
