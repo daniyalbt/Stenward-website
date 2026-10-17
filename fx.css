@@ -13,7 +13,7 @@
   --maxw:74rem; --ease:cubic-bezier(.22,.61,.36,1);
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;background:var(--navy-deep)}
+html{scroll-behavior:smooth;background:var(--navy-deep);border-top:5px solid var(--teal)}
 body{font-family:var(--font);color:var(--soft);background:var(--navy-deep);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;animation:pageIn .6s ease-out}
 
 /* Page transition animations */
