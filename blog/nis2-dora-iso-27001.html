@@ -853,6 +853,23 @@
             .rg-item:last-child:nth-child(odd) { grid-column: auto; }
             .rg-layer { padding: 1.4rem 1.2rem 1.5rem; }
         }
+        
+        /* ── regulation cards v2 ── */
+        .rg-short { font-size: 1.02rem; color: #fff; padding: .9rem 1.1rem; border-left: 2px solid var(--teal); background: rgba(0,253,179,.05); border-radius: 0 10px 10px 0; margin-bottom: 1.6rem; }
+        .rg-short strong { color: var(--teal); font-family: var(--mono); font-size: .72rem; letter-spacing: .16em; text-transform: uppercase; margin-right: .4rem; font-weight: 700; }
+        .rg-facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 1.8rem; }
+        .rg-fact { border: 1px solid var(--line-2); border-radius: 12px; padding: 1.1rem 1.1rem 1.2rem; background: rgba(7,12,20,.5); }
+        .rg-fact b { display: block; font-family: var(--mono); font-size: 1.35rem; color: var(--teal); letter-spacing: -.02em; line-height: 1.1; }
+        .rg-fact span { display: block; font-size: .82rem; color: var(--soft); margin-top: .5rem; line-height: 1.45; }
+        .rg-ladder { display: grid; gap: 10px; margin-top: .6rem; }
+        .rg-rung { display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; border: 1px solid var(--line); border-radius: 10px; padding: .9rem 1.1rem; background: rgba(7,12,20,.4); }
+        .rg-rung .who { color: #fff; font-weight: 600; font-size: .95rem; }
+        .rg-rung .amt { font-family: var(--mono); color: var(--teal); font-size: .9rem; }
+        .rg-note { margin-top: .9rem !important; font-size: .9rem !important; color: var(--faint) !important; }
+        @media (max-width: 700px) {
+            .rg-facts { grid-template-columns: 1fr; }
+            .rg-rung { flex-direction: column; align-items: flex-start; gap: .3rem; }
+        }
         </style>
 </head>
 <body>
@@ -945,6 +962,13 @@
                     <span class="rg-no">01</span>
                     <h3>NIS2 - the broad one</h3>
                 </div>
+                <p class="rg-short"><strong>In short:</strong> the EU's general cyber law. It can reach a small SaaS company through its enterprise customers.</p>
+
+                <div class="rg-facts">
+                    <div class="rg-fact"><b>18</b><span>sectors in scope, including cloud and managed services</span></div>
+                    <div class="rg-fact"><b>24h / 72h</b><span>early warning, then full incident report</span></div>
+                    <div class="rg-fact"><b>€10M</b><span>or 2% of global revenue, for essential entities</span></div>
+                </div>
 
                 <p><a href="https://eur-lex.europa.eu/eli/dir/2022/2555/oj" target="_blank" rel="noopener">NIS2</a> is the EU's general cybersecurity law, and it's the one most likely to touch a general SaaS company.</p>
 
@@ -968,12 +992,12 @@
                     </div>
                 </div>
 
-                <div class="rg-sub">The teeth</div>
-                <p>This is what makes NIS2 different from a best-practice framework. In both cases, executives carry personal liability.</p>
-                <div class="rg-fines">
-                    <div class="rg-fine"><b>€10M / 2%</b><span>Essential entities: whichever is higher, of global revenue</span></div>
-                    <div class="rg-fine"><b>€7M / 1.4%</b><span>Important entities: whichever is higher, of global revenue</span></div>
+                <div class="rg-sub">What happens if you get it wrong</div>
+                <div class="rg-ladder">
+                    <div class="rg-rung"><span class="who">Essential entities</span><span class="amt">€10M or 2% of global revenue</span></div>
+                    <div class="rg-rung"><span class="who">Important entities</span><span class="amt">€7M or 1.4% of global revenue</span></div>
                 </div>
+                <p class="rg-note">Whichever figure is higher applies. Company executives can also be held personally liable.</p>
             </div>
 
             <div class="rg-trap">
@@ -981,11 +1005,17 @@
                 <p>You don't have to be named by NIS2 to be bound by it. If a regulated company is your customer, their obligations arrive on your desk as contract clauses - supplier security requirements, audit rights, incident-notification duties. This is the exact moment most SaaS companies first encounter the certification question.</p>
             </div>
 
-
             <div class="rg-card">
                 <div class="rg-card-head">
                     <span class="rg-no">02</span>
                     <h3>DORA - the financial one</h3>
+                </div>
+                <p class="rg-short"><strong>In short:</strong> strict resilience rules for finance. They reach SaaS vendors through bank and insurer contracts.</p>
+
+                <div class="rg-facts">
+                    <div class="rg-fact"><b>Finance</b><span>banks, insurers, payments, fintech and their ICT providers</span></div>
+                    <div class="rg-fact"><b>4h</b><span>to notify authorities of a major incident</span></div>
+                    <div class="rg-fact"><b>Jan 2025</b><span>applies since</span></div>
                 </div>
 
                 <p><a href="https://eur-lex.europa.eu/eli/reg/2022/2554/oj" target="_blank" rel="noopener">DORA</a> is narrower and deeper. It governs digital operational resilience in the financial sector, and it's prescriptive in a way NIS2 is not.</p>
@@ -1002,14 +1032,20 @@
                         <span class="hrs">4h</span>
                     </div>
                 </div>
-                <p style="margin-top: 1rem;">Far tighter than NIS2 - notification to authorities within 4 hours for major incidents.</p>
+                <p class="rg-note">Far tighter than NIS2 - notification to authorities within 4 hours for major incidents.</p>
             </div>
-
 
             <div class="rg-card">
                 <div class="rg-card-head">
                     <span class="rg-no">03</span>
                     <h3>The EU AI Act</h3>
+                </div>
+                <p class="rg-short"><strong>In short:</strong> rules for AI systems, scaled to risk. They matter most if AI is core to what you sell.</p>
+
+                <div class="rg-facts">
+                    <div class="rg-fact"><b>Aug 2026</b><span>full obligations apply</span></div>
+                    <div class="rg-fact"><b>Risk-based</b><span>rules depend on what your AI does</span></div>
+                    <div class="rg-fact"><b>Feb 2025</b><span>first prohibitions applied</span></div>
                 </div>
 
                 <p>The <a href="https://eur-lex.europa.eu/eli/reg/2024/1689/oj" target="_blank" rel="noopener">EU AI Act</a> governs how AI systems are built and deployed, on a risk-tiered basis. Its obligations are phasing in now: prohibitions applied from February 2025, high-risk obligations from August 2025, and full obligations from August 2026.</p>
@@ -1028,16 +1064,6 @@
             <p>But ISO 27001 does not cover everything, and it's important to be honest about the gaps:</p>
 
             <div class="rg-stack">
-                <div class="rg-layer add">
-                    <span class="rg-layer-tag">Layer 2 · The regulations add</span>
-                    <div class="rg-items">
-                        <div class="rg-item">Legal incident-reporting clocks to named authorities <em>ISO 27001's incident handling is internal, with no legal clock</em></div>
-                        <div class="rg-item">A formal register of information and live audit trail <em>DORA</em></div>
-                        <div class="rg-item">Threat-led penetration testing where designated <em>DORA</em></div>
-                        <div class="rg-item">Contractual flow-down and subcontractor transparency</div>
-                        <div class="rg-item">Cooperation with national authorities and their inspections</div>
-                    </div>
-                </div>
                 <div class="rg-layer base">
                     <span class="rg-layer-tag">Layer 1 · ISO 27001 gives you</span>
                     <div class="rg-chips">
@@ -1047,6 +1073,16 @@
                         <span class="rg-chip">Supplier security controls</span>
                         <span class="rg-chip">Business continuity and testing</span>
                         <span class="rg-chip">Continuous improvement</span>
+                    </div>
+                </div>
+                <div class="rg-layer add">
+                    <span class="rg-layer-tag">Layer 2 · The regulations add</span>
+                    <div class="rg-items">
+                        <div class="rg-item">Legal incident-reporting clocks to named authorities <em>ISO 27001's incident handling is internal, with no legal clock</em></div>
+                        <div class="rg-item">A formal register of information and live audit trail <em>DORA</em></div>
+                        <div class="rg-item">Threat-led penetration testing where designated <em>DORA</em></div>
+                        <div class="rg-item">Contractual flow-down and subcontractor transparency</div>
+                        <div class="rg-item">Cooperation with national authorities and their inspections</div>
                     </div>
                 </div>
             </div>
