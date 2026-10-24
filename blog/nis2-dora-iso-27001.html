@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="How to run an ISO 27001 risk assessment that holds up at audit: scoping first, consistent criteria, real risk owners, and a Statement of Applicability that follows from your decisions.">
-    <title>The ISO 27001 Risk Assessment: Where Projects Get Decided - Stenward</title>
+    <meta name="description" content="NIS2, DORA and the EU AI Act explained for SaaS companies: who each one applies to, how they reach you through customer contracts, and where ISO 27001 fits.">
+    <title>NIS2, DORA, or ISO 27001: Which One Does Your SaaS Actually Need? - Stenward</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
@@ -803,11 +803,11 @@
     <section class="blog-hero">
         <div class="blog-hero-inner">
             <a href="/insights" class="blog-back">Back to Insights</a>
-            <h1 class="blog-title">The ISO 27001 Risk Assessment: Where Projects <span style="color: var(--teal); text-shadow: 0 0 38px rgba(0, 253, 179, .35);">Get Decided</span></h1>
+            <h1 class="blog-title">NIS2, DORA, or ISO 27001: Which One Does Your SaaS <span style="color: var(--teal); text-shadow: 0 0 38px rgba(0, 253, 179, .35);">Actually Need?</span></h1>
             <div class="blog-meta">
-                <span class="blog-tag">ISO 27001</span>
+                <span class="blog-tag">Regulation</span>
                 <span class="blog-date">24 October 2026</span>
-                <span class="blog-time">7 min read</span>
+                <span class="blog-time">6 min read</span>
             </div>
         </div>
     </section>
@@ -817,120 +817,134 @@
         <span class="ghost"></span>
         <div class="blog-wrapper">
             <div class="blog-content">
-            <p>Ask anyone who has been through ISO 27001 which phase caused the most trouble, and the answer is rarely the audit itself. It's the risk assessment. It looks like a spreadsheet exercise, and that is exactly why it gets underestimated. Everything the rest of the system depends on flows from it, so a weak assessment shows up later as weak controls, a thin Statement of Applicability, and an auditor who asks questions nobody can answer.</p>
+            <p>If you sell software into Europe, three sets of rules have landed in quick succession - NIS2, DORA, and the EU AI Act - and the honest state of most SaaS founders right now is quiet confusion about which of them, if any, actually applies to their company.</p>
 
-            <div class="key-insight">
-                <div class="insight-stat">
-                    <div class="stat-number">3</div>
-                    <div class="stat-label">Core Outputs</div>
-                    <div class="stat-sub">Risk assessment, risk treatment plan, and Statement of Applicability</div>
+            <p>It's a fair place to be confused. These are regulations, not certifications, so nobody sends you a tidy checklist. They overlap in places, they use different language for similar ideas, and the question founders really want answered - what do I personally have to do? - depends entirely on who you sell to and what you build.</p>
+
+            <p>Here's the short version, and then we'll take each one in turn.</p>
+
+            <div class="phase-grid">
+                <div class="phase-card">
+                    <div class="phase-num">NIS2</div>
+                    <h4>Broad cybersecurity law</h4>
+                    <p>In force since Oct 2024. Applies by sector and size.</p>
                 </div>
-                <div class="insight-content">
-                    <h3>Why It Matters More Than It Looks</h3>
-                    <p>The standard doesn't ask for a list of threats. It asks for a repeatable method, applied consistently, that produces decisions an owner has accepted. Each control in Annex A should be traceable back to a risk you identified, or to a justified reason it doesn't apply. If that chain is broken, the certification audit tends to find it.</p>
+                <div class="phase-card">
+                    <div class="phase-num">DORA</div>
+                    <h4>Financial-sector resilience</h4>
+                    <p>Applies since Jan 2025. Applies to finance and their ICT providers.</p>
+                </div>
+                <div class="phase-card">
+                    <div class="phase-num">AI Act</div>
+                    <h4>AI governance</h4>
+                    <p>Phasing in to Aug 2026. Applies by what your AI does.</p>
                 </div>
             </div>
 
             <div class="divider"></div>
 
-            <h2 class="section-head">What the Standard Actually Asks For</h2>
+            <h2 class="section-head">The thing to understand first</h2>
 
-            <p style="margin-top: 2rem;">Clause 6.1.2 sets the requirements for the assessment itself. You need to define risk criteria, meaning how you score likelihood and impact and what level of risk you are willing to accept. You need to identify risks to confidentiality, integrity, and availability of information within scope. You need to analyse and evaluate those risks, and you need to assign a risk owner to each one.</p>
+            <p style="margin-top: 2rem;">NIS2, DORA and the AI Act are laws. <a href="https://www.iso.org/standard/27001" target="_blank" rel="noopener">ISO 27001</a> is a certification. They are not competing options - they operate at different levels.</p>
 
-            <p>Clause 6.1.3 covers treatment. For each risk you decide whether to modify it, retain it, avoid it, or share it. Those decisions feed into the Statement of Applicability, which lists every Annex A control, whether it applies, and why. The SoA is not a formality. It is the document an auditor uses to test whether your assessment actually drove your controls.</p>
+            <p>The laws tell you what outcomes you must achieve (manage your risk, report incidents on a clock, oversee your suppliers). They do not tell you how, and crucially, none of them can be "certified." You can't hold up a NIS2 certificate, because there's no such thing.</p>
+
+            <p>ISO 27001 is how you demonstrate, in a structured and externally-audited way, that you're meeting most of what those laws demand. That relationship - law sets the obligation, certification proves you're meeting it - is the whole key to cutting through the confusion. We'll come back to it, because it's where this gets practical.</p>
+
+            <div class="divider"></div>
+
+            <h2 class="section-head">NIS2 - the broad one</h2>
+
+            <p style="margin-top: 2rem;"><a href="https://eur-lex.europa.eu/eli/dir/2022/2555/oj" target="_blank" rel="noopener">NIS2</a> is the EU's general cybersecurity law, and it's the one most likely to touch a general SaaS company.</p>
+
+            <p><strong>Who it covers.</strong> NIS2 applies to "essential" and "important" entities across 18 sectors - and companies with more than 50 employees, or revenue above €10M, operating in those sectors are in scope. The sectors include digital infrastructure, cloud and data-centre providers, and managed service providers, which is where a lot of B2B SaaS lands.</p>
+
+            <p><strong>The part founders miss.</strong> Even if you're a small company outside those thresholds, a company with fewer than 50 employees is generally not directly in scope unless it is a critical ICT provider to a NIS2- or DORA-regulated entity - in which case it is affected indirectly. In plain terms: if your enterprise customer is regulated, their obligations flow down to you through the contract, whether or not the law names you directly. This is the mechanism that quietly pulls small SaaS vendors into scope - not the law reaching them, but their customers reaching them.</p>
+
+            <p><strong>What it requires.</strong> Managing supply-chain risk including SaaS and AI vendors, maintaining a complete inventory of information systems, reporting significant incidents to the competent authority, and senior-management oversight of cybersecurity with mandatory training.</p>
+
+            <p><strong>The incident clock.</strong> An early warning within 24 hours, and a full report within 72 hours.</p>
+
+            <p><strong>The teeth.</strong> This is what makes NIS2 different from a best-practice framework. For essential entities, fines reach €10M or 2% of global revenue; for important entities, €7M or 1.4% - and in both cases, executives carry personal liability.</p>
 
             <div class="key-point">
-                <span class="key-point-label">Critical Detail</span>
-                <p class="key-point-text">The method has to be consistent. Two people assessing the same risk should land on broadly the same score. If the scores depend on who happened to be in the room, the auditor will treat the whole register with suspicion.</p>
+                <span class="key-point-label">The flow-down trap</span>
+                <p class="key-point-text">You don't have to be named by NIS2 to be bound by it. If a regulated company is your customer, their obligations arrive on your desk as contract clauses - supplier security requirements, audit rights, incident-notification duties. This is the exact moment most SaaS companies first encounter the certification question.</p>
             </div>
 
             <div class="divider"></div>
 
-            <h2 class="section-head">Start With Scope, Not Threats</h2>
+            <h2 class="section-head">DORA - the financial one</h2>
 
-            <p style="margin-top: 2rem;">Most teams jump straight to listing threats. That's backwards. The assessment only covers assets inside your certification scope, so the first job is an asset inventory: the systems, data stores, suppliers, people, and locations that the scope actually includes.</p>
+            <p style="margin-top: 2rem;"><a href="https://eur-lex.europa.eu/eli/reg/2022/2554/oj" target="_blank" rel="noopener">DORA</a> is narrower and deeper. It governs digital operational resilience in the financial sector, and it's prescriptive in a way NIS2 is not.</p>
 
-            <p>The scope decision and the risk assessment are closely linked. A narrow, well-justified scope means fewer assets to assess and fewer controls to evidence. A scope drawn too wide, usually to satisfy a single customer's wording, multiplies the work without adding much assurance. Settle the scope before the risk register grows, because changing it later means reworking the assessment.</p>
+            <p><strong>Who it covers.</strong> The financial sector - banks, insurers, investment firms, payment providers, and fintech and crypto-asset companies - and, critically, their critical ICT providers, such as cloud and SaaS vendors.</p>
+
+            <p><strong>Why it matters even if you're not a bank.</strong> That last clause is the one. If you're a SaaS company serving financial clients - a fintech tool, a payments integration, anything a bank or insurer runs on - DORA's third-party-risk requirements reach you through your customers. Third-party risk is the pillar most relevant to SaaS: it requires a provider registry, risk assessments, specific contract clauses covering audit rights, incident notification, data portability and exit plans, and monitoring of provider concentration.</p>
+
+            <p><strong>The incident clock.</strong> Far tighter than NIS2 - notification to authorities within 4 hours for major incidents.</p>
 
             <div class="divider"></div>
 
-            <h2 class="section-head">Running It Without Losing Months</h2>
+            <h2 class="section-head">The EU AI Act - the newest one</h2>
 
-            <div style="margin-top: 2rem; display: grid; gap: 1.2rem;">
-                <div class="key-point" style="padding-left: 3.2rem;">
-                    <span class="key-point-label">Step 1</span>
-                    <p class="key-point-text">Agree the risk criteria once. A simple five-point scale for likelihood and impact, plus a clear line for what risk level requires treatment, is enough for most companies.</p>
+            <p style="margin-top: 2rem;">The <a href="https://eur-lex.europa.eu/eli/reg/2024/1689/oj" target="_blank" rel="noopener">EU AI Act</a> governs how AI systems are built and deployed, on a risk-tiered basis. Its obligations are phasing in now: prohibitions applied from February 2025, high-risk obligations from August 2025, and full obligations from August 2026.</p>
+
+            <p>If AI is core to your product - and increasingly it is - this is the one to watch, because the obligations land in full next year. It's also the regulation that pairs with <a href="https://www.iso.org/standard/42001" target="_blank" rel="noopener">ISO 42001</a>, the new AI-management-system standard, in the same way the others pair with ISO 27001. For an AI-native SaaS company, the two together are becoming the expected answer.</p>
+
+            <div class="divider"></div>
+
+            <h2 class="section-head">So where does ISO 27001 actually fit?</h2>
+
+            <p style="margin-top: 2rem;">Here's the practical heart of it, and the reason this matters for how you spend your time and money.</p>
+
+            <p>You cannot certify to NIS2 or DORA - there is no such certificate. But ISO 27001 gives you a certifiable management system that maps well to DORA and NIS2 themes, including governance, risk management, incident response, supplier controls and continuous improvement. In practice, it gives you a strong control foundation and a reusable evidence model across frameworks - you build the ISMS once, and most of what the regulations ask for is already documented and operating.</p>
+
+            <p>The sensible approach, and the one we take with clients, is to start from your ISO 27001 control set and Statement of Applicability, then map each control to the specific NIS2 and DORA obligations. One control framework, evidenced once, pointed at multiple regulations.</p>
+
+            <p>But ISO 27001 does not cover everything, and it's important to be honest about the gaps:</p>
+
+            <div class="stat-box">
+                <div class="stat-item">
+                    <div class="stat-item-val">ISO 27001 gives you</div>
+                    <div class="stat-item-key">Governance and management review · risk-based control selection · incident-response process · supplier security controls · business continuity and testing · continuous improvement</div>
                 </div>
-                <div class="key-point" style="padding-left: 3.2rem;">
-                    <span class="key-point-label">Step 2</span>
-                    <p class="key-point-text">Build the asset register from the scope. Name an owner for each asset. Ownership is what makes the later decisions stick.</p>
-                </div>
-                <div class="key-point" style="padding-left: 3.2rem;">
-                    <span class="key-point-label">Step 3</span>
-                    <p class="key-point-text">Identify threats and vulnerabilities per asset, then score each risk. Work through the register in sessions with the people who run the systems, not alone in a document.</p>
-                </div>
-                <div class="key-point" style="padding-left: 3.2rem;">
-                    <span class="key-point-label">Step 4</span>
-                    <p class="key-point-text">Decide treatment for each risk and record it in the risk treatment plan. Get the risk owner to accept any risk you retain, in writing.</p>
-                </div>
-                <div class="key-point" style="padding-left: 3.2rem;">
-                    <span class="key-point-label">Step 5</span>
-                    <p class="key-point-text">Draft the Statement of Applicability from the treatment decisions. Every control marked as applicable should point to a risk, and every exclusion should have a reason.</p>
+                <div class="stat-item">
+                    <div class="stat-item-val">The regulations add</div>
+                    <div class="stat-item-key">Legal incident-reporting clocks to named authorities (ISO 27001's incident handling is internal, with no legal clock) · a formal register of information and live audit trail (DORA) · threat-led penetration testing where designated (DORA) · contractual flow-down and subcontractor transparency · cooperation with national authorities and their inspections</div>
                 </div>
             </div>
 
+            <p>So ISO 27001 is the foundation, not the finish line. It does the heavy lifting - the controls, the evidence, the structure - and then the regulation-specific requirements (the reporting clocks, the registers, the contractual clauses) sit on top of it.</p>
+
             <div class="divider"></div>
 
-            <h2 class="section-head">Where Teams Get It Wrong</h2>
+            <h2 class="section-head">The honest answer to "which one do I need?"</h2>
 
-            <div style="margin-top: 2rem; display: grid; gap: 1.2rem;">
+            <p style="margin-top: 2rem;">Most SaaS founders asking this question don't actually have a free choice between frameworks - the situation chooses for them:</p>
+
+            <div style="margin-top: 1.5rem; display: grid; gap: 1.2rem;">
                 <div class="key-point">
-                    <span class="key-point-label">Mistake 1</span>
-                    <p class="key-point-text"><strong>Generic templates.</strong> A downloaded risk list that nobody in the business has reviewed. Auditors recognise it immediately, and it rarely reflects the company's real exposure.</p>
+                    <span class="key-point-label">Financial-sector customers</span>
+                    <p class="key-point-text">You sell to financial-sector customers → DORA's third-party requirements will reach you through their contracts. ISO 27001 is the foundation; DORA-specific clauses go on top.</p>
                 </div>
                 <div class="key-point">
-                    <span class="key-point-label">Mistake 2</span>
-                    <p class="key-point-text"><strong>Scoring without criteria.</strong> Every risk rated "high" or "medium" with no definition behind the labels. The results can't be reproduced, so they can't be defended.</p>
+                    <span class="key-point-label">Enterprise and regulated customers</span>
+                    <p class="key-point-text">You sell to enterprise or regulated customers in covered sectors → NIS2 flows down to you as supplier security requirements. ISO 27001 is almost always what they'll ask you to hold.</p>
                 </div>
                 <div class="key-point">
-                    <span class="key-point-label">Mistake 3</span>
-                    <p class="key-point-text"><strong>No real risk owners.</strong> Risks assigned to a shared mailbox or a role nobody holds. When a risk is accepted, the person accepting it has to have the authority to do so.</p>
-                </div>
-                <div class="key-point">
-                    <span class="key-point-label">Mistake 4</span>
-                    <p class="key-point-text"><strong>A disconnected SoA.</strong> Controls marked as applicable with no link to any risk, or exclusions with vague justifications. This is one of the most common reasons for findings at Stage 2.</p>
-                </div>
-                <div class="key-point">
-                    <span class="key-point-label">Mistake 5</span>
-                    <p class="key-point-text"><strong>A one-off exercise.</strong> The assessment is written once, then left to go stale. Risks change when systems, suppliers, and people change, so the register needs a scheduled review and an update trigger.</p>
+                    <span class="key-point-label">AI at the core</span>
+                    <p class="key-point-text">AI is core to your product → the AI Act applies on its own timeline, and ISO 42001 is the emerging companion certification.</p>
                 </div>
             </div>
 
-            <div class="divider"></div>
+            <p style="margin-top: 2rem;">In nearly every case, the thread running through all three is the same: ISO 27001 is the certification that proves you're meeting the baseline these laws demand. It's why, when an enterprise or financial customer sends you a security review driven by their own NIS2 or DORA obligations, the requirement that lands on your desk is so often "<a href="/blog/iso-27001-timeline.html">get ISO 27001 certified</a>." The law is the reason; the certificate is the answer they'll accept.</p>
 
-            <h2 class="section-head">Defending It to an Auditor</h2>
-
-            <p style="margin-top: 2rem;">An auditor doesn't expect a perfect register. They expect a method you can explain, applied the same way throughout, with a visible trail from risk to decision to control. Be ready to walk them through a single risk end to end: how it was scored, who owns it, what treatment was chosen, which controls implement that treatment, and what evidence shows those controls are running.</p>
-
-            <p>That trail is also what keeps the assessment alive after certification. Surveillance audits will revisit it, and a register that has been updated through real change is far easier to defend than one that was rewritten the week before the audit.</p>
-
-            <div class="key-point">
-                <span class="key-point-label">What Actually Works</span>
-                <p class="key-point-text">A short, explicit method, a register built from real scope, named owners who accept their risks, and an SoA that reads as a summary of those decisions. Teams that get this right spend less time on the audit and more time running the controls.</p>
-            </div>
-
-            <div class="divider"></div>
-
-            <h2 class="section-head">Bottom Line</h2>
-
-            <p style="margin-top: 2rem;">Treat the risk assessment as the foundation of the whole management system, not a box to tick on the way to the controls. Settle scope first, agree the criteria before scoring anything, put real owners on every risk, and make sure the Statement of Applicability follows from the decisions you have made.</p>
-
-            <p>Get this right and the rest of the project becomes far more predictable. Get it wrong and the problems surface at the worst possible time, usually during the certification audit.</p>
+            <p>That's the real shape of it. You don't usually get to pick which regulation touches you - your customers and your product decide that. But you do get to choose how efficiently you respond, and building one solid ISO 27001 foundation that answers most of what all three demand is, for a growing SaaS company, by far <a href="/#offer">the most economical way through</a>.</p>
 
             <div class="cta-final">
-                <h3>Want an Honest Read on Your Risk Assessment?</h3>
-                <p>Stenward helps Series A and B SaaS companies build a risk assessment that stands up to scrutiny, with a senior practitioner leading the work from scoping through to the Statement of Applicability.</p>
-                <a href="/book.html" class="btn btn-accent">Book a call</a>
+                <h3>Stenward helps Series A and B SaaS companies build the ISO 27001 foundation that answers enterprise security reviews - including the ones driven by NIS2 and DORA.</h3>
+                <p>If a regulated customer is asking you to certify, and you want an honest view of what it takes, <a href="/book.html">get in touch</a>.</p>
             </div>
             </div>
         </div>
