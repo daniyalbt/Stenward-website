@@ -870,6 +870,22 @@
             .rg-facts { grid-template-columns: 1fr; }
             .rg-rung { flex-direction: column; align-items: flex-start; gap: .3rem; }
         }
+        
+        /* ── summary row v3 ── */
+        .rg-glance { gap: 18px; }
+        .rg-glance-item { padding: 1.8rem 1.6rem 1.6rem; border-radius: 16px; }
+        .rg-g-top { display: flex; justify-content: space-between; align-items: center; gap: .6rem; margin-bottom: 1.1rem; }
+        .rg-g-top .rg-tag { font-size: .66rem; }
+        .rg-pill { font-family: var(--mono); font-size: .62rem; letter-spacing: .14em; text-transform: uppercase; padding: .32rem .6rem; border-radius: 999px; border: 1px solid var(--line-2); color: var(--soft); white-space: nowrap; }
+        .rg-pill.live { border-color: rgba(0,253,179,.5); color: var(--teal); background: rgba(0,253,179,.08); box-shadow: 0 0 14px rgba(0,253,179,.12); }
+        .rg-glance-item h4 { font-size: 1.22rem; margin: 0 0 1.3rem; }
+        .rg-g-rows { display: grid; gap: 0; border-top: 1px solid var(--line); }
+        .rg-g-rows > div { display: grid; grid-template-columns: 6.5rem 1fr; gap: .8rem; padding: .75rem 0; border-bottom: 1px solid var(--line); }
+        .rg-g-rows dt { font-family: var(--mono); font-size: .68rem; letter-spacing: .12em; text-transform: uppercase; color: var(--faint); padding-top: .15rem; }
+        .rg-g-rows dd { font-size: .9rem; color: #fff; line-height: 1.4; }
+        @media (max-width: 700px) {
+            .rg-g-rows > div { grid-template-columns: 1fr; gap: .2rem; }
+        }
         </style>
 </head>
 <body>
@@ -928,19 +944,28 @@
 
             <div class="rg-glance">
                 <div class="rg-glance-item">
-                    <span class="rg-tag">NIS2</span>
+                    <div class="rg-g-top"><span class="rg-tag">01 · NIS2</span><span class="rg-pill live">In force</span></div>
                     <h4>Broad cybersecurity law</h4>
-                    <p>In force since Oct 2024. Applies by sector and size.</p>
+                    <dl class="rg-g-rows">
+                        <div><dt>Since</dt><dd>October 2024</dd></div>
+                        <div><dt>Applies to</dt><dd>Companies by sector and size</dd></div>
+                    </dl>
                 </div>
                 <div class="rg-glance-item">
-                    <span class="rg-tag">DORA</span>
+                    <div class="rg-g-top"><span class="rg-tag">02 · DORA</span><span class="rg-pill live">In force</span></div>
                     <h4>Financial-sector resilience</h4>
-                    <p>Applies since Jan 2025. Applies to finance and their ICT providers.</p>
+                    <dl class="rg-g-rows">
+                        <div><dt>Since</dt><dd>January 2025</dd></div>
+                        <div><dt>Applies to</dt><dd>Finance firms and their ICT providers</dd></div>
+                    </dl>
                 </div>
                 <div class="rg-glance-item">
-                    <span class="rg-tag">EU AI Act</span>
+                    <div class="rg-g-top"><span class="rg-tag">03 · AI Act</span><span class="rg-pill">Phasing in</span></div>
                     <h4>AI governance</h4>
-                    <p>Phasing in to Aug 2026. Applies by what your AI does.</p>
+                    <dl class="rg-g-rows">
+                        <div><dt>Full effect</dt><dd>August 2026</dd></div>
+                        <div><dt>Applies to</dt><dd>Depends on what your AI does</dd></div>
+                    </dl>
                 </div>
             </div>
 
