@@ -319,11 +319,66 @@
     });
   }
 
+  /* ════════════════ SHARED LEGAL / CREDIBILITY FURNITURE ════════════════
+     Articles: a "Last reviewed" line under the hero meta, and a disclaimer
+     at the foot of the article. Set per article with
+       <meta name="last-reviewed" content="25 October 2026">
+     and optionally <meta name="disclaimer" content="..."> to override the default.
+     Every page: a short general-information line in the footer.
+     Supplementary text only, so it is kept out of the heading structure.
+  */
+  var ART_DISCLAIMER = 'This article is general information, not legal or compliance advice. Regulatory scope, deadlines and obligations change - the EU AI Act timeline, in particular, has already shifted once - and how any of these rules apply depends on your specific circumstances. Always confirm the current position against the official legislation and, where it matters, take professional advice. Stenward helps SaaS companies implement ISO 27001; we’re not a law firm.';
+  var SITE_FINE = 'The information on this site is general in nature and does not constitute legal, compliance or professional advice.';
+
+  function articleFrame() {
+    var meta = document.querySelector('.blog-meta');
+    var content = document.querySelector('.blog-band .blog-content');
+    if (!meta || !content) return;
+
+    var rev = document.querySelector('meta[name="last-reviewed"]');
+    if (rev && !document.querySelector('.art-reviewed')) {
+      var r = document.createElement('p');
+      r.className = 'art-reviewed';
+      r.textContent = 'Last reviewed: ' + rev.getAttribute('content');
+      meta.insertAdjacentElement('afterend', r);
+    }
+
+    var ov = document.querySelector('meta[name="disclaimer"]');
+    var box = document.createElement('aside');
+    box.className = 'art-disclaimer';
+    box.setAttribute('aria-label', 'Disclaimer');
+    var p = document.createElement('p');
+    var label = document.createElement('strong');
+    label.textContent = 'Disclaimer: ';
+    p.appendChild(label);
+    p.appendChild(document.createTextNode(ov ? ov.getAttribute('content') : ART_DISCLAIMER));
+    box.appendChild(p);
+    content.appendChild(box);
+  }
+
+  function siteFine() {
+    if (document.querySelector('.site-fine')) return;
+    var p = document.createElement('p');
+    p.className = 'site-fine';
+    p.textContent = SITE_FINE;
+    var foot = document.querySelector('footer');
+    if (foot) {
+      foot.appendChild(p);
+    } else {
+      var wrap = document.createElement('footer');
+      wrap.className = 'site-foot';
+      wrap.appendChild(p);
+      document.body.appendChild(wrap);
+    }
+  }
+
   /* ───────────────────────── BOOT ───────────────────────── */
   function init() {
     if (STATIC) document.documentElement.classList.add('no-anim');
 
     mobileMenu();
+    articleFrame();
+    siteFine();
 
     var heroCanvas = document.getElementById('lattice');
     if (heroCanvas) Lattice(heroCanvas, { density: 150 });

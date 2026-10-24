@@ -676,3 +676,12 @@ footer{background:var(--navy-deep);border-top:1px solid var(--line)}
 .cal-nav button:disabled{opacity:.3;cursor:default}
 .bk-days button.pad{visibility:hidden;border:0;background:none;box-shadow:none;pointer-events:none}
 .pc-day.pc-pad{visibility:hidden;border:0;pointer-events:none}
+
+/* ════════════ ARTICLE + SITE FINE PRINT (quiet, supplementary) ════════════ */
+.blog-hero-inner .art-reviewed{margin-top:.7rem;font-size:.8rem;letter-spacing:.03em;color:var(--faint)}
+.blog-content .art-disclaimer{margin-top:3.2rem;padding:1.4rem 0 0;border-top:1px solid var(--line)}
+.blog-content .art-disclaimer p{font-size:.8rem;line-height:1.65;color:var(--faint);margin:0}
+.blog-content .art-disclaimer strong{color:var(--soft);font-weight:600}
+.site-foot{background:var(--navy-deep);border-top:1px solid var(--line)}
+.site-fine{max-width:var(--maxw);margin:0 auto;padding:1.1rem 2rem 1.4rem;font-size:.72rem;line-height:1.55;color:var(--faint)}
+footer .site-fine{border-top:1px solid var(--line);margin-top:1.2rem;padding-left:0;padding-right:0}
