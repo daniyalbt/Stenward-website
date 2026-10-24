@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="How to run an ISO 27001 risk assessment that holds up at audit: scoping first, consistent criteria, real risk owners, and a Statement of Applicability that follows from your decisions.">
+    <title>The ISO 27001 Risk Assessment: Where Projects Get Decided - Stenward</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../fx.css">
+    <style>
+        .blog-hero {
+            position: relative;
+            padding: 9rem 2rem 5rem;
+            background: radial-gradient(120% 100% at 70% 30%, #11203A 0%, var(--navy) 42%, var(--navy-deep) 100%);
+            overflow: hidden;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .blog-hero::before {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--teal), transparent);
+            opacity: 0.5;
+        }
+
+        .blog-hero-inner {
+            max-width: var(--maxw);
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .blog-back {
+            display: inline-flex;
+            align-items: center;
+            gap: .4rem;
+            color: var(--soft);
+            font-size: .8rem;
+            letter-spacing: .04em;
+            transition: color .2s;
+            margin-bottom: 2rem;
+        }
+
+        .blog-back:hover {
+            color: var(--teal);
+        }
+
+        .blog-back::before {
+            content: "←";
+        }
+
+        .blog-title {
+            font-size: clamp(2.4rem, 5vw, 4rem);
+            font-weight: 600;
+            color: #fff;
+            letter-spacing: -0.025em;
+            line-height: 1.12;
+            max-width: 54rem;
+            text-wrap: balance;
+            margin-bottom: 1.6rem;
+        }
+
+        .blog-meta {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 0;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .blog-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            font-family: var(--mono);
+            font-size: .68rem;
+            font-weight: 700;
+            letter-spacing: .28em;
+            text-transform: uppercase;
+            color: var(--teal);
+        }
+
+        .blog-tag::before {
+            content: "";
+            width: 8px;
+            height: 8px;
+            background: var(--teal);
+            transform: rotate(45deg);
+            flex-shrink: 0;
+            box-shadow: var(--tealglow);
+        }
+
+        .blog-date, .blog-time {
+            font-size: .88rem;
+            color: var(--faint);
+        }
+
+        .blog-band {
+            position: relative;
+            padding: 6rem 2rem 7rem;
+            background: linear-gradient(180deg, var(--navy-deep) 0%, rgba(17, 32, 58, .9) 50%, var(--navy-deep) 100%);
+            overflow: hidden;
+        }
+
+        .blog-band::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--teal), transparent);
+            opacity: 0.4;
+            z-index: 1;
+        }
+
+        .blog-band::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--teal), transparent);
+            opacity: 0.3;
+            z-index: 1;
+        }
+
+        .blog-wrapper {
+            max-width: var(--maxw);
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .blog-band .ghost {
+            position: absolute;
+            right: -80px;
+            top: 120px;
+            width: 360px;
+            height: 360px;
+            border: 1px solid var(--line-2);
+            transform: rotate(45deg);
+            opacity: 0.12;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .blog-band .ghost::after {
+            content: "";
+            position: absolute;
+            inset: 50px;
+            border: 1px solid var(--line);
+            opacity: 0.8;
+        }
+
+        .blog-content {
+            max-width: 52rem;
+            margin: 0 auto;
+            color: var(--soft);
+            line-height: 1.8;
+            font-size: 1.06rem;
+            font-family: var(--font);
+            position: relative;
+            z-index: 1;
+        }
+
+        .blog-content h2 {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #fff;
+            letter-spacing: -0.025em;
+            margin: 3.6rem 0 1.6rem;
+            line-height: 1.12;
+            text-wrap: balance;
+            font-family: var(--font);
+        }
+
+        .blog-content h2:first-child {
+            margin-top: 0;
+        }
+
+        .blog-content h3 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #fff;
+            margin: 2.4rem 0 1.1rem;
+            letter-spacing: -0.01em;
+            font-family: var(--font);
+        }
+
+        .blog-content p {
+            margin-bottom: 1.5rem;
+            color: var(--soft);
+            font-size: 1.06rem;
+        }
+
+        .blog-content p:last-child {
+            margin-bottom: 0;
+        }
+
+        .blog-content ul, .blog-content ol {
+            margin: 1.8rem 0 1.8rem 2.4rem;
+            color: var(--soft);
+        }
+
+        .blog-content li {
+            margin-bottom: .95rem;
+            color: var(--soft);
+            font-size: 1.04rem;
+            line-height: 1.65;
+        }
+
+        .blog-content strong {
+            color: #fff;
+            font-weight: 700;
+        }
+
+        .blog-callout {
+            position: relative;
+            border: 1px solid var(--line-2);
+            border-left: 3px solid var(--teal);
+            border-radius: 14px;
+            padding: 2rem 2.2rem;
+            background: linear-gradient(120deg, rgba(20, 34, 58, .5), rgba(12, 22, 38, .4));
+            margin: 2.6rem 0;
+            overflow: hidden;
+        }
+
+        .blog-callout::before {
+            content: "";
+            position: absolute;
+            top: -1px;
+            left: 20px;
+            right: 20px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--teal), transparent);
+            opacity: .5;
+        }
+
+        .blog-callout h4 {
+            color: var(--teal);
+            margin-bottom: 1.2rem;
+            font-weight: 600;
+            font-size: 1.1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .blog-callout ul {
+            margin: 0 0 0 1.8rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .blog-callout li {
+            margin-bottom: .7rem;
+            color: var(--soft);
+        }
+
+        .blog-two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2.2rem;
+            margin: 2.2rem 0;
+        }
+
+        .blog-two-col-item {
+            position: relative;
+            z-index: 1;
+        }
+
+        .blog-two-col h4 {
+            color: var(--teal);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            font-size: 1.06rem;
+        }
+
+        .blog-two-col ul {
+            margin: 0 0 0 1.6rem;
+        }
+
+        .blog-two-col li {
+            font-size: 0.98rem;
+            margin-bottom: .6rem;
+            color: var(--soft);
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-left: 2.2rem;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .timeline-item:last-child {
+            border-bottom: 0;
+        }
+
+        .timeline-item::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0.4em;
+            width: 16px;
+            height: 16px;
+            background: var(--teal);
+            border: 1.5px solid var(--teal);
+            border-radius: 50%;
+            box-shadow: 0 0 12px rgba(0, 253, 179, .4);
+            transform: translate(-8px, 0);
+        }
+
+        .timeline-item h4 {
+            color: #fff;
+            font-size: 1.08rem;
+            font-weight: 600;
+            margin-bottom: .6rem;
+            letter-spacing: -0.01em;
+        }
+
+        .timeline-item p {
+            font-size: 0.98rem;
+            color: var(--soft);
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--teal), transparent);
+            margin: 3rem 0;
+            opacity: .4;
+        }
+
+        .highlight-box {
+            position: relative;
+            background: radial-gradient(120% 80% at 60% 20%, rgba(0, 253, 179, .08), transparent 80%);
+            border: 1px solid rgba(0, 253, 179, .15);
+            border-radius: 16px;
+            padding: 2.2rem;
+            margin: 2.6rem 0;
+            overflow: hidden;
+        }
+
+        .highlight-box::before {
+            content: "";
+            position: absolute;
+            top: -1px;
+            left: 20px;
+            right: 20px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--teal), transparent);
+            opacity: .6;
+        }
+
+        .highlight-box p {
+            position: relative;
+            z-index: 1;
+            font-size: 1.08rem;
+            line-height: 1.7;
+            color: #fff;
+            margin: 0;
+        }
+
+        .key-insight {
+            display: grid;
+            grid-template-columns: 0.7fr 1.3fr;
+            gap: 3.6rem;
+            margin: 4.2rem 0;
+            align-items: center;
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        .insight-stat {
+            position: relative;
+        }
+
+        .stat-number {
+            font-size: 6rem;
+            font-weight: 700;
+            color: var(--teal);
+            line-height: 1;
+            letter-spacing: -0.03em;
+            text-shadow: 0 0 50px rgba(0, 253, 179, .3);
+            margin-bottom: 0.6rem;
+            font-family: var(--mono);
+        }
+
+        .stat-label {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #fff;
+            line-height: 1.3;
+            max-width: 16ch;
+            letter-spacing: -0.01em;
+            font-family: var(--font);
+        }
+
+        .stat-sub {
+            font-size: 0.95rem;
+            color: var(--soft);
+            margin-top: 1.1rem;
+            line-height: 1.65;
+            font-family: var(--font);
+        }
+
+        .insight-content h3 {
+            font-size: 1.7rem;
+            color: #fff;
+            font-weight: 600;
+            margin-bottom: 1.4rem;
+            letter-spacing: -0.02em;
+            font-family: var(--font);
+        }
+
+        .insight-content p {
+            font-size: 1.06rem;
+            color: var(--soft);
+            line-height: 1.75;
+            margin-bottom: 1.4rem;
+            font-family: var(--font);
+        }
+
+        .phase-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.6rem;
+            margin: 3rem 0;
+        }
+
+        .phase-card {
+            position: relative;
+            background: linear-gradient(180deg, rgba(20, 34, 58, .6), rgba(12, 22, 38, .5));
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            padding: 2.2rem;
+            transition: all .3s var(--ease);
+            overflow: hidden;
+        }
+
+        .phase-card::before {
+            content: "";
+            position: absolute;
+            top: -1px;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--teal), transparent);
+            opacity: 0;
+            transition: opacity .3s;
+        }
+
+        .phase-card::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: 16px;
+            background: radial-gradient(380px circle at var(--gx, 50%) var(--gy, 50%), rgba(0, 253, 179, .08), transparent 60%);
+            opacity: 0;
+            transition: opacity .3s;
+            pointer-events: none;
+        }
+
+        .phase-card:hover {
+            border-color: var(--line-2);
+            background: linear-gradient(180deg, rgba(20, 34, 58, .75), rgba(12, 22, 38, .65));
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, .3);
+        }
+
+        .phase-card:hover::before {
+            opacity: .5;
+        }
+
+        .phase-card:hover::after {
+            opacity: 1;
+        }
+
+        .phase-num {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            background: rgba(0, 253, 179, .1);
+            border: 1.5px solid var(--teal);
+            border-radius: 10px;
+            color: var(--teal);
+            font-family: var(--mono);
+            font-weight: 700;
+            font-size: 1.15rem;
+            margin-bottom: 1.2rem;
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 0 16px rgba(0, 253, 179, .15);
+        }
+
+        .phase-card h4 {
+            color: #fff;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.9rem;
+            letter-spacing: -0.01em;
+            position: relative;
+            z-index: 1;
+            font-family: var(--font);
+        }
+
+        .phase-card p {
+            color: var(--soft);
+            font-size: 0.98rem;
+            line-height: 1.68;
+            margin: 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .stat-box {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.8rem;
+            margin: 3.2rem 0;
+        }
+
+        .stat-item {
+            position: relative;
+            background: linear-gradient(135deg, rgba(0, 253, 179, .06), rgba(0, 253, 179, .02));
+            border: 1px solid rgba(0, 253, 179, .18);
+            border-radius: 14px;
+            padding: 2rem 1.8rem;
+            text-align: center;
+            overflow: hidden;
+            transition: all .3s var(--ease);
+        }
+
+        .stat-item::before {
+            content: "";
+            position: absolute;
+            top: -1px;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--teal), transparent);
+            opacity: .4;
+        }
+
+        .stat-item:hover {
+            border-color: rgba(0, 253, 179, .3);
+            background: linear-gradient(135deg, rgba(0, 253, 179, .1), rgba(0, 253, 179, .03));
+            transform: translateY(-2px);
+        }
+
+        .stat-item-val {
+            font-size: 3.2rem;
+            font-weight: 700;
+            color: var(--teal);
+            line-height: 1;
+            margin-bottom: 0.7rem;
+            text-shadow: 0 0 24px rgba(0, 253, 179, .25);
+            font-family: var(--mono);
+        }
+
+        .stat-item-key {
+            font-size: 0.85rem;
+            color: #fff;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            font-family: var(--mono);
+        }
+
+        .section-head {
+            position: relative;
+            margin: 4.4rem 0 2.8rem;
+            padding-bottom: 1.8rem;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .section-head::after {
+            content: "";
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 140px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--teal), transparent);
+            box-shadow: var(--tealglow);
+        }
+
+        .section-head h2 {
+            margin: 0;
+            font-size: 1.95rem;
+            font-weight: 600;
+            color: #fff;
+            letter-spacing: -0.025em;
+            font-family: var(--font);
+        }
+
+        .key-point {
+            position: relative;
+            margin: 0.9rem 0;
+            padding: 1.2rem 2.1rem;
+            padding-left: 3.4rem;
+            background: linear-gradient(90deg, rgba(0, 253, 179, .07), transparent);
+            border-left: 3px solid var(--teal);
+            border-radius: 10px;
+            border-top: 1px solid rgba(0, 253, 179, .1);
+            border-bottom: 1px solid rgba(0, 253, 179, .05);
+            transition: all .2s var(--ease);
+        }
+
+        .key-point:hover {
+            border-left-color: var(--teal);
+            background: linear-gradient(90deg, rgba(0, 253, 179, .1), transparent);
+            padding-left: 3.6rem;
+        }
+
+        .key-point::before {
+            content: "→";
+            position: absolute;
+            left: 1.1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--teal);
+            font-weight: 700;
+            font-size: 1.3rem;
+            transition: transform .2s var(--ease);
+        }
+
+        .key-point:hover::before {
+            transform: translateY(-50%) translateX(2px);
+        }
+
+        .key-point-label {
+            display: inline-block;
+            font-family: var(--mono);
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: var(--teal);
+            margin-bottom: 0.5rem;
+        }
+
+        .key-point-text {
+            font-size: 1.06rem;
+            color: #fff;
+            line-height: 1.68;
+            margin: 0;
+            font-family: var(--font);
+        }
+
+        .cta-final {
+            position: relative;
+            margin-top: 5.5rem;
+            padding: 3.8rem 3.5rem;
+            background: linear-gradient(135deg, rgba(0, 253, 179, .09), rgba(0, 253, 179, .02));
+            border: 1px solid rgba(0, 253, 179, .22);
+            border-radius: 18px;
+            text-align: center;
+            overflow: hidden;
+            transition: all .3s var(--ease);
+        }
+
+        .cta-final::before {
+            content: "";
+            position: absolute;
+            top: -1px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--teal), transparent);
+        }
+
+        .cta-final::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: 18px;
+            background: radial-gradient(120% 100% at 50% 0%, rgba(0, 253, 179, .1), transparent 80%);
+            opacity: 0;
+            transition: opacity .3s;
+            pointer-events: none;
+        }
+
+        .cta-final:hover {
+            border-color: rgba(0, 253, 179, .35);
+            background: linear-gradient(135deg, rgba(0, 253, 179, .13), rgba(0, 253, 179, .04));
+            transform: translateY(-2px);
+        }
+
+        .cta-final:hover::after {
+            opacity: 1;
+        }
+
+        .cta-final h3 {
+            position: relative;
+            z-index: 1;
+            font-size: 1.75rem;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 1.2rem;
+            letter-spacing: -0.025em;
+            font-family: var(--font);
+        }
+
+        .cta-final p {
+            position: relative;
+            z-index: 1;
+            font-size: 1.1rem;
+            color: var(--soft);
+            line-height: 1.72;
+            margin: 0 auto 2.2rem;
+            max-width: 48rem;
+            font-family: var(--font);
+        }
+
+        @media (max-width: 920px) {
+            .key-insight {
+                grid-template-columns: 1fr;
+            }
+
+            .phase-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stat-box {
+                grid-template-columns: 1fr;
+            }
+
+            .stat-number {
+                font-size: 3.5rem;
+            }
+            .blog-hero {
+                padding: 6rem 2rem 3rem;
+            }
+
+            .blog-title {
+                font-size: clamp(2rem, 4vw, 3rem);
+            }
+
+            .blog-band {
+                padding: 3rem 2rem 4rem;
+            }
+
+            .blog-content h2 {
+                font-size: 1.5rem;
+                margin: 2.2rem 0 1rem;
+            }
+
+            .blog-content h3 {
+                font-size: 1.2rem;
+            }
+
+            .blog-two-col {
+                grid-template-columns: 1fr;
+                gap: 1.6rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <header class="nav">
+        <div class="nav-inner">
+            <a class="nav-brand" href="/">
+                <img class="mark" src="../assets/logo-s-mark.png" alt="" />
+                <span class="wm"><span class="a">Sten</span><span class="b">ward</span></span>
+            </a>
+            <button class="nav-menu-btn" id="nav-menu-toggle" aria-label="Toggle menu" type="button">☰</button>
+            <nav class="nav-links">
+                <a href="/#offer">The offer</a>
+                <a href="/#coverage">Coverage</a>
+                <a href="/#services">Services</a>
+                <a href="/#outcomes">Outcomes</a>
+                <a href="/#process">Process</a>
+                <a href="/insights">Insights</a>
+                <a class="btn btn-accent btn-sm nav-cta" href="/book.html">Book a call</a>
+            </nav>
+            <nav class="nav-mobile" id="nav-mobile">
+                <a href="/#offer">The offer</a>
+                <a href="/#coverage">Coverage</a>
+                <a href="/#services">Services</a>
+                <a href="/#outcomes">Outcomes</a>
+                <a href="/#process">Process</a>
+                <a href="/insights">Insights</a>
+                <a href="/book.html">Book a call</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Blog Hero -->
+    <section class="blog-hero">
+        <div class="blog-hero-inner">
+            <a href="/insights" class="blog-back">Back to Insights</a>
+            <h1 class="blog-title">The ISO 27001 Risk Assessment: Where Projects <span style="color: var(--teal); text-shadow: 0 0 38px rgba(0, 253, 179, .35);">Get Decided</span></h1>
+            <div class="blog-meta">
+                <span class="blog-tag">ISO 27001</span>
+                <span class="blog-date">24 October 2026</span>
+                <span class="blog-time">7 min read</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Content -->
+    <section class="blog-band">
+        <span class="ghost"></span>
+        <div class="blog-wrapper">
+            <div class="blog-content">
+            <p>Ask anyone who has been through ISO 27001 which phase caused the most trouble, and the answer is rarely the audit itself. It's the risk assessment. It looks like a spreadsheet exercise, and that is exactly why it gets underestimated. Everything the rest of the system depends on flows from it, so a weak assessment shows up later as weak controls, a thin Statement of Applicability, and an auditor who asks questions nobody can answer.</p>
+
+            <div class="key-insight">
+                <div class="insight-stat">
+                    <div class="stat-number">3</div>
+                    <div class="stat-label">Core Outputs</div>
+                    <div class="stat-sub">Risk assessment, risk treatment plan, and Statement of Applicability</div>
+                </div>
+                <div class="insight-content">
+                    <h3>Why It Matters More Than It Looks</h3>
+                    <p>The standard doesn't ask for a list of threats. It asks for a repeatable method, applied consistently, that produces decisions an owner has accepted. Each control in Annex A should be traceable back to a risk you identified, or to a justified reason it doesn't apply. If that chain is broken, the certification audit tends to find it.</p>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <h2 class="section-head">What the Standard Actually Asks For</h2>
+
+            <p style="margin-top: 2rem;">Clause 6.1.2 sets the requirements for the assessment itself. You need to define risk criteria, meaning how you score likelihood and impact and what level of risk you are willing to accept. You need to identify risks to confidentiality, integrity, and availability of information within scope. You need to analyse and evaluate those risks, and you need to assign a risk owner to each one.</p>
+
+            <p>Clause 6.1.3 covers treatment. For each risk you decide whether to modify it, retain it, avoid it, or share it. Those decisions feed into the Statement of Applicability, which lists every Annex A control, whether it applies, and why. The SoA is not a formality. It is the document an auditor uses to test whether your assessment actually drove your controls.</p>
+
+            <div class="key-point">
+                <span class="key-point-label">Critical Detail</span>
+                <p class="key-point-text">The method has to be consistent. Two people assessing the same risk should land on broadly the same score. If the scores depend on who happened to be in the room, the auditor will treat the whole register with suspicion.</p>
+            </div>
+
+            <div class="divider"></div>
+
+            <h2 class="section-head">Start With Scope, Not Threats</h2>
+
+            <p style="margin-top: 2rem;">Most teams jump straight to listing threats. That's backwards. The assessment only covers assets inside your certification scope, so the first job is an asset inventory: the systems, data stores, suppliers, people, and locations that the scope actually includes.</p>
+
+            <p>The scope decision and the risk assessment are closely linked. A narrow, well-justified scope means fewer assets to assess and fewer controls to evidence. A scope drawn too wide, usually to satisfy a single customer's wording, multiplies the work without adding much assurance. Settle the scope before the risk register grows, because changing it later means reworking the assessment.</p>
+
+            <div class="divider"></div>
+
+            <h2 class="section-head">Running It Without Losing Months</h2>
+
+            <div style="margin-top: 2rem; display: grid; gap: 1.2rem;">
+                <div class="key-point" style="padding-left: 3.2rem;">
+                    <span class="key-point-label">Step 1</span>
+                    <p class="key-point-text">Agree the risk criteria once. A simple five-point scale for likelihood and impact, plus a clear line for what risk level requires treatment, is enough for most companies.</p>
+                </div>
+                <div class="key-point" style="padding-left: 3.2rem;">
+                    <span class="key-point-label">Step 2</span>
+                    <p class="key-point-text">Build the asset register from the scope. Name an owner for each asset. Ownership is what makes the later decisions stick.</p>
+                </div>
+                <div class="key-point" style="padding-left: 3.2rem;">
+                    <span class="key-point-label">Step 3</span>
+                    <p class="key-point-text">Identify threats and vulnerabilities per asset, then score each risk. Work through the register in sessions with the people who run the systems, not alone in a document.</p>
+                </div>
+                <div class="key-point" style="padding-left: 3.2rem;">
+                    <span class="key-point-label">Step 4</span>
+                    <p class="key-point-text">Decide treatment for each risk and record it in the risk treatment plan. Get the risk owner to accept any risk you retain, in writing.</p>
+                </div>
+                <div class="key-point" style="padding-left: 3.2rem;">
+                    <span class="key-point-label">Step 5</span>
+                    <p class="key-point-text">Draft the Statement of Applicability from the treatment decisions. Every control marked as applicable should point to a risk, and every exclusion should have a reason.</p>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <h2 class="section-head">Where Teams Get It Wrong</h2>
+
+            <div style="margin-top: 2rem; display: grid; gap: 1.2rem;">
+                <div class="key-point">
+                    <span class="key-point-label">Mistake 1</span>
+                    <p class="key-point-text"><strong>Generic templates.</strong> A downloaded risk list that nobody in the business has reviewed. Auditors recognise it immediately, and it rarely reflects the company's real exposure.</p>
+                </div>
+                <div class="key-point">
+                    <span class="key-point-label">Mistake 2</span>
+                    <p class="key-point-text"><strong>Scoring without criteria.</strong> Every risk rated "high" or "medium" with no definition behind the labels. The results can't be reproduced, so they can't be defended.</p>
+                </div>
+                <div class="key-point">
+                    <span class="key-point-label">Mistake 3</span>
+                    <p class="key-point-text"><strong>No real risk owners.</strong> Risks assigned to a shared mailbox or a role nobody holds. When a risk is accepted, the person accepting it has to have the authority to do so.</p>
+                </div>
+                <div class="key-point">
+                    <span class="key-point-label">Mistake 4</span>
+                    <p class="key-point-text"><strong>A disconnected SoA.</strong> Controls marked as applicable with no link to any risk, or exclusions with vague justifications. This is one of the most common reasons for findings at Stage 2.</p>
+                </div>
+                <div class="key-point">
+                    <span class="key-point-label">Mistake 5</span>
+                    <p class="key-point-text"><strong>A one-off exercise.</strong> The assessment is written once, then left to go stale. Risks change when systems, suppliers, and people change, so the register needs a scheduled review and an update trigger.</p>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <h2 class="section-head">Defending It to an Auditor</h2>
+
+            <p style="margin-top: 2rem;">An auditor doesn't expect a perfect register. They expect a method you can explain, applied the same way throughout, with a visible trail from risk to decision to control. Be ready to walk them through a single risk end to end: how it was scored, who owns it, what treatment was chosen, which controls implement that treatment, and what evidence shows those controls are running.</p>
+
+            <p>That trail is also what keeps the assessment alive after certification. Surveillance audits will revisit it, and a register that has been updated through real change is far easier to defend than one that was rewritten the week before the audit.</p>
+
+            <div class="key-point">
+                <span class="key-point-label">What Actually Works</span>
+                <p class="key-point-text">A short, explicit method, a register built from real scope, named owners who accept their risks, and an SoA that reads as a summary of those decisions. Teams that get this right spend less time on the audit and more time running the controls.</p>
+            </div>
+
+            <div class="divider"></div>
+
+            <h2 class="section-head">Bottom Line</h2>
+
+            <p style="margin-top: 2rem;">Treat the risk assessment as the foundation of the whole management system, not a box to tick on the way to the controls. Settle scope first, agree the criteria before scoring anything, put real owners on every risk, and make sure the Statement of Applicability follows from the decisions you have made.</p>
+
+            <p>Get this right and the rest of the project becomes far more predictable. Get it wrong and the problems surface at the worst possible time, usually during the certification audit.</p>
+
+            <div class="cta-final">
+                <h3>Want an Honest Read on Your Risk Assessment?</h3>
+                <p>Stenward helps Series A and B SaaS companies build a risk assessment that stands up to scrutiny, with a senior practitioner leading the work from scoping through to the Statement of Applicability.</p>
+                <a href="/book.html" class="btn btn-accent">Book a call</a>
+            </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cursor & JS -->
+    <div class="cursor"></div>
+    <div class="cursor-dot"></div>
+    <script src="../fx.js"></script>
+</body>
+</html>
