@@ -685,3 +685,13 @@ footer{background:var(--navy-deep);border-top:1px solid var(--line)}
 .site-foot{background:var(--navy-deep);border-top:1px solid var(--line)}
 .site-fine{max-width:var(--maxw);margin:0 auto;padding:1.1rem 2rem 1.4rem;font-size:.72rem;line-height:1.55;color:var(--faint)}
 footer .site-fine{border-top:1px solid var(--line);margin-top:1.2rem;padding-left:0;padding-right:0}
+
+/* ── summary boxes (articles): stacked label over value, aligned rows ── */
+.blog-content .rg-glance-item{display:flex;flex-direction:column;padding:1.6rem 1.5rem 1.2rem}
+.blog-content .rg-g-top{flex-wrap:nowrap;margin-bottom:1.2rem}
+.blog-content .rg-g-top .rg-tag,.blog-content .rg-pill{white-space:nowrap}
+.blog-content .rg-glance-item h4{margin:0 0 1.4rem;min-height:2.5em;line-height:1.25}
+.blog-content .rg-g-rows{margin-top:0;border-top:1px solid var(--line)}
+.blog-content .rg-g-rows > div{grid-template-columns:1fr;gap:.35rem;padding:.85rem 0;border-bottom:1px solid var(--line)}
+.blog-content .rg-g-rows dt{padding-top:0;font-size:.64rem}
+.blog-content .rg-g-rows dd{font-size:.95rem;line-height:1.45}
