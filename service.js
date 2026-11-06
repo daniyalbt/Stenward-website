@@ -59,7 +59,7 @@
     var slug = window.__SVC || qp('s'); if (!DATA[slug]) slug = 'iso-27001';
     var d = DATA[slug];
     document.title = 'Stenward — ' + d.name;
-    el('svc-no').textContent = d.no + ' / 06';
+    if (el('svc-no')) el('svc-no').textContent = d.no + ' / 06';
     el('svc-name').textContent = d.name;
     el('svc-line').textContent = d.line;
     el('svc-intro').textContent = d.intro;

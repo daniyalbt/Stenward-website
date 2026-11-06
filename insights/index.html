@@ -4,12 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Insights - Stenward</title>
+  <meta name="description" content="Senior-led research on ISO 27001, SOC 2, GDPR, NIS2, DORA and AI governance for SaaS companies that sell to enterprises.">
     <link rel="stylesheet" href="../fx.css">
     <style>
+:focus-visible{outline:2px solid var(--teal);outline-offset:3px;border-radius:4px}a:active,button:active,.btn:active{opacity:.82}@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}html,body{overflow-x:clip}
         .insights-band {
             position: relative;
             padding: 9rem 2rem;
-            background: radial-gradient(120% 90% at 70% 30%, #11203A 0%, var(--navy) 42%, var(--navy-deep) 100%);
+            background: radial-gradient(120% 90% at 70% 30%, var(--navy-mid) 0%, var(--navy) 42%, var(--navy-deep) 100%);
             overflow: hidden;
         }
 
@@ -34,15 +36,12 @@
             font-weight: 600;
             line-height: 1.0;
             letter-spacing: -0.035em;
-            color: #fff;
+            color: var(--paper);
             margin-top: 1rem;
             text-wrap: balance;
         }
 
-        .insights-head h1 .t {
-            color: var(--teal);
-            text-shadow: 0 0 38px rgba(0, 253, 179, .35);
-        }
+        .insights-head h1 .t {color: inherit;}
 
         .insights-head h1::after {
             content: "";
@@ -79,7 +78,7 @@
 
         .card {
             position: relative;
-            background: linear-gradient(180deg, rgba(20, 34, 58, .5), rgba(12, 22, 38, .4));
+            background: linear-gradient(180deg, var(--c-013), var(--c-015));
             border: 1px solid var(--line);
             border-radius: 18px;
             padding: 2.4rem;
@@ -94,7 +93,7 @@
             position: absolute;
             inset: 0;
             border-radius: 18px;
-            background: radial-gradient(380px circle at var(--gx, 50%) var(--gy, 50%), rgba(0, 253, 179, .10), transparent 60%);
+            background: radial-gradient(380px circle at var(--gx, 50%) var(--gy, 50%), var(--c-016), transparent 60%);
             opacity: 0;
             transition: opacity .3s;
             pointer-events: none;
@@ -113,7 +112,7 @@
 
         .card:hover {
             border-color: var(--line-2);
-            box-shadow: 0 24px 60px rgba(0, 0, 0, .4);
+            box-shadow: 0 24px 60px var(--c-017);
             transform: translateY(-4px);
         }
 
@@ -173,12 +172,12 @@
         .card-tag {
             display: inline-flex;
             align-items: center;
-            gap: 7px;
+            gap:8px;
             font-family: var(--mono);
             font-size: .68rem;
             font-weight: 700;
-            letter-spacing: .28em;
-            text-transform: uppercase;
+            letter-spacing:.01em;
+            text-transform:none;
             color: var(--teal);
         }
 
@@ -200,7 +199,7 @@
         .card h2 {
             font-size: 1.4rem;
             font-weight: 600;
-            color: #fff;
+            color: var(--paper);
             margin-bottom: 1rem;
             letter-spacing: -0.01em;
             line-height: 1.3;
@@ -234,7 +233,7 @@
 
         /* Accent card highlight */
         .card.accent {
-            border-color: rgba(0, 253, 179, .3);
+            border-color: var(--c-019);
         }
 
         .card.accent::after {
@@ -245,14 +244,14 @@
         .featured-article {
             position: relative;
             margin: 4rem 0;
-            background: linear-gradient(135deg, rgba(0, 253, 179, .09), rgba(0, 253, 179, .02));
-            border: 1px solid rgba(0, 253, 179, .22);
+            background: linear-gradient(135deg, var(--c-062), var(--c-059));
+            border: 1px solid var(--c-063);
             border-radius: 20px;
             overflow: hidden;
             display: grid;
             grid-template-columns: 1.4fr 0.6fr;
             gap: 0;
-            transition: all .3s var(--ease);
+            transition:color .2s,background-color .2s,border-color .2s,transform .3s,opacity .3s,box-shadow .3s var(--ease);
         }
 
         .featured-article::before {
@@ -267,8 +266,8 @@
         }
 
         .featured-article:hover {
-            border-color: rgba(0, 253, 179, .35);
-            background: linear-gradient(135deg, rgba(0, 253, 179, .13), rgba(0, 253, 179, .04));
+            border-color: var(--c-064);
+            background: linear-gradient(135deg, var(--c-065), var(--c-044));
             transform: translateY(-3px);
         }
 
@@ -279,18 +278,18 @@
             z-index: 20;
             display: inline-flex;
             align-items: center;
-            gap: 7px;
+            gap:8px;
             font-family: var(--mono);
             font-size: 0.72rem;
             font-weight: 700;
-            letter-spacing: 0.16em;
-            text-transform: uppercase;
+            letter-spacing:.01em;
+            text-transform:none;
             color: var(--teal);
-            background: rgba(0, 253, 179, .1);
-            border: 1px solid rgba(0, 253, 179, .3);
+            background: var(--c-039);
+            border: 1px solid var(--c-019);
             padding: 0.5rem 1rem;
             border-radius: 20px;
-            box-shadow: 0 0 12px rgba(0, 253, 179, .15);
+            
         }
 
         .featured-content {
@@ -303,7 +302,7 @@
         .featured-content h2 {
             font-size: 2rem;
             font-weight: 600;
-            color: #fff;
+            color: var(--paper);
             line-height: 1.2;
             margin: 1.2rem 0 1.4rem;
             letter-spacing: -0.02em;
@@ -334,7 +333,7 @@
 
         .featured-visual {
             position: relative;
-            background: radial-gradient(120% 100% at 50% 0%, rgba(0, 253, 179, .1), transparent 80%);
+            background: radial-gradient(120% 100% at 50% 0%, var(--c-039), transparent 80%);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -369,8 +368,8 @@
         .stat-label {
             font-family: var(--mono);
             font-size: 0.8rem;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
+            letter-spacing:.01em;
+            text-transform:none;
             color: var(--faint);
             margin-bottom: 0.8rem;
         }
@@ -380,14 +379,14 @@
             font-weight: 700;
             color: var(--teal);
             line-height: 1;
-            text-shadow: 0 0 30px rgba(0, 253, 179, .25);
+            
             margin-bottom: 0.4rem;
             font-family: var(--mono);
         }
 
         .stat-unit {
             font-size: 1rem;
-            color: #fff;
+            color: var(--paper);
             font-weight: 600;
             letter-spacing: -0.01em;
         }
@@ -399,12 +398,12 @@
         .section-label {
             display: inline-flex;
             align-items: center;
-            gap: 7px;
+            gap:8px;
             font-family: var(--mono);
             font-size: 0.75rem;
             font-weight: 700;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
+            letter-spacing:.01em;
+            text-transform:none;
             color: var(--teal);
             margin-bottom: 2.4rem;
         }
@@ -420,7 +419,7 @@
 
         .insight-card-placeholder {
             position: relative;
-            background: linear-gradient(180deg, rgba(20, 34, 58, .5), rgba(12, 22, 38, .4));
+            background: linear-gradient(180deg, var(--c-013), var(--c-015));
             border: 1px solid var(--line);
             border-radius: 16px;
             padding: 2.4rem;
@@ -429,7 +428,7 @@
             align-items: center;
             text-align: center;
             overflow: hidden;
-            transition: all .3s var(--ease);
+            transition:color .2s,background-color .2s,border-color .2s,transform .3s,opacity .3s,box-shadow .3s var(--ease);
         }
 
         .insight-card-placeholder::before {
@@ -446,7 +445,7 @@
 
         .insight-card-placeholder:hover {
             border-color: var(--line-2);
-            background: linear-gradient(180deg, rgba(20, 34, 58, .75), rgba(12, 22, 38, .65));
+            background: linear-gradient(180deg, var(--c-056), var(--c-057));
             transform: translateY(-3px);
         }
 
@@ -463,7 +462,7 @@
         .insight-card-placeholder h3 {
             font-size: 1.3rem;
             font-weight: 600;
-            color: #fff;
+            color: var(--paper);
             margin-bottom: 0.8rem;
             letter-spacing: -0.01em;
             font-family: var(--font);
@@ -479,29 +478,29 @@
         .placeholder-tag {
             display: inline-flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
             font-family: var(--mono);
             font-size: 0.7rem;
             font-weight: 700;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
+            letter-spacing:.01em;
+            text-transform:none;
             color: var(--faint);
             border: 1px solid var(--line);
             padding: 0.45rem 0.9rem;
             border-radius: 20px;
-            background: rgba(255, 255, 255, .03);
+            background: var(--c-054);
         }
 
         .insights-cta {
             position: relative;
             margin: 5rem 0;
             padding: 3.2rem;
-            background: linear-gradient(135deg, rgba(0, 253, 179, .08), rgba(0, 253, 179, .02));
-            border: 1px solid rgba(0, 253, 179, .2);
+            background: linear-gradient(135deg, var(--c-002), var(--c-059));
+            border: 1px solid var(--c-018);
             border-radius: 18px;
             overflow: hidden;
             text-align: center;
-            transition: all .3s var(--ease);
+            transition:color .2s,background-color .2s,border-color .2s,transform .3s,opacity .3s,box-shadow .3s var(--ease);
         }
 
         .insights-cta::before {
@@ -515,8 +514,8 @@
         }
 
         .insights-cta:hover {
-            border-color: rgba(0, 253, 179, .35);
-            background: linear-gradient(135deg, rgba(0, 253, 179, .12), rgba(0, 253, 179, .04));
+            border-color: var(--c-064);
+            background: linear-gradient(135deg, var(--c-025), var(--c-044));
             transform: translateY(-2px);
         }
 
@@ -530,7 +529,7 @@
         .insights-cta h3 {
             font-size: 1.7rem;
             font-weight: 600;
-            color: #fff;
+            color: var(--paper);
             margin-bottom: 1.2rem;
             letter-spacing: -0.02em;
             font-family: var(--font);
@@ -613,9 +612,8 @@
         <div class="wrap">
             <div data-reveal style="margin-bottom: 5rem;">
                 <div style="display: flex; align-items: center; gap: 2rem; margin-bottom: 0.8rem;">
-                    <span class="eyebrow">Research & Insights</span>
-                </div>
-                <h1 style="position: relative; display: block; font-size: clamp(2.6rem, 6.2vw, 5.1rem); font-weight: 600; line-height: 1.0; letter-spacing: -0.035em; color: #fff; text-wrap: balance;">Practitioner <span style="color: var(--teal); text-shadow: 0 0 38px rgba(0, 253, 179, .35);">Perspectives</span></h1>
+                    </div>
+                <h1 style="position: relative; display: block; font-size: clamp(2.6rem, 6.2vw, 5.1rem); font-weight: 600; line-height: 1.0; letter-spacing: -0.035em; color: var(--paper); text-wrap: balance;">Practitioner <span style="color: var(--teal); ">Perspectives</span></h1>
                 <p style="margin-top: 1.1rem; font-size: 1.08rem; line-height: 1.65; color: var(--soft); max-width: 48rem;">Senior-led research on what actually matters: ISO 27001 timelines and pitfalls, SOC 2 readiness, GDPR implementation, or any security framework that impacts your business.</p>
             </div>
 
@@ -648,7 +646,7 @@
                         </div>
                         <div class="case-body">
                             <h3>AI and ISO 27001: What Enterprise Buyers Now Ask</h3>
-                            <p>Security reviews now include an AI section. Your ISO 27001 certificate doesn't answer it, and here's what to do about the gap.</p>
+                            <p>Security reviews now include an AI section. Your ISO 27001 certificate doesn’t answer it, and here’s what to do about the gap.</p>
                             <div style="margin-top: 1.2rem; display: flex; gap: 12px; font-size: 0.85rem; color: var(--faint);">
                                 <span>6 November 2026</span>
                                 <span>·</span>
@@ -693,16 +691,15 @@
                 <span class="ghost"></span>
                 <div class="situation-grid">
                     <div>
-                        <span class="eyebrow">Ready to move forward?</span>
                         <h2 style="margin-top: 1rem;">Get clarity on your compliance path.</h2>
-                        <p>Whether you're evaluating ISO 27001, SOC 2, GDPR, or any framework that matters to your business - start with a conversation. We'll give you an honest assessment of where you stand, what your real timeline looks like, and what it actually takes to get there.</p>
+                        <p>Whether you’re evaluating ISO 27001, SOC 2, GDPR, or any framework that matters to your business - start with a conversation. We’ll give you an honest assessment of where you stand, what your real timeline looks like, and what it actually takes to get there.</p>
                         <div style="margin-top: 1.5rem; display: flex; gap: 1.6rem; flex-wrap: wrap;">
                             <span class="pf">Senior-led from day one</span>
                             <span class="pf">No commitment required</span>
                         </div>
                     </div>
                     <div class="col">
-                        <a class="btn btn-accent" href="/#contact" data-magnetic>Book a call <span class="ar">→</span></a>
+                        <a class="btn btn-accent" href="/#contact" data-magnetic>Book a call</a>
                         <a class="btn btn-ghost" href="/#offer" data-magnetic>Our approach</a>
                     </div>
                 </div>

@@ -374,6 +374,7 @@
 
   /* ───────────────────────── BOOT ───────────────────────── */
   function init() {
+    document.documentElement.classList.add('js-ready');
     if (STATIC) document.documentElement.classList.add('no-anim');
 
     mobileMenu();
