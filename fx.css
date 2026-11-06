@@ -742,3 +742,14 @@ h1,h2,h3{text-wrap:balance}
 .exp-row.open .exp-dia{transform:none;box-shadow:none}
 .cl-n{border-radius:8px;transform:none}
 .cl-n b{transform:none}
+
+/* ════════════ FLATTER TILE GRIDS: ruled lists instead of boxed cards ════════════ */
+.clause{border:0;border-top:1px solid var(--line);border-radius:0;background:none;padding:1.2rem .4rem}
+.clause:hover{background:none;transform:none;border-top-color:var(--teal)}
+.clause.active{background:none;box-shadow:none;border-top-color:var(--teal)}
+.annex-theme{border:0;border-top:1px solid var(--line);border-radius:0;background:none;padding:1.4rem .2rem 1.2rem}
+.annex-theme:hover{transform:none}
+.annex-theme.active{background:none;box-shadow:none;border-top-color:var(--teal)}
+
+.at-grid{display:block;height:3px;background:var(--line);margin-top:.2rem}
+.at-grid i{display:block;height:3px;width:0;background:var(--teal);transform:none;border:0;border-radius:0;box-shadow:none;position:static;transition:width .6s var(--ease)}

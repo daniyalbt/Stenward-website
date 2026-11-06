@@ -382,7 +382,7 @@
     siteFine();
 
     var heroCanvas = document.getElementById('lattice');
-    if (heroCanvas) Lattice(heroCanvas, { density: 150 });
+    if (heroCanvas) Lattice(heroCanvas, { density: 60 });
     var bookCanvas = document.getElementById('lattice-book');
     if (bookCanvas) Lattice(bookCanvas, { density: 80, calm: true });
 

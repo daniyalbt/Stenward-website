@@ -175,9 +175,7 @@
     // fill each theme's diamond grid
     themes.forEach(function (t) {
       var g = t.querySelector('.at-grid'), n = +g.getAttribute('data-n');
-      var html = '';
-      for (var i = 0; i < n; i++) html += '<i style="transition-delay:' + (i * 14) + 'ms"></i>';
-      g.innerHTML = html;
+      g.innerHTML = '<i style="width:' + (n / 93 * 100).toFixed(1) + '%"></i>';
     });
     function render(i) {
       var a = ANNEX[i];
