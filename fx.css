@@ -729,3 +729,16 @@ html{overflow-x:clip}
 
 .stat-item-val,.cx-num,.at-count,.cyc-center b,.gg-now b,.stat-number{font-variant-numeric:tabular-nums}
 h1,h2,h3{text-wrap:balance}
+
+/* ════════════ VISUAL RESTRAINT (fewer generic motifs, same palette) ════════════ */
+.sec-head h2::after,.section-head::after,.key-insight h2::after{display:none}
+.ghost,.situation .ghost,.commit .ghost,.blog-band .ghost{display:none}
+.eyebrow::before,.hero-proof .pf::before,.spec li::before,.exp-dia,.sp-dia,.rg-chip::before,.rg-item::before,.cl-n{transform:none;border-radius:50%}
+.eyebrow::before,.spec li::before,.hero-proof .pf::before{width:6px;height:6px;border-width:0;background:var(--teal)}
+.hero-proof .pf::before{border:0;background:var(--teal)}
+.rg-chip::before{width:6px;height:6px;border-radius:50%}
+.rg-item::before{width:6px;height:6px;border-radius:50%;border-width:0;background:var(--teal)}
+.exp-dia{width:10px;height:10px;border-radius:50%;background:var(--teal);border:0}
+.exp-row.open .exp-dia{transform:none;box-shadow:none}
+.cl-n{border-radius:8px;transform:none}
+.cl-n b{transform:none}
